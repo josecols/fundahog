@@ -3,11 +3,12 @@
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols
 from django.contrib import admin
-from blog.models import Entrada
+from blog.models import Categoria, Entrada
 
 class EntradaAdmin(admin.ModelAdmin):
     class Media:
         js = ('/static/js/ckeditor/ckeditor.js',
               '/static/js/ckeditor/init.js',)
 
+admin.site.register(Categoria)
 admin.site.register(Entrada, EntradaAdmin)
