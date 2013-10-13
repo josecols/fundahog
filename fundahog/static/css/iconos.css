@@ -61,3 +61,6 @@ span[class^="i-"], span[class*=" i-"] {
 .i-guardar:before {
 	content:"\f0C7";
 }
+.i-entrada:before {
+	content:"\f15C";
+} 

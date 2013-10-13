@@ -36,7 +36,5 @@ CKEDITOR.editorConfig = function( config ) {
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
     
-    config.defaultLanguage = 'es';
-    
-    config.width = '50%';
+    config.defaultLanguage = 'es';    
 };

@@ -54,6 +54,14 @@
 			</nav>
 			<section id="principal">
 				<section id="contenido" class="left">
+					{% if request.user.is_staff %}
+					<form action="" class="formulario entrada">
+						<div class="contenedor-input">
+							<input type="text" name="titulo" placeholder="Título">
+						</div>
+						<textarea id="entrada_contenido" name="contenido"></textarea>
+					</form>
+					{% endif %}
 					{% for entrada in entradas.all %}
 					<h1 class="titulo"><a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
 						<small>
@@ -74,6 +82,10 @@
 					</nav>
 				</section>
 				<aside id="sidebar" class="right">
+					{% if request.user.is_staff %}
+					<a id="entrada" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
+					<div class="fix"></div>
+					{% endif %}
 					<form action="" class="busqueda formulario">
 						<div class="contenedor-input">
 							<span class="i-busqueda"></span>
@@ -89,6 +101,17 @@
 		</div>
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+		{% if request.user.is_staff %}		
+		<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+		<script async defer src="{{STATIC_URL}}js/edicion.js"></script>
+		<script>
+			$(document).ready(function () {
+				$('#entrada').click(function (){
+					$('.formulario.entrada').slideToggle('slow');
+				});
+			});			
+		</script>
+		{% endif %}
 	</body>
 
 </html>

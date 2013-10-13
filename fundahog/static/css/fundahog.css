@@ -326,6 +326,13 @@ body {
     border: 1px solid #BBB;
     outline:none;
 }
+.formulario.entrada {
+	display:none;
+	margin-top:30px;
+}
+.formulario.entrada .contenedor-input input { 
+	width:98%;
+}
 .busqueda .contenedor-input {
     border-left: 4px solid #CA4F7A;
 }
