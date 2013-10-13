@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>{{entrada}} - FUNDAHOG</title>
+		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
+	</head>
+
+	<body>
+		<header id="header">
+			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+			<table class="contacto">
+				<tr>
+					<td>Teléfono</td>
+					<td><span class="i-telefono"></span></td>
+				</tr>
+				<tr>
+					<td>Ubicación</td>
+					<td><span class="i-ubicacion"></span></td>
+				</tr>
+			</table>
+			<div class="fix"></div>
+		</header>
+		<div id="pagina" class="hardware">
+			<a id="menu" class="toggler" href="javascript:void(0)"> <span class="i-menu"></span>Menú</a>
+			<nav id="barra">
+				<ul>
+					<li>
+						<a href="">Nosotros</a>
+					</li>
+					<li>
+						<a class="seleccionado" href="{% url blog %}">Blog</a>
+					</li>
+					<li>
+						<a href="">Programas</a>
+					</li>
+					<li>
+						<a href="">Contacto</a>
+					</li>
+					<li>
+						<a href="">Eventos</a>
+					</li>
+					<li>
+						<a href="">Libros</a>
+					</li>
+					<li>
+						<a href="">Galería</a>
+					</li>
+				</ul>
+			</nav>
+			<section id="principal">
+				<section id="contenido" class="left">
+					{% if request.user.is_staff %}
+					<div class="titulo">
+						<div id="titulo" contenteditable="true">
+							{{entrada}}
+						</div>
+						<small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small>
+					</div>
+					<div id="contenido-html" contenteditable="true">
+						{{entrada.contenido|safe}}
+					</div>
+					{% else %}
+					<h1 class="titulo"> {{entrada}} <small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small></h1>
+					{{entrada.contenido|safe}}
+					{% endif %}
+					<hr>
+				</section>
+				<aside id="sidebar" class="right">
+					{% if request.user.is_staff %}
+					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">Modo edición activo</a>
+					{% endif %}
+					<div class="fix"></div>
+					<form action="" class="busqueda formulario">
+						<div class="contenedor-input">
+							<span class="i-busqueda"></span>
+							<input type="text" placeholder="Búsqueda">
+						</div>
+						<div class="fix"></div>
+					</form>
+					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
+					<h2 class="titulo">Categorías</h2>
+				</aside>
+				<div class="fix"></div>
+			</section>
+		</div>
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+		{% if request.user.is_staff %}
+		<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+		<script async defer src="{{STATIC_URL}}js/inline.js"></script>
+		<script async defer src="{{STATIC_URL}}js/editor.js"></script>
+		<script>
+			$(document).ready(function() {
+				var guardar = false;
+
+				$("div[contenteditable='true']").bind('input', function() {
+					$('#guardar').text('Guardar cambios');
+					$('#guardar').addClass('cambios');
+					guardar = true;
+				});
+				
+				$('#guardar').click(function() {
+					modificar();
+				});
+
+				function modificar() {					
+					if (guardar) {
+						var titulo = $('#titulo').text(); 
+						var contenido = encodeURIComponent($('#contenido-html').html());	
+						var entrada = "{{entrada.pk}}";						
+						
+						var request = $.ajax({
+							async : true,
+							type : "POST",
+							url : "{% url modificar_entrada %}",
+							data : 'entrada=' + entrada 
+								+ '&titulo=' + titulo 
+								+ '&contenido=' + contenido
+								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
+							dataType : "text"
+						});
+						request.done(function(msg) {
+							location.reload();
+						});
+					}
+				}
+
+			});
+		</script>
+		{% endif %}
+	</body>
+
+</html>

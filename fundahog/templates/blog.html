@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>FUNDAHOG</title>
+		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
+	</head>
+
+	<body>
+		<header id="header">
+			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+			<table class="contacto">
+				<tr>
+					<td>Teléfono</td>
+					<td><span class="i-telefono"></span></td>
+				</tr>
+				<tr>
+					<td>Ubicación</td>
+					<td><span class="i-ubicacion"></span></td>
+				</tr>
+			</table>
+			<div class="fix"></div>
+		</header>
+		<div id="pagina" class="hardware">
+			<a id="menu" class="toggler" href="javascript:void(0)"> <span class="i-menu"></span>Menú</a>
+			<nav id="barra">
+				<ul>
+					<li>
+						<a href="">Nosotros</a>
+					</li>
+					<li>
+						<a class="seleccionado" href="{% url blog %}">Blog</a>
+					</li>
+					<li>
+						<a href="">Programas</a>
+					</li>
+					<li>
+						<a href="">Contacto</a>
+					</li>
+					<li>
+						<a href="">Eventos</a>
+					</li>
+					<li>
+						<a href="">Libros</a>
+					</li>
+					<li>
+						<a href="">Galería</a>
+					</li>
+				</ul>
+			</nav>
+			<section id="principal">
+				<section id="contenido" class="left">
+					{% for entrada in entradas.all %}
+					<h1 class="titulo"><a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
+						<small>
+							{% if request.user.is_staff %}
+							<a href="{% url entrada entrada.slug entrada.pk %}"><span class="i-editar"></span>Editar</a>
+							{% endif %}
+							<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} 
+							<span class="i-usuario"></span>José Cols		
+						</small>
+					</h1>
+					{{entrada.contenido|safe|truncatewords_html:50}}
+					<hr>
+					{% endfor %}
+					<nav class="navegacion">
+						<a href="" class="boton left">Anterior</a>
+						<a href="" class="boton right">Siguiente</a>
+						<div class="fix"></div>
+					</nav>
+				</section>
+				<aside id="sidebar" class="right">
+					<form action="" class="busqueda formulario">
+						<div class="contenedor-input">
+							<span class="i-busqueda"></span>
+							<input type="text" placeholder="Búsqueda">
+						</div>
+						<div class="fix"></div>
+					</form>
+					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
+					<h2 class="titulo">Categorías</h2>
+				</aside>
+				<div class="fix"></div>
+			</section>
+		</div>
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+	</body>
+
+</html>
