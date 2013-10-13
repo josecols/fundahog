@@ -58,3 +58,6 @@ span[class^="i-"], span[class*=" i-"] {
 .i-editar:before {
     content:"\f044";
 }
+.i-guardar:before {
+	content:"\f0C7";
+}
