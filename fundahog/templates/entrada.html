@@ -71,9 +71,9 @@
 					{% endif %}
 					<hr>
 				</section>
-				<aside id="sidebar" class="right">
+				<aside id="sidebar" class="right">					
 					{% if request.user.is_staff %}
-					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">Modo edición activo</a>
+					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
 					{% endif %}
 					<div class="fix"></div>
 					<form action="" class="busqueda formulario">
@@ -94,20 +94,36 @@
 		{% if request.user.is_staff %}
 		<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
 		<script async defer src="{{STATIC_URL}}js/inline.js"></script>
-		<script async defer src="{{STATIC_URL}}js/editor.js"></script>
 		<script>
 			$(document).ready(function() {
-				var guardar = false;
+				var guardar = false;			
 
-				$("div[contenteditable='true']").bind('input', function() {
-					$('#guardar').text('Guardar cambios');
-					$('#guardar').addClass('cambios');
-					guardar = true;
+				$('div[contenteditable]').on('focus', function() {
+				    var $this = $(this);
+				    $this.data('before', $this.html());
+				    return $this;
+				}).on('blur input paste', function() {
+				    var $this = $(this);
+				    if ($this.data('before') !== $this.html()) {
+				        $this.data('before', $this.html());
+				        $this.trigger('change');
+				    }
+				    return $this;
 				});
+
+				$("div[contenteditable='true']").bind('change', function() {
+					cambios();
+				});				
 				
 				$('#guardar').click(function() {
 					modificar();
 				});
+				
+				function cambios() {
+					$('#guardar').html('<span style="display:inline-block" class="i-guardar"></span>Guardar cambios');
+					$('#guardar').addClass('cambios');					
+					guardar = true;
+				}
 
 				function modificar() {					
 					if (guardar) {
