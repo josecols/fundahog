@@ -115,7 +115,7 @@ body {
 #principal #contenido {
     width:100%;
 }
-#principal #contenido ul {
+#principal #contenido ul, #principal #contenido ol {
 	padding-left: 30px;
 }
 #principal #sidebar {
@@ -270,7 +270,7 @@ body {
     margin: 40px auto;
     overflow: hidden;
 }
-#principal p, #principal #contenido ul {
+#principal p, #principal #contenido ul, #principal #contenido ol  {
     line-height:1.8;
     text-align:justify;
 }
