@@ -267,7 +267,7 @@ body {
     background: #DDD;
     border: 0;
     height: 1px;
-    margin: 40px auto;
+    margin: 40px auto 5px;
     overflow: hidden;
 }
 #principal p, #principal #contenido ul, #principal #contenido ol  {
@@ -329,6 +329,15 @@ body {
 .formulario.entrada {
 	display:none;
 	margin-top:30px;
+}
+.formulario.entrada label {
+	display:block;
+	margin:15px 0 5px;
+}
+.formulario.entrada select {	
+    font-family:'Open Sans', sans-serif;
+	font-size:0.9em;
+	width:100%;
 }
 .formulario.entrada .contenedor-input input { 
 	width:98%;

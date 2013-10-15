@@ -4,6 +4,9 @@
     Autor: Jose Cols - josecolsg@gmail.com - @josecols
     Version: 1.0
 */
-window.onload = function() {
-	CKEDITOR.replace('entrada_contenido');
-}; 
+$(document).ready(function () {
+	$('#entrada').click(function (){
+		$('.formulario.entrada').slideToggle('slow');
+		$('#guardar').toggle();
+	});
+});	

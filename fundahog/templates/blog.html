@@ -55,23 +55,24 @@
 			<section id="principal">
 				<section id="contenido" class="left">
 					{% if request.user.is_staff %}
-					<form action="" class="formulario entrada">
+					<form class="formulario entrada">
 						<div class="contenedor-input">
 							<input type="text" name="titulo" placeholder="Título">
 						</div>
-						<textarea id="entrada_contenido" name="contenido"></textarea>
+						<textarea id="entrada_contenido" name="contenido"></textarea>												
+						{% if categorias %} 
+ <label for="categorias">Categorias:</label>
+						<select name="categorias" multiple="multiple">
+							{% for categoria in categorias %}
+							<option value="{{categoria.pk}}">{{categoria}}</option>
+							{% endfor %}
+						</select>
+						<small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
+						{% endif %}
 					</form>
 					{% endif %}
 					{% for entrada in entradas.all %}
-					<h1 class="titulo"><a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
-						<small>
-							{% if request.user.is_staff %}
-							<a href="{% url entrada entrada.slug entrada.pk %}"><span class="i-editar"></span>Editar</a>
-							{% endif %}
-							<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} 
-							<span class="i-usuario"></span>José Cols		
-						</small>
-					</h1>
+					<h1 class="titulo"><a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a><small> {% if request.user.is_staff %} <a href="{% url entrada entrada.slug entrada.pk %}"><span class="i-editar"></span>Editar</a> {% endif %} <span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small></h1>
 					{{entrada.contenido|safe|truncatewords_html:50}}
 					<hr>
 					{% endfor %}
@@ -83,6 +84,7 @@
 				</section>
 				<aside id="sidebar" class="right">
 					{% if request.user.is_staff %}
+					<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;"><span class="i-guardar"></span>Guardar</a>
 					<a id="entrada" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
 					<div class="fix"></div>
 					{% endif %}
@@ -101,15 +103,39 @@
 		</div>
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-		{% if request.user.is_staff %}		
-		<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-		<script async defer src="{{STATIC_URL}}js/edicion.js"></script>
+		{% if request.user.is_staff %}
+		<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+		<script src="{{STATIC_URL}}js/edicion.js"></script>
 		<script>
-			$(document).ready(function () {
-				$('#entrada').click(function (){
-					$('.formulario.entrada').slideToggle('slow');
+			window.onload = function() {
+				var html = CKEDITOR.replace('entrada_contenido');
+
+				$('#guardar').click(function() {
+					guardar();
 				});
-			});			
+
+				function guardar() {
+					var titulo = $('input[name="titulo"]').val();
+					var contenido = html.getData();
+					var categorias = $('select[name="categorias"]').val().join(',');
+					
+					var request = $.ajax({
+						async : true,
+						type : "POST",
+						url : "{% url agregar_entrada %}",
+						data : 'titulo=' + titulo
+						+ '&contenido=' + encodeURIComponent(contenido)
+						+ '&categorias=' + categorias
+						+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
+						dataType : "text"
+					});
+					request.done(function(msg) {
+						location.reload();
+					});
+				}
+
+			};
+
 		</script>
 		{% endif %}
 	</body>
