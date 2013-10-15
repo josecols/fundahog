@@ -55,3 +55,13 @@ def modificar(request):
             entrada.save()
             return HttpResponse(simplejson.dumps("Entrada modificada con éxito"), mimetype='application/javascript')
     raise Http404
+
+@csrf_protect
+def borrar(request):
+    if request.user.is_superuser and request.method == 'POST':        
+        entrada_id = request.POST.get('entrada', None)
+        entrada = get_object_or_404(Entrada, pk=entrada_id)
+        entrada.delete()
+        return HttpResponse(simplejson.dumps("Entrada borrada con éxito"), mimetype='application/javascript')
+                
+    raise Http404
