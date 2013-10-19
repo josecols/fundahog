@@ -8,6 +8,9 @@
 		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
 		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
+		{% if request.user.is_staff %}
+		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
+		{% endif %}
 	</head>
 
 	<body>
@@ -107,6 +110,19 @@
 					</form>
 					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
 					<h2 class="titulo">Categorías</h2>
+					{% if categorias %}
+					<nav class="categorias">
+						<ul>
+							{% for categoria in categorias %}
+							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
+							{% endfor %}
+							<div class="fix"></div>
+						</ul>						
+						{% if request.user.is_staff %}
+						<a href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
+						{% endif %}						
+					</nav>
+					{% endif %}
 				</aside>
 				<div class="fix"></div>
 			</section>

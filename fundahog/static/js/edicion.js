@@ -7,6 +7,7 @@
 $(document).ready(function () {
 	$('#entrada').click(function (){
 		$('.formulario.entrada').slideToggle('slow');
+		$("html, body").animate({ scrollTop: 0 }, "slow");
 		$('#guardar').toggle();
 	});
 });	

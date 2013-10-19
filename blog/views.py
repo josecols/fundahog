@@ -10,9 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
 
 def index(request):
-    categorias = None
-    if (request.user.is_superuser):
-        categorias = Categoria.objects.all()
+    categorias = Categoria.objects.all()
     entradas = Entrada.objects.all()
     return render_to_response('blog.html',
                               {'entradas':entradas, 'categorias':categorias, 'request':request},

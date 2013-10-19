@@ -67,3 +67,6 @@ span[class^="i-"], span[class*=" i-"] {
 .i-borrar:before {
 	content:"\f00d";
 }
+.i-categoria:before {
+	content:"\f097";
+}
