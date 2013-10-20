@@ -7,6 +7,9 @@ from PIL import Image
 from django.db import models
 from django.template.defaultfilters import slugify
 
+def uuid_slug(uuid):
+    return str(uuid)[:8]
+
 def directorio(instance, nombre):
     if isinstance(instance, Evento):
         ruta = 'uploads/eventos'
@@ -14,7 +17,7 @@ def directorio(instance, nombre):
         ruta = 'uploads/error'
         
     extension = nombre.split('.')[-1]
-    nombre = "%s.%s" % (uuid.uuid4(), extension)
+    nombre = "%s.%s" % (uuid_slug(uuid.uuid4()), extension)
     return os.path.join(ruta, nombre)
 
 def redimensionar(archivo, ancho_requerido, alto_requerido):
