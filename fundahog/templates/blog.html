@@ -74,6 +74,7 @@
 						{% endif %}
 					</form>
 					{% endif %}
+					{% if entradas %}
 					{% for entrada in entradas.all %}
 					<h1 class="titulo">
 						<a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
@@ -94,6 +95,9 @@
 						<a href="" class="boton right">Siguiente</a>
 						<div class="fix"></div>
 					</nav>
+					{% else %}
+					<p class="center">No hay entradas registradas</p>
+					{% endif %}
 				</section>
 				<aside id="sidebar" class="right">
 					{% if request.user.is_staff %}
