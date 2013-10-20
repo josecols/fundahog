@@ -27,4 +27,4 @@ class Entrada(models.Model):
     def save(self): 
         if not self.id:
             self.slug = slugify(self.titulo)
-        super(Entrada, self).save()         
+        super(Entrada, self).save()
