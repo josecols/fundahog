@@ -6,6 +6,7 @@ import uuid, os
 from PIL import Image
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.db.models.signals import pre_delete
 
 def uuid_slug(uuid):
     return str(uuid)[:8]
@@ -25,7 +26,8 @@ def redimensionar(archivo, ancho_requerido, alto_requerido):
     ancho, alto = imagen.size
     if alto > alto_requerido and ancho > ancho_requerido:
         imagen.thumbnail((ancho_requerido, alto), Image.ANTIALIAS)
-        imagen.save(archivo)  
+        imagen.save(archivo)
+     
          
 class Evento(models.Model):
     titulo = models.CharField(max_length=100, unique=True, verbose_name="título")
@@ -45,4 +47,13 @@ class Evento(models.Model):
             archivo = self.portada.path            
             redimensionar(archivo, 400, 200)
                 
-                
+# Señales
+def borrar_portada(sender, instance, **kwargs):
+    if instance.portada:
+        try:
+            os.remove(instance.portada.path)
+        except OSError:
+            pass   
+        
+pre_delete.connect(borrar_portada, sender=Evento)
+

@@ -70,7 +70,7 @@
 						</div>						
 						<div class="fix"></div>
 						<small>
-							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
+							<span class="i-calendario"></span>{{evento.fecha}}
 						</small>						
 					</div>
 					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
@@ -81,7 +81,7 @@
 					{% else %}
 					<h1 class="titulo">{{evento}}
 						<small>
-							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
+							<span class="i-calendario"></span>{{evento.fecha}}
 						</small>
 					</h1>
 					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">

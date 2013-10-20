@@ -22,5 +22,6 @@ urlpatterns = patterns('',
     
     # Portal
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
-    url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$', 'portal.views.evento' , name='evento'),
+    url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$', 'portal.views.evento' , name='evento'),    
+    url(r'^eventos/evento/borrar/$', 'portal.views.borrar_evento' , name='borrar_evento'),
 )
