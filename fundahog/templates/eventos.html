@@ -55,6 +55,11 @@
                     <li>
                         <a href="">Galería</a>
                     </li>
+					{% if request.user.is_staff %}
+					<li>
+						<a href="">Ayuda</a>
+					</li>
+					{% endif %}
                 </ul>
             </nav>
             <section id="principal">

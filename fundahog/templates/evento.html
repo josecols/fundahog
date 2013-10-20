@@ -36,7 +36,7 @@
 						<a href="">Nosotros</a>
 					</li>
 					<li>
-						<a class="seleccionado" href="{% url blog %}">Blog</a>
+						<a href="{% url blog %}">Blog</a>
 					</li>
 					<li>
 						<a href="">Programas</a>
@@ -45,7 +45,7 @@
 						<a href="">Contacto</a>
 					</li>
 					<li>
-						<a href="">Eventos</a>
+						<a class="seleccionado" href="{% url eventos %}">Eventos</a>
 					</li>
 					<li>
 						<a href="">Libros</a>
@@ -53,42 +53,45 @@
 					<li>
 						<a href="">Galería</a>
 					</li>
+					{% if request.user.is_staff %}
+					<li>
+						<a href="">Ayuda</a>
+					</li>
+					{% endif %}
 				</ul>
 			</nav>
 			<section id="principal">
-				<section id="contenido" class="left">
-					{% if request.user.is_staff %}
-					<div class="titulo">
-						<div id="titulo" contenteditable="true">
-							{{entrada}}
-						</div>
-						<small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small>
-					</div>
-					<div id="contenido-html" contenteditable="true">
-						{{entrada.contenido|safe}}
-					</div>
-					{% else %}
-					<h1 class="titulo"> {{entrada}} <small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small></h1>
-					{{entrada.contenido|safe}}
-					{% endif %}
-					<hr>
-				</section>
-				<aside id="sidebar" class="right">					
+				<section id="contenido">
 					{% if request.user.is_staff %}
 					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
 					<div class="fix"></div>
-					{% endif %}					
-					<form action="" class="busqueda formulario">
-						<div class="contenedor-input">
-							<span class="i-busqueda"></span>
-							<input type="text" placeholder="Búsqueda">
+					<div class="titulo">
+						<div id="titulo" contenteditable="true">
+							{{evento}}
 						</div>
-						<div class="fix"></div>
-					</form>
-					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
-					<h2 class="titulo">Categorías</h2>
-				</aside>
-				<div class="fix"></div>
+						<small>
+							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
+							<span class="i-usuario"></span>José Cols
+						</small>						
+					</div>
+					<img class="left" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
+					<div id="contenido-html" contenteditable="true">
+						{{evento.contenido|safe}}
+					</div>
+					<div class="fix"></div>
+					{% else %}
+					<h1 class="titulo">{{evento}}
+						<small>
+							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
+							<span class="i-usuario"></span>José Cols
+						</small>
+					</h1>
+					<img class="left" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
+					{{evento.contenido|safe}}
+					<div class="fix"></div>
+					{% endif %}
+					<hr>
+				</section>
 			</section>
 		</div>
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
