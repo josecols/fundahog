@@ -62,19 +62,18 @@
 			</nav>
 			<section id="principal">
 				<section id="contenido">
-					{% if request.user.is_staff %}
-					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
-					<div class="fix"></div>
+					{% if request.user.is_staff %}					
 					<div class="titulo">
-						<div id="titulo" contenteditable="true">
+						<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
+						<div id="titulo" class="left" contenteditable="true">
 							{{evento}}
-						</div>
+						</div>						
+						<div class="fix"></div>
 						<small>
 							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
-							<span class="i-usuario"></span>José Cols
 						</small>						
 					</div>
-					<img class="left" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
+					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
 					<div id="contenido-html" contenteditable="true">
 						{{evento.contenido|safe}}
 					</div>
@@ -83,10 +82,9 @@
 					<h1 class="titulo">{{evento}}
 						<small>
 							<span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
-							<span class="i-usuario"></span>José Cols
 						</small>
 					</h1>
-					<img class="left" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
+					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
 					{{evento.contenido|safe}}
 					<div class="fix"></div>
 					{% endif %}

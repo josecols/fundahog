@@ -115,10 +115,17 @@ body {
 #principal #contenido {
     width:100%;
 }
+#principal #contenido img {
+	max-width: 100%;	
+	border-radius:6px;
+	display:block;
+	margin:5px auto;
+}
 #principal #contenido ul, #principal #contenido ol {
 	padding-left: 30px;
 }
-#principal #sidebar {
+#principal #sidebar {	  
+    margin-top:30px;
     width:100%;
 }
 #principal #sidebar nav {
@@ -187,9 +194,9 @@ body {
     padding: 0 0 5px;
 }
 #principal .navegacion {
-	margin:40px 0 20px;
+	margin:40px 0 10px;
 }
-#principal .navegacion .boton, #principal #sidebar .boton, #principal #contenido .boton {
+#principal .navegacion .boton, #principal #sidebar .boton {
     background-color:#BA3F69;
     color:#FFF;
     display:inline-block;
@@ -205,9 +212,14 @@ body {
 	width: auto;
 }
 #principal #contenido .boton {
-	margin:10px 0 0;
+    background-color:#BA3F69;
+    color:#FFF;
+    display:block;
+    margin:10px 0 0;
 	padding:6px;
 	width: auto;
+	font-size:16px;
+	font-weight:400;
 }
 #principal .navegacion .boton:hover, #principal #sidebar .boton:hover {
     background-color:#D44877;
@@ -215,13 +227,13 @@ body {
 #principal .navegacion .boton:active, #principal #sidebar .boton:active {
     background-color:#E54E82;
 }
-#principal #sidebar .boton.cambios {
+#principal #sidebar .boton.cambios, #principal #contenido .boton.cambios {
 	background-color:#4E9DBF;		
 }
-#principal #sidebar .boton.cambios:hover {
+#principal #sidebar .boton.cambios:hover, #principal #contenido .boton.cambios:hover {
 	background-color:#58B0D6;		
 }
-#principal #sidebar .boton.cambios:active {
+#principal #sidebar .boton.cambios:active, #principal #contenido .boton.cambios:hover {
 	background-color:#60C1EB;		
 }
 #principal .enlace {
@@ -410,12 +422,7 @@ body {
 p.center {
 	margin-top:15px;
 }
-img.left {
-	float:left;
-	margin:0 10px 10px 0;
-	border-radius:6px;
-}
-@media only screen and (min-width: 690px) {
+@media only screen and (min-width: 780px) {
     #header .contacto {
         bottom: 10px;
         display: block;
@@ -458,11 +465,14 @@ img.left {
     #principal #caja .titulo {
         margin-top:0;
     }
-    #principal #contenido.left {
+    #principal #contenido.left, #principal #titulo.left {
         width:70%;
     }
+    #principal #contenido img {
+		float:left;	
+		margin:0 10px 10px 0;
+	}
     #principal #sidebar {
-        margin-top:30px;
         width:28%;
     }
     #principal #sidebar nav {

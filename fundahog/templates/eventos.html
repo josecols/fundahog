@@ -71,7 +71,8 @@
                         <h2 class="titulo">
                             <a href="{% url evento evento.slug evento.pk %}">{{evento}}</a>
                             <small>
-                                <span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}</small>
+                                <span class="i-calendario"></span>{{evento.fecha|date:"d/m/Y"}}
+                            </small>
                         </h2>
                         <p>{{evento.contenido|safe|truncatewords_html:50}}</p>
                         <p class="enlace">
