@@ -32,8 +32,8 @@ def agregar(request):
         categorias = str(request.POST.get('categorias', None)).split(',')
         
         if (titulo and contenido and categorias):
-            entrada = Entrada(titulo=titulo, contenido=contenido)
-            entrada.save()
+            entrada = Entrada(titulo=titulo, contenido=contenido, autor=request.user)
+            entrada.save()            
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
                 entrada.categorias.add(categoria)
