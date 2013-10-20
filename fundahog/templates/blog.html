@@ -12,7 +12,8 @@
 		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
 		{% endif %}
 	</head>
-
+	
+	{% load filters %}
 	<body>
 		<header id="header">
 			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
@@ -84,7 +85,7 @@
 							<a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)"><span class="i-borrar"></span>Borrar</a> 
 							{% endif %}
 							<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}}
-							<span class="i-usuario"></span>José Cols 
+							<span class="i-usuario"></span>{{entrada.autor|nombre_completo}}
 						</small>
 					</h1>
 					{{entrada.contenido|safe|truncatewords_html:50}}

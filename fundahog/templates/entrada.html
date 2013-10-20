@@ -12,7 +12,8 @@
 		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
 		{% endif %}
 	</head>
-
+	
+	{% load filters %}
 	<body>
 		<header id="header">
 			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
@@ -62,13 +63,21 @@
 						<div id="titulo" contenteditable="true">
 							{{entrada}}
 						</div>
-						<small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small>
+						<small>
+							<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} 
+							<span class="i-usuario"></span>{{entrada.autor|nombre_completo}} 
+						</small>
 					</div>
 					<div id="contenido-html" contenteditable="true">
 						{{entrada.contenido|safe}}
 					</div>
 					{% else %}
-					<h1 class="titulo"> {{entrada}} <small><span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} <span class="i-usuario"></span>José Cols </small></h1>
+					<h1 class="titulo"> {{entrada}}
+						<small>
+							<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}} 
+							<span class="i-usuario"></span>{{entrada.autor|nombre_completo}}
+						</small>
+					</h1>
 					{{entrada.contenido|safe}}
 					{% endif %}
 					<hr>
@@ -86,7 +95,7 @@
 						<div class="fix"></div>
 					</form>
 					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
-					<h2 class="titulo">Categorías</h2>
+					<h2 class="titulo">Categorías</h2>				
 				</aside>
 				<div class="fix"></div>
 			</section>
