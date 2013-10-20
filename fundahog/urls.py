@@ -12,9 +12,15 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT, }),
+    
+    # Blog
     url(r'^$', 'blog.views.index', name='blog'),
-    url(r'^entrada/(?P<slug>[-\w\d]+)-(?P<entrada_id>\d+)/$', 'blog.views.entrada' , name='entrada'),
-    url(r'^entrada/modificar/$', 'blog.views.modificar' , name='modificar_entrada'),
-    url(r'^entrada/agregar/$', 'blog.views.agregar' , name='agregar_entrada'),
-    url(r'^entrada/borrar/$', 'blog.views.borrar' , name='borrar_entrada'),
+    url(r'^blog/entrada/(?P<slug>[-\w\d]+)-(?P<entrada_id>\d+)/$', 'blog.views.entrada' , name='entrada'),
+    url(r'^blog/entrada/modificar/$', 'blog.views.modificar' , name='modificar_entrada'),
+    url(r'^blog/entrada/agregar/$', 'blog.views.agregar' , name='agregar_entrada'),
+    url(r'^blog/entrada/borrar/$', 'blog.views.borrar' , name='borrar_entrada'),
+    
+    # Portal
+    url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
+    url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$', 'portal.views.evento' , name='evento'),
 )

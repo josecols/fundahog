@@ -4,8 +4,10 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols
 from django.contrib import admin
 from portal.models import Evento
+from portal.forms import EventoForm
 
 class EventoAdmin(admin.ModelAdmin):
+    form = EventoForm
     class Media:
         js = ('/static/js/ckeditor/ckeditor.js',
               '/static/js/ckeditor/init.js',)

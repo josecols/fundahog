@@ -98,8 +98,8 @@ body {
 #caja .correo, #caja .social, #caja .bienvenida {
     width:100%;
 }
-#caja .social {
-    text-align:center;
+#caja .social, .center {
+    text-align:center !important;
 }
 #caja .social img {
     height:48px;
@@ -409,6 +409,9 @@ body {
     -o-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
+}
+p.center {
+	margin-top:15px;
 }
 @media only screen and (min-width: 690px) {
     #header .contacto {
