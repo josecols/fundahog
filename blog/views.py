@@ -9,17 +9,18 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
 
-def index(request):
-    categorias = Categoria.objects.all()
+def index(request):    
     entradas = Entrada.objects.all()
+    categorias = Categoria.objects.all()
     return render_to_response('blog.html',
                               {'entradas':entradas, 'categorias':categorias, 'request':request},
                               context_instance=RequestContext(request))
 
 def entrada(request, slug, entrada_id):
     entrada = get_object_or_404(Entrada, pk=entrada_id)
+    categorias = Categoria.objects.all()
     return render_to_response('entrada.html',
-                              {'entrada':entrada, 'request':request},
+                              {'entrada':entrada, 'categorias':categorias, 'request':request},
                               context_instance=RequestContext(request))
 
 # Vistas AJAX
