@@ -41,6 +41,18 @@ def agregar(request):
     raise Http404
 
 @csrf_protect
+def agregar_categoria(request):
+    if request.user.is_superuser and request.method == 'POST':
+        descripcion = request.POST.get('descripcion', None)
+        
+        if (descripcion):
+            categoria = Categoria(descripcion=descripcion)
+            categoria.save()
+            return HttpResponse(simplejson.dumps(str(categoria.pk)), mimetype='application/javascript')
+    raise Http404
+        
+
+@csrf_protect
 def modificar(request):
     if request.user.is_superuser and request.method == 'POST':        
         entrada_id = request.POST.get('entrada', None)

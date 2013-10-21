@@ -8,9 +8,6 @@
 		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
 		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
-		{% if request.user.is_staff %}
-		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
-		{% endif %}
 	</head>
 	
 	{% load filters %}
@@ -126,10 +123,11 @@
 							{% for categoria in categorias %}
 							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
 							{% endfor %}
-							<div class="fix"></div>
+							<div class="fix"></div>				
 						</ul>						
+						<div id="nueva_categoria" contenteditable="true"></div>
 						{% if request.user.is_staff %}
-						<a href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
+						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
 						{% endif %}						
 					</nav>
 					{% endif %}
@@ -145,14 +143,34 @@
 		<script>
 			window.onload = function() {
 				var html = CKEDITOR.replace('entrada_contenido');
+				var nueva_categoria = $('#nueva_categoria');
 
 				$('#guardar').click(function() {
 					guardar();
 				});
 				
+				$('#agregar').click(function() {					
+					nueva_categoria.slideToggle('fast');
+					nueva_categoria.focus();
+					nueva_categoria.text('');
+					nueva_categoria.bind('keypress', function(e) {
+					    if (e.which == 13) {		
+					    	if (nueva_categoria.text() == nueva_categoria.data('categoria'))
+        						return false;
+    						nueva_categoria.data('categoria', nueva_categoria.text());					    						    						    	
+					        $('.categorias ul').prepend('<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>' + 
+					        nueva_categoria.text() + '</a></li>');        					
+					        nueva_categoria.css('display','none');		
+					        agregarCategoria(nueva_categoria.text());		        
+					    }					       
+					});
+				});
+				
 				$('.borrar').click(function() {
 					borrar(this);
 				});
+				
+	            CKEDITOR.instances["nueva_categoria"].destroy()
 
 				function guardar() {
 					var titulo = $('input[name="titulo"]').val();
@@ -191,6 +209,22 @@
 							location.reload();
 						});
 					} 							
+				}
+				
+				function agregarCategoria(categoria) {
+					var request = $.ajax({
+						async : true,
+						type : "POST",
+						url : "{% url agregar_categoria %}",
+						data : 'descripcion=' + categoria
+								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
+						dataType : "text"
+					});
+					request.done(function(msg) {
+						if (msg) {
+							$('select[name="categorias"]').prepend('<option value="'+ msg + '">' + categoria + '</option>');
+						}
+					});
 				}
 			};
 

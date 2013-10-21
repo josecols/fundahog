@@ -128,6 +128,12 @@ body {
     margin-top:30px;
     width:100%;
 }
+#principal #sidebar #nueva_categoria {
+	outline: none;
+	display:none;
+	border-bottom:1px solid #CCC;
+	margin:0 4px;
+}
 #principal #sidebar nav {
     margin-top:20px;
     background-color:#F0F0F0;

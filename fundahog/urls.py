@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^blog/entrada/modificar/$', 'blog.views.modificar' , name='modificar_entrada'),
     url(r'^blog/entrada/agregar/$', 'blog.views.agregar' , name='agregar_entrada'),
     url(r'^blog/entrada/borrar/$', 'blog.views.borrar' , name='borrar_entrada'),
+    url(r'^blog/categoria/agregar/$', 'blog.views.agregar_categoria' , name='agregar_categoria'),
     
     # Portal
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
