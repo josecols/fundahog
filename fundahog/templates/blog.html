@@ -116,7 +116,19 @@
 						<div class="fix"></div>
 					</form>
 					<h2 class="titulo">Entradas <a href=""> <span class="i-popular"></span> </a><a href=""> <span class="i-reciente"></span> </a></h2>
-					<h2 class="titulo">Categorías</h2>
+					<h2 class="titulo">Categorías</h2>					
+					{% if request.user.is_staff %}
+					<nav class="categorias">
+						<ul>
+							{% for categoria in categorias %}
+							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
+							{% endfor %}
+							<div class="fix"></div>				
+						</ul>						
+						<div id="nueva_categoria" contenteditable="true"></div>
+						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>					
+					</nav>
+					{% else %}				
 					{% if categorias %}
 					<nav class="categorias">
 						<ul>
@@ -130,6 +142,7 @@
 						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
 						{% endif %}						
 					</nav>
+					{% endif %}
 					{% endif %}
 				</aside>
 				<div class="fix"></div>
