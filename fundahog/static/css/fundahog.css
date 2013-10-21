@@ -1,4 +1,4 @@
-@charset"utf-8";
+@charset "utf-8";
 
 /*  FUNDAHOG
     UCAB Guayana
@@ -471,7 +471,7 @@ p.center {
     #principal #caja .titulo {
         margin-top:0;
     }
-    #principal #contenido.left, #principal #titulo.left {
+    #principal #contenido.left, #principal #titulo.left, #principal #contenido.right {
         width:70%;
     }
     #principal #contenido img {

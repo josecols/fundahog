@@ -35,25 +35,25 @@
             <nav id="barra">
                 <ul>
                     <li>
-                        <a href="">Nosotros</a>
+                        <a href="{% url nosotros %}">Nosotros</a>
                     </li>
                     <li>
                         <a href="{% url blog %}">Blog</a>
                     </li>
                     <li>
-                        <a href="">Programas</a>
+                        <a href="{% url programas %}">Programas</a>
                     </li>
                     <li>
-                        <a href="">Contacto</a>
+                        <a href="{% url contacto %}">Contacto</a>
                     </li>
                     <li>
                         <a class="seleccionado" href="{% url eventos %}">Eventos</a>
                     </li>
                     <li>
-                        <a href="">Libros</a>
+                        <a href="{% url libros %}">Libros</a>
                     </li>
                     <li>
-                        <a href="">Galería</a>
+                        <a href="{% url galeria %}">Galería</a>
                     </li>
 					{% if request.user.is_staff %}
 					<li>

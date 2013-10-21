@@ -22,6 +22,21 @@ def evento(request, slug, evento_id):
                               {'evento':evento, 'request':request},
                               context_instance=RequestContext(request))
 
+def programas(request):
+    return render_to_response('programas.html', {'request':request}, context_instance=RequestContext(request))
+
+def nosotros(request):
+    return render_to_response('nosotros.html', {'request':request}, context_instance=RequestContext(request))
+
+def contacto(request):
+    return render_to_response('contacto.html', {'request':request}, context_instance=RequestContext(request))
+
+def galeria(request):
+    return render_to_response('galeria.html', {'request':request}, context_instance=RequestContext(request))
+
+def libros(request):
+    return render_to_response('libros.html', {'request':request}, context_instance=RequestContext(request))
+
 # Vistas AJAX
 @csrf_protect
 def borrar_evento(request):

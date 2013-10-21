@@ -22,7 +22,12 @@ urlpatterns = patterns('',
     url(r'^blog/categoria/agregar/$', 'blog.views.agregar_categoria' , name='agregar_categoria'),
     
     # Portal
+    url(r'^nosotros/$', 'portal.views.nosotros', name='nosotros'),
+    url(r'^programas/$', 'portal.views.programas', name='programas'),
+    url(r'^contacto/$', 'portal.views.contacto', name='contacto'),
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
-    url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$', 'portal.views.evento' , name='evento'),    
+    url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$', 'portal.views.evento' , name='evento'),
     url(r'^eventos/evento/borrar/$', 'portal.views.borrar_evento' , name='borrar_evento'),
+    url(r'^libros/$', 'portal.views.libros', name='libros'),
+    url(r'^galeria/$', 'portal.views.galeria', name='galeria'),
 )
