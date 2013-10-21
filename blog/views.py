@@ -37,6 +37,7 @@ def agregar(request):
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
                 entrada.categorias.add(categoria)
+            print "prueba"
             return HttpResponse(simplejson.dumps("Entrada agregada con éxito"), mimetype='application/javascript')
     raise Http404
 

@@ -153,6 +153,7 @@
 		{% if request.user.is_staff %}
 		<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
 		<script src="{{STATIC_URL}}js/edicion.js"></script>
+		<script src="{{STATIC_URL}}js/movil.js"></script>
 		<script>
 			window.onload = function() {
 				var html = CKEDITOR.replace('entrada_contenido');
@@ -187,15 +188,21 @@
 
 				function guardar() {
 					var titulo = $('input[name="titulo"]').val();
-					var contenido = html.getData();
+					var contenido = '';
 					var categorias = $('select[name="categorias"]').val().join(',');
+					
+					if (jQuery.browser.mobile) {
+						contenido = $('#entrada_contenido').val();
+					} else {
+						contenido = encodeURIComponent(html.getData());
+					}					
 					
 					var request = $.ajax({
 						async : true,
 						type : "POST",
 						url : "{% url agregar_entrada %}",
 						data : 'titulo=' + titulo
-						+ '&contenido=' + encodeURIComponent(contenido)
+						+ '&contenido=' + contenido
 						+ '&categorias=' + categorias
 						+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
 						dataType : "text"
