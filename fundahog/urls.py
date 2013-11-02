@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     
     # Blog
     url(r'^$', 'blog.views.index', name='blog'),
+    url(r'^blog/pagina-(?P<pagina>\d+)/$', 'blog.views.index', name='blog_pagina'),
     url(r'^blog/entrada/(?P<slug>[-\w\d]+)-(?P<entrada_id>\d+)/$', 'blog.views.entrada' , name='entrada'),
     url(r'^blog/entrada/modificar/$', 'blog.views.modificar' , name='modificar_entrada'),
     url(r'^blog/entrada/agregar/$', 'blog.views.agregar' , name='agregar_entrada'),

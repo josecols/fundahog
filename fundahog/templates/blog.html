@@ -78,7 +78,7 @@
 					</form>
 					{% endif %}
 					{% if entradas %}
-					{% for entrada in entradas.all %}
+					{% for entrada in entradas %}
 					<h1 class="titulo">
 						<a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
 						<small>
@@ -93,11 +93,17 @@
 					{{entrada.contenido|safe|truncatewords_html:50}}
 					<hr>
 					{% endfor %}
+					{% if entradas.has_previous or entradas.has_next %}
 					<nav class="navegacion">
-						<a href="" class="boton left">Anterior</a>
-						<a href="" class="boton right">Siguiente</a>
+						{% if entradas.has_previous %}
+						<a href="{% url blog_pagina entradas.previous_page_number %}" class="boton left">Anterior</a>
+						{% endif %}
+						{% if entradas.has_next %}
+						<a href="{% url blog_pagina entradas.next_page_number %}" class="boton right">Siguiente</a>
+						{% endif %}
 						<div class="fix"></div>
 					</nav>
+					{% endif %}
 					{% else %}
 					<p class="center">No hay entradas registradas</p>
 					{% endif %}

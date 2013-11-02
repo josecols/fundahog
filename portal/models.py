@@ -1,7 +1,7 @@
 # encoding:utf-8
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
-# Desarrollado por José Cols - josecolsg@gmail.com - @josecols
+# Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 import uuid, os
 from PIL import Image
 from django.db import models

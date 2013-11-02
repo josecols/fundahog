@@ -1,16 +1,33 @@
 # encoding:utf-8
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
-# Desarrollado por José Cols - josecolsg@gmail.com - @josecols
+# Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 from blog.models import Categoria, Entrada
 from django.utils import simplejson
 from django.http import Http404, HttpResponse
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-def index(request):    
-    entradas = Entrada.objects.all()
+
+# Publicaciones por página
+ENTRADAS = 10
+
+def paginar(lista, pagina, cantidad):
+    paginator = Paginator(lista, cantidad)    
+    try:
+        entradas = paginator.page(pagina)
+    except PageNotAnInteger:
+        entradas = paginator.page(1)
+    except EmptyPage:
+        entradas = paginator.page(paginator.num_pages)     
+    return entradas
+
+
+def index(request, pagina='1'):    
+    lista = Entrada.objects.order_by('creado').reverse()
+    entradas = paginar(lista, pagina, ENTRADAS)      
     categorias = Categoria.objects.all()
     return render_to_response('blog.html',
                               {'entradas':entradas, 'categorias':categorias, 'request':request},
@@ -37,7 +54,6 @@ def agregar(request):
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
                 entrada.categorias.add(categoria)
-            print "prueba"
             return HttpResponse(simplejson.dumps("Entrada agregada con éxito"), mimetype='application/javascript')
     raise Http404
 

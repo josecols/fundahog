@@ -1,7 +1,7 @@
 # encoding:utf-8
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
-# Desarrollado por José Cols - josecolsg@gmail.com - @josecols
+# Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 from portal.models import Evento
 from django.utils import simplejson
 from django.http import HttpResponse, Http404
