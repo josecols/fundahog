@@ -152,7 +152,7 @@ body {
 }
 #principal #sidebar nav a:hover, #principal #sidebar nav .seleccionado {
     color:#FFF;
-    background-color:#A13550;
+    background-color:#A13543;
     text-shadow: 1px 1px 0 #782944;
 }
 #principal #sidebar .categorias {
@@ -181,7 +181,7 @@ body {
     padding: 20px 0 15px;
 }
 #principal .titulo small {
-    border-left:3px solid #A13550;
+    border-left:3px solid #A13543;
     font-size: 16px;
     font-weight: 300;
     margin-left:2px;
@@ -203,7 +203,7 @@ body {
 	margin:40px 0 10px;
 }
 #principal .navegacion .boton, #principal #sidebar .boton {
-    background-color:#A13550;
+    background-color:#A13543;
     color:#FFF;
     display:inline-block;
     margin:0 15px 20px;
@@ -218,7 +218,7 @@ body {
 	width: auto;
 }
 #principal #contenido .boton {
-    background-color:#A13550;
+    background-color:#A13543;
     color:#FFF;
     display:block;
     margin:10px 0 0;
@@ -228,10 +228,10 @@ body {
 	font-weight:400;
 }
 #principal .navegacion .boton:hover, #principal #sidebar .boton:hover {
-    background-color:#BA3D5C;
+    background-color:#B83C4D;
 }
 #principal .navegacion .boton:active, #principal #sidebar .boton:active {
-    background-color:#DE496E;
+    background-color:#C94254;
 }
 #principal #sidebar .boton.cambios, #principal #contenido .boton.cambios {
 	background-color:#4E9DBF;		
@@ -303,7 +303,7 @@ body {
     color: #108CDE;
 }
 #principal a, #principal .titulo small a, #principal .titulo small a:hover {
-    color:#A13550;
+    color:#A13543;
     text-decoration:underline;
 }
 #principal a:hover, #principal .titulo small a:hover {
@@ -389,7 +389,7 @@ body {
 	width:98%;
 }
 .busqueda .contenedor-input {
-    border-left: 4px solid #A13550;
+    border-left: 4px solid #A13543;
 }
 .busqueda .focus {
     border-left: 4px solid #CA1360;
@@ -407,7 +407,7 @@ body {
     width:170px;
 }
 .rosa {
-    color:#A13550;
+    color:#A13543;
 }
 .left {
     float: left
