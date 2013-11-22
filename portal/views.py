@@ -39,6 +39,21 @@ def libros(request):
 
 # Vistas AJAX
 @csrf_protect
+def modificar_evento(request):
+    if request.user.is_superuser and request.method == 'POST':        
+        evento_id = request.POST.get('evento', None)
+        evento = get_object_or_404(Evento, pk=evento_id)         
+        titulo = request.POST.get('titulo', None)
+        contenido = request.POST.get('contenido', None)
+        
+        if (titulo and contenido):
+            evento.titulo = titulo
+            evento.contenido = contenido
+            evento.save()
+            return HttpResponse(simplejson.dumps("Evento modificado con éxito"), mimetype='application/javascript')
+    raise Http404
+
+
 def borrar_evento(request):
     if request.user.is_superuser and request.method == 'POST':        
         evento_id = request.POST.get('evento', None)

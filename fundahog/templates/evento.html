@@ -132,13 +132,13 @@
 					if (guardar) {
 						var titulo = $('#titulo').text(); 
 						var contenido = encodeURIComponent($('#contenido-html').html());	
-						var entrada = "{{entrada.pk}}";						
+						var evento = "{{evento.pk}}";						
 						
 						var request = $.ajax({
 							async : true,
 							type : "POST",
-							url : "{% url modificar_entrada %}",
-							data : 'entrada=' + entrada 
+							url : "{% url modificar_evento %}",
+							data : 'evento=' + evento 
 								+ '&titulo=' + titulo 
 								+ '&contenido=' + contenido
 								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
