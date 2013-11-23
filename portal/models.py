@@ -7,6 +7,7 @@ from PIL import Image
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.db.models.signals import pre_delete
+from django.core.validators import RegexValidator
 
 def uuid_slug(uuid):
     return str(uuid)[:8]
@@ -46,6 +47,33 @@ class Evento(models.Model):
         if self.portada:
             archivo = self.portada.path            
             redimensionar(archivo, 400, 200)
+
+
+class Seccion(models.Model):
+    titulo = models.CharField(max_length=100, unique=True, verbose_name="título")
+    contenido = models.TextField()
+    secciones = models.ManyToManyField("self", blank = True)
+    slug = models.SlugField(max_length=100, editable=False)
+    creado = models.DateTimeField(editable=False, auto_now_add=True)
+    
+    def __unicode__(self):
+        return self.titulo    
+    
+    def save(self): 
+        if not self.id:
+            self.slug = slugify(self.titulo)
+        super(Seccion, self).save()
+        
+class Telefono(models.Model):
+    telefono = models.CharField(max_length=12, unique=True, validators=[RegexValidator(regex='^\d{3}-\d{3}-\d{4}$', message='El formato es incorrecto')], 
+                                verbose_name="número de teléfono", help_text='Formato XXX-XXX-XXXX. P. ej. 414-853-0463')
+    principal = models.BooleanField(help_text='Un número marcado como principal aparecerá en la cabecera del sitio')
+    class Meta:
+        verbose_name = "teléfono"
+        verbose_name_plural = "teléfonos"
+        
+    def __unicode__(self):
+        return self.telefono    
                 
 # Señales
 def borrar_portada(sender, instance, **kwargs):
