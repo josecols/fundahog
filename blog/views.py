@@ -52,9 +52,10 @@ def busqueda(request, pagina="1", query=None):
             entradas = paginar(lista, pagina, ENTRADAS * 2)
         else:
             entradas = None
+        categorias = Categoria.objects.all()
             
     return render_to_response('busqueda.html',
-                              {'entradas': entradas, 'query': query, 'request':request},
+                              {'entradas': entradas, 'query': query, 'categorias':categorias, 'request':request},
                               context_instance=RequestContext(request))
 # Vistas AJAX
 @csrf_protect
