@@ -104,7 +104,7 @@
 					<nav class="categorias">
 						<ul>
 							{% for categoria in categorias %}
-							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
+							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>				
 							{% endfor %}
 							<div class="fix"></div>
 						</ul>						

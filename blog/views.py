@@ -46,13 +46,13 @@ def entrada(request, slug, entrada_id):
 def busqueda(request, pagina="1", query=None):
     if not query:
         query = request.GET.get('q', '')
-        if query:
-            qset = (Q(titulo__icontains=query) | Q(categorias__descripcion__icontains=query) | Q(contenido__icontains=query))
-            lista = Entrada.objects.filter(qset).distinct()
-            entradas = paginar(lista, pagina, ENTRADAS * 2)
-        else:
-            entradas = None
-        categorias = Categoria.objects.all()
+    if query:
+        qset = (Q(titulo__icontains=query) | Q(categorias__descripcion__icontains=query) | Q(contenido__icontains=query))
+        lista = Entrada.objects.filter(qset).distinct()
+        entradas = paginar(lista, pagina, ENTRADAS * 2)
+    else:
+        entradas = None
+    categorias = Categoria.objects.all()
             
     return render_to_response('busqueda.html',
                               {'entradas': entradas, 'query': query, 'categorias':categorias, 'request':request},
