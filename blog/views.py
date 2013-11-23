@@ -9,6 +9,7 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models.query_utils import Q
 
 
 # Publicaciones por página
@@ -33,6 +34,7 @@ def index(request, pagina='1'):
                               {'entradas':entradas, 'categorias':categorias, 'request':request},
                               context_instance=RequestContext(request))
 
+
 def entrada(request, slug, entrada_id):
     entrada = get_object_or_404(Entrada, pk=entrada_id)
     categorias = Categoria.objects.all()
@@ -40,6 +42,20 @@ def entrada(request, slug, entrada_id):
                               {'entrada':entrada, 'categorias':categorias, 'request':request},
                               context_instance=RequestContext(request))
 
+
+def busqueda(request, pagina="1", query=None):
+    if not query:
+        query = request.GET.get('q', '')
+        if query:
+            qset = (Q(titulo__icontains=query) | Q(categorias__descripcion__icontains=query) | Q(contenido__icontains=query))
+            lista = Entrada.objects.filter(qset).distinct()
+            entradas = paginar(lista, pagina, ENTRADAS * 2)
+        else:
+            entradas = None
+            
+    return render_to_response('busqueda.html',
+                              {'entradas': entradas, 'query': query, 'request':request},
+                              context_instance=RequestContext(request))
 # Vistas AJAX
 @csrf_protect
 def agregar(request):

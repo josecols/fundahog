@@ -21,6 +21,8 @@ urlpatterns = patterns('',
     url(r'^blog/entrada/agregar/$', 'blog.views.agregar' , name='agregar_entrada'),
     url(r'^blog/entrada/borrar/$', 'blog.views.borrar' , name='borrar_entrada'),
     url(r'^blog/categoria/agregar/$', 'blog.views.agregar_categoria' , name='agregar_categoria'),
+    url(r'^blog/busqueda-(?P<pagina>\d+)/$', 'blog.views.busqueda', name='blog_busqueda'),
+    url(r'^blog/busqueda-(?P<pagina>\d+)/(?P<query>[-\w]+)/$', 'blog.views.busqueda', name='blog_busqueda_query'),
     
     # Portal
     url(r'^nosotros/$', 'portal.views.nosotros', name='nosotros'),

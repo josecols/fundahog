@@ -92,10 +92,10 @@
 					<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
 					<div class="fix"></div>
 					{% endif %}					
-					<form action="" class="busqueda formulario">
+					<form method="get" action="{% url blog_busqueda "1" %}" class="busqueda formulario">
 						<div class="contenedor-input">
 							<span class="i-busqueda"></span>
-							<input type="text" placeholder="Búsqueda">
+							<input name="q" type="text" placeholder="Búsqueda">
 						</div>
 						<div class="fix"></div>
 					</form>
