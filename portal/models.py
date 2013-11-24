@@ -5,9 +5,10 @@
 import uuid, os
 from PIL import Image
 from django.db import models
-from django.template.defaultfilters import slugify
+from django.contrib.sites.models import Site
 from django.db.models.signals import pre_delete
 from django.core.validators import RegexValidator
+from django.template.defaultfilters import slugify
 
 def uuid_slug(uuid):
     return str(uuid)[:8]
@@ -52,9 +53,12 @@ class Evento(models.Model):
 class Seccion(models.Model):
     titulo = models.CharField(max_length=100, unique=True, verbose_name="título")
     contenido = models.TextField()
-    secciones = models.ManyToManyField("self", blank = True)
+    secciones = models.ManyToManyField("self", blank=True, verbose_name="Subsecciones", help_text='Toda subsección es integrada en la sección más general')
     slug = models.SlugField(max_length=100, editable=False)
     creado = models.DateTimeField(editable=False, auto_now_add=True)
+    class Meta:
+        verbose_name = "sección"
+        verbose_name_plural = "secciones"
     
     def __unicode__(self):
         return self.titulo    
@@ -65,7 +69,7 @@ class Seccion(models.Model):
         super(Seccion, self).save()
         
 class Telefono(models.Model):
-    telefono = models.CharField(max_length=12, unique=True, validators=[RegexValidator(regex='^\d{3}-\d{3}-\d{4}$', message='El formato es incorrecto')], 
+    telefono = models.CharField(max_length=12, unique=True, validators=[RegexValidator(regex='^\d{3}-\d{3}-\d{4}$', message='El formato es incorrecto')],
                                 verbose_name="número de teléfono", help_text='Formato XXX-XXX-XXXX. P. ej. 414-853-0463')
     principal = models.BooleanField(help_text='Un número marcado como principal aparecerá en la cabecera del sitio')
     class Meta:
@@ -74,6 +78,27 @@ class Telefono(models.Model):
         
     def __unicode__(self):
         return self.telefono    
+
+class Correo(models.Model):
+    correo = models.EmailField(verbose_name="Correo electrónico")
+    
+    def __unicode__(self):
+        return str(self.correo)    
+    
+class Organizacion(models.Model):
+    site = models.OneToOneField(Site)
+    direccion = models.TextField(verbose_name="dirección")
+    telefonos = models.ManyToManyField(Telefono, verbose_name="números telefónicos")
+    correos = models.ManyToManyField(Correo)
+    twitter = models.URLField()
+    facebook = models.URLField()
+    
+    class Meta:
+        verbose_name = "organización"
+        verbose_name_plural = "organización"
+        
+    def __unicode__(self):
+        return "Información de la organización"   
                 
 # Señales
 def borrar_portada(sender, instance, **kwargs):

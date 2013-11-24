@@ -3,8 +3,8 @@
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 from django.contrib import admin
-from portal.models import Evento
-from portal.forms import EventoForm
+from portal.models import Evento, Seccion, Telefono, Correo, Organizacion
+from portal.forms import EventoForm, SeccionForm
 
 class EventoAdmin(admin.ModelAdmin):
     form = EventoForm
@@ -12,5 +12,14 @@ class EventoAdmin(admin.ModelAdmin):
         js = ('/static/js/ckeditor/ckeditor.js',
               '/static/js/ckeditor/init.js',)
 
+class SeccionAdmin(admin.ModelAdmin):
+    form = SeccionForm
+    class Media:
+        js = ('/static/js/ckeditor/ckeditor.js',
+              '/static/js/ckeditor/init.js',)
 
 admin.site.register(Evento, EventoAdmin)
+admin.site.register(Seccion, SeccionAdmin)
+admin.site.register(Telefono)
+admin.site.register(Correo)
+admin.site.register(Organizacion)
