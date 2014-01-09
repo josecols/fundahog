@@ -8,6 +8,9 @@
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
 		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
+		{% if request.user.is_staff %}
+		<link rel="stylesheet" href="{{STATIC_URL}}css/jquery.datetimepicker.css">
+		{% endif %}
     </head>
     
     <body>
@@ -62,7 +65,28 @@
 					{% endif %}
                 </ul>
             </nav>
-            <section id="principal">
+            
+            <section id="principal">					
+				{% if request.user.is_staff %}
+            	<section id="contenido" class="left">
+					<form class="formulario entrada">
+						<div class="contenedor-input">
+							<input type="text" name="titulo" placeholder="Título">
+						</div>
+						<textarea id="evento_contenido" name="contenido"></textarea>	
+						<label>Fecha y hora del evento:</label>
+						<div class="contenedor-input">
+							<input id="fecha_hora" type="text" name="fecha_hora" placeholder="d/m/a h:m">
+						</div>						
+					</form>
+            	</section>
+            	<aside id="sidebar" class="right">
+					<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;"><span class="i-guardar"></span>Guardar</a>
+					<a id="nuevo" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nuevo evento</a>
+					<div class="fix"></div>
+            	</aside>
+            	<div class="fix"></div>
+            	{% endif %}
             	{% if eventos %}            	
                 <ul class="lista">
                 	{% for evento in eventos %}
@@ -102,10 +126,21 @@
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
         {% if request.user.is_staff %}        
+		<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+        <script src="{{STATIC_URL}}js/edicion.js"></script>
+        <script src="{{STATIC_URL}}js/movil.js"></script>
+        <script src="{{STATIC_URL}}js/datetimepicker/jquery.datetimepicker.min.js"></script>
 		<script>
 			window.onload = function() {
+				var html = CKEDITOR.replace('evento_contenido');
+				
 				$('.borrar').click(function() {
 					borrar(this);
+				});
+				
+				
+				$('#guardar').click(function() {
+					guardar();
 				});
 
 				function borrar(boton) {
@@ -125,8 +160,41 @@
 							location.reload();
 						});
 					} 							
+				}			
+
+
+				function guardar() {
+					var titulo = $('input[name="titulo"]').val();
+					var contenido = '';
+					var fecha = $('#fecha_hora').val();
+					
+					if (jQuery.browser.mobile) {
+						contenido = $('#evento_contenido').val();
+					} else {
+						contenido = encodeURIComponent(html.getData());
+					}					
+					
+					var request = $.ajax({
+						async : true,
+						type : "POST",
+						url : "{% url agregar_evento %}",
+						data : 'titulo=' + titulo
+						+ '&contenido=' + contenido
+						+ '&fecha=' + fecha
+						+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
+						dataType : "text"
+					});
+					request.done(function(msg) {
+						location.reload();
+					});
 				}
-			};
+								
+				$('#fecha_hora').datetimepicker({
+					lang:'es',
+					format:'d-m-Y H:i'
+				});
+			};			
+
 
 		</script>
 		{% endif %}

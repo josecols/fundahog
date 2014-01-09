@@ -2,6 +2,7 @@
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
+from datetime import datetime
 from portal.models import Evento
 from django.utils import simplejson
 from django.http import HttpResponse, Http404
@@ -40,7 +41,7 @@ def libros(request):
 # Vistas AJAX
 @csrf_protect
 def modificar_evento(request):
-    if request.user.is_superuser and request.method == 'POST':        
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
         evento_id = request.POST.get('evento', None)
         evento = get_object_or_404(Evento, pk=evento_id)         
         titulo = request.POST.get('titulo', None)
@@ -53,12 +54,26 @@ def modificar_evento(request):
             return HttpResponse(simplejson.dumps("Evento modificado con éxito"), mimetype='application/javascript')
     raise Http404
 
-
+@csrf_protect
 def borrar_evento(request):
-    if request.user.is_superuser and request.method == 'POST':        
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
         evento_id = request.POST.get('evento', None)
         evento = get_object_or_404(Evento, pk=evento_id)
         evento.delete()
         return HttpResponse(simplejson.dumps("Evento borrado con éxito"), mimetype='application/javascript')
                 
+    raise Http404
+
+@csrf_protect
+def agregar_evento(request):
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
+        titulo = request.POST.get('titulo', None)
+        contenido = request.POST.get('contenido', None)
+        fecha = request.POST.get('fecha', None)                
+        fecha = datetime.strptime(fecha, '%d-%m-%Y %H:%M')
+        
+        if (titulo and contenido and fecha):
+            evento = Evento(titulo=titulo, contenido=contenido, fecha=fecha)
+            evento.save()            
+            return HttpResponse(simplejson.dumps("Evento agregado con éxito"), mimetype='application/javascript')
     raise Http404

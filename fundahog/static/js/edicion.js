@@ -5,8 +5,8 @@
     Version: 1.0
 */
 $(document).ready(function () {
-	$('#entrada').click(function (){
-		$('.formulario.entrada').slideToggle('slow');
+	$('#nuevo').click(function (){
+		$('.formulario').slideToggle('slow');
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 		$('#guardar').toggle();
 	});

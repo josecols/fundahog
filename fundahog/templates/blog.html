@@ -67,7 +67,7 @@
 						</div>
 						<textarea id="entrada_contenido" name="contenido"></textarea>												
 						{% if categorias %} 
- <label for="categorias">Categorias:</label>
+ 						<label for="categorias">Categorias:</label>
 						<select name="categorias" multiple="multiple">
 							{% for categoria in categorias %}
 							<option value="{{categoria.pk}}">{{categoria}}</option>
@@ -111,7 +111,7 @@
 				<aside id="sidebar" class="right">
 					{% if request.user.is_staff %}
 					<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;"><span class="i-guardar"></span>Guardar</a>
-					<a id="entrada" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
+					<a id="nuevo" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
 					<div class="fix"></div>
 					{% endif %}
 					<form method="get" action="{% url blog_busqueda "1" %}" class="busqueda formulario">
@@ -189,7 +189,6 @@
 					borrar(this);
 				});
 				
-	            CKEDITOR.instances["nueva_categoria"].destroy()
 
 				function guardar() {
 					var titulo = $('input[name="titulo"]').val();
@@ -217,6 +216,22 @@
 					});
 				}
 				
+				function agregarCategoria(categoria) {
+					var request = $.ajax({
+						async : true,
+						type : "POST",
+						url : "{% url agregar_categoria %}",
+						data : 'descripcion=' + categoria
+								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
+						dataType : "text"
+					});
+					request.done(function(msg) {
+						if (msg) {
+							$('select[name="categorias"]').prepend('<option value="'+ msg + '">' + categoria + '</option>');
+						}
+					});
+				}
+				
 				function borrar(boton) {
 					var pk = $(boton).attr('id').match(/[0-9]+/);
 					var respuesta = confirm("¿Está seguro que deasea eliminar la entrada?");
@@ -234,23 +249,7 @@
 							location.reload();
 						});
 					} 							
-				}
-				
-				function agregarCategoria(categoria) {
-					var request = $.ajax({
-						async : true,
-						type : "POST",
-						url : "{% url agregar_categoria %}",
-						data : 'descripcion=' + categoria
-								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-						dataType : "text"
-					});
-					request.done(function(msg) {
-						if (msg) {
-							$('select[name="categorias"]').prepend('<option value="'+ msg + '">' + categoria + '</option>');
-						}
-					});
-				}
+				}				
 			};
 
 		</script>
