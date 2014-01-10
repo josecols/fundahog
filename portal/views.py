@@ -9,6 +9,7 @@ from django.http import HttpResponse, Http404
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import  render_to_response, get_object_or_404
+from portal.forms import EventoForm
 
 def eventos(request):
     eventos = Evento.objects.all()
@@ -66,14 +67,15 @@ def borrar_evento(request):
 
 @csrf_protect
 def agregar_evento(request):
-    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
-        titulo = request.POST.get('titulo', None)
-        contenido = request.POST.get('contenido', None)
-        fecha = request.POST.get('fecha', None)                
-        fecha = datetime.strptime(fecha, '%d-%m-%Y %H:%M')
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():      
+        post = request.POST.copy()
+        post['fecha'] = datetime.strptime(post['fecha'], '%d-%m-%Y %H:%M')              
+        form = EventoForm(post, request.FILES)
         
-        if (titulo and contenido and fecha):
-            evento = Evento(titulo=titulo, contenido=contenido, fecha=fecha)
-            evento.save()            
+        if (form.is_valid()):
+            form.save()      
             return HttpResponse(simplejson.dumps("Evento agregado con éxito"), mimetype='application/javascript')
+        else:
+            return HttpResponse(simplejson.dumps(form.errors), mimetype='application/javascript')
     raise Http404
+

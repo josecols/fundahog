@@ -69,15 +69,18 @@
             <section id="principal">					
 				{% if request.user.is_staff %}
             	<section id="contenido" class="left">
-					<form class="formulario entrada">
+					<form class="formulario entrada" action="{% url agregar_evento %}" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
 						<div class="contenedor-input">
 							<input type="text" name="titulo" placeholder="Título">
 						</div>
 						<textarea id="evento_contenido" name="contenido"></textarea>	
 						<label>Fecha y hora del evento:</label>
 						<div class="contenedor-input">
-							<input id="fecha_hora" type="text" name="fecha_hora" placeholder="d/m/a h:m">
+							<input id="fecha_hora" type="text" name="fecha" placeholder="día-mes-año hora:minuto">
 						</div>						
+						<input id="portada" type="file" name="portada">
+						<input type="submit" value="Enviar">
 					</form>
             	</section>
             	<aside id="sidebar" class="right">
@@ -129,6 +132,7 @@
 		<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
         <script src="{{STATIC_URL}}js/edicion.js"></script>
         <script src="{{STATIC_URL}}js/movil.js"></script>
+        <script src="{{STATIC_URL}}js/upload.js"></script>
         <script src="{{STATIC_URL}}js/datetimepicker/jquery.datetimepicker.min.js"></script>
 		<script>
 			window.onload = function() {
@@ -171,22 +175,17 @@
 					if (jQuery.browser.mobile) {
 						contenido = $('#evento_contenido').val();
 					} else {
-						contenido = encodeURIComponent(html.getData());
-					}					
+						contenido = html.getData();
+					}
 					
-					var request = $.ajax({
-						async : true,
-						type : "POST",
-						url : "{% url agregar_evento %}",
-						data : 'titulo=' + titulo
-						+ '&contenido=' + contenido
-						+ '&fecha=' + fecha
-						+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-						dataType : "text"
-					});
-					request.done(function(msg) {
+					$('#portada').upload('{% url agregar_evento %}', {
+						'titulo': titulo, 
+						'contenido': contenido,
+						'fecha': fecha,
+						'csrfmiddlewaretoken': '{{csrf_token}}'
+					}, function(success) {
 						location.reload();
-					});
+					});					
 				}
 								
 				$('#fecha_hora').datetimepicker({
