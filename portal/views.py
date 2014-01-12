@@ -11,6 +11,18 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import  render_to_response, get_object_or_404
 from portal.forms import EventoForm
 
+
+def construir_data(flag, msg):
+    data = {}
+    if (flag == 0):
+        data['flag'] = 0
+        data['msg'] = msg
+    else:
+        data['flag'] = -1
+        data['errores'] = msg
+        
+    return simplejson.dumps(data)
+
 def eventos(request):
     eventos = Evento.objects.all()
     return render_to_response('eventos.html',
@@ -43,16 +55,20 @@ def libros(request):
 @csrf_protect
 def modificar_evento(request):
     if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
-        evento_id = request.POST.get('evento', None)
+        evento_id = request.POST.get('evento', None)    
         evento = get_object_or_404(Evento, pk=evento_id)         
-        titulo = request.POST.get('titulo', None)
-        contenido = request.POST.get('contenido', None)
+        evento.titulo = request.POST.get('titulo', None)
+        evento.contenido = request.POST.get('contenido', None)        
         
-        if (titulo and contenido):
-            evento.titulo = titulo
-            evento.contenido = contenido
-            evento.save()
-            return HttpResponse(simplejson.dumps("Evento modificado con éxito"), mimetype='application/javascript')
+        data = {'titulo': evento.titulo, 'contenido':evento.contenido, 'fecha':evento.fecha, 'portada':evento.portada }        
+        form = EventoForm(data, instance=evento)
+
+        if (form.is_valid()):            
+            form.save()      
+            return HttpResponse(construir_data(0, 'Evento modificado con éxito'), mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors), mimetype='application/javascript')
+            
     raise Http404
 
 @csrf_protect
@@ -61,7 +77,7 @@ def borrar_evento(request):
         evento_id = request.POST.get('evento', None)
         evento = get_object_or_404(Evento, pk=evento_id)
         evento.delete()
-        return HttpResponse(simplejson.dumps("Evento borrado con éxito"), mimetype='application/javascript')
+        return HttpResponse(construir_data(0, 'Evento borrado con éxito'), mimetype='application/javascript')
                 
     raise Http404
 
@@ -74,8 +90,8 @@ def agregar_evento(request):
         
         if (form.is_valid()):
             form.save()      
-            return HttpResponse(simplejson.dumps("Evento agregado con éxito"), mimetype='application/javascript')
+            return HttpResponse(construir_data(0, 'Evento agregado con éxito'), mimetype='application/javascript')
         else:
-            return HttpResponse(simplejson.dumps(form.errors), mimetype='application/javascript')
+            return HttpResponse(construir_data(-1, form.errors), mimetype='application/javascript')
     raise Http404
 

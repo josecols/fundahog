@@ -69,7 +69,7 @@
             <section id="principal">					
 				{% if request.user.is_staff %}
             	<section id="contenido" class="left">
-					<form class="formulario entrada" action="{% url agregar_evento %}" method="post" enctype="multipart/form-data">
+					<form class="formulario entrada" enctype="multipart/form-data">
 						{% csrf_token %}
 						<div class="contenedor-input">
 							<input type="text" name="titulo" placeholder="Título">
@@ -79,8 +79,8 @@
 						<div class="contenedor-input">
 							<input id="fecha_hora" type="text" name="fecha" placeholder="día-mes-año hora:minuto">
 						</div>						
+						<label>Imagen de portada:</label>
 						<input id="portada" type="file" name="portada">
-						<input type="submit" value="Enviar">
 					</form>
             	</section>
             	<aside id="sidebar" class="right">
