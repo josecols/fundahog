@@ -5,12 +5,12 @@
 from datetime import datetime
 from portal.models import Evento
 from django.utils import simplejson
+from portal.forms import EventoForm
 from django.http import HttpResponse, Http404
+from django.core.exceptions import ValidationError
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import  render_to_response, get_object_or_404
-from portal.forms import EventoForm
-
 
 def construir_data(flag, msg):
     data = {}
@@ -60,14 +60,12 @@ def modificar_evento(request):
         evento.titulo = request.POST.get('titulo', None)
         evento.contenido = request.POST.get('contenido', None)        
         
-        data = {'titulo': evento.titulo, 'contenido':evento.contenido, 'fecha':evento.fecha, 'portada':evento.portada }        
-        form = EventoForm(data, instance=evento)
-
-        if (form.is_valid()):            
-            form.save()      
-            return HttpResponse(construir_data(0, 'Evento modificado con éxito'), mimetype='application/javascript')
-        else:
-            return HttpResponse(construir_data(-1, form.errors), mimetype='application/javascript')
+        try:
+            evento.full_clean()
+            evento.save()
+            return HttpResponse(construir_data(0, "Evento modificado con éxito"), mimetype='application/javascript')
+        except ValidationError as errors:        
+            return HttpResponse(construir_data(-1, errors.message_dict), mimetype='application/javascript') 
             
     raise Http404
 

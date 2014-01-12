@@ -6,7 +6,7 @@
 */
 $(document).ready(function () {
 	$('#nuevo').click(function (){
-		$('.formulario').slideToggle('slow');
+		$('.formulario.admin').slideToggle('fast');
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 		$('#guardar').toggle();
 	});

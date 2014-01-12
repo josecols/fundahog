@@ -61,7 +61,7 @@
 			<section id="principal">
 				<section id="contenido" class="left">
 					{% if request.user.is_staff %}
-					<form class="formulario entrada">
+					<form class="formulario admin entrada">
 						<div class="contenedor-input">
 							<input type="text" name="titulo" placeholder="Título">
 						</div>
@@ -111,7 +111,7 @@
 				<aside id="sidebar" class="right">
 					{% if request.user.is_staff %}
 					<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;"><span class="i-guardar"></span>Guardar</a>
-					<a id="entrada" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
+					<a id="nuevo" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nueva entrada</a>
 					<div class="fix"></div>
 					{% endif %}
 					<form method="get" action="{% url blog_busqueda "1" %}" class="busqueda formulario">
@@ -126,7 +126,7 @@
 					<nav class="categorias">
 						<ul>
 							{% for categoria in categorias %}
-							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
+							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>							
 							{% endfor %}
 							<div class="fix"></div>				
 						</ul>						
@@ -141,11 +141,7 @@
 							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>						
 							{% endfor %}
 							<div class="fix"></div>				
-						</ul>						
-						<div id="nueva_categoria" contenteditable="true"></div>
-						{% if request.user.is_staff %}
-						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
-						{% endif %}						
+						</ul>									
 					</nav>
 					{% endif %}
 					{% endif %}
@@ -163,6 +159,8 @@
 			window.onload = function() {
 				var html = CKEDITOR.replace('entrada_contenido');
 				var nueva_categoria = $('#nueva_categoria');
+				
+	            CKEDITOR.instances["nueva_categoria"].destroy()
 
 				$('#guardar').click(function() {
 					guardar();
@@ -187,9 +185,7 @@
 				
 				$('.borrar').click(function() {
 					borrar(this);
-				});
-				
-	            CKEDITOR.instances["nueva_categoria"].destroy()
+				});				
 
 				function guardar() {
 					var titulo = $('input[name="titulo"]').val();

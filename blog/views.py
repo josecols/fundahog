@@ -2,15 +2,17 @@
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
-from blog.models import Categoria, Entrada
+from blog.forms import EntradaForm
 from django.utils import simplejson
+from portal.views import construir_data
+from blog.models import Categoria, Entrada
+from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
 from django.template.context import RequestContext
+from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models.query_utils import Q
-
 
 # Publicaciones por página
 ENTRADAS = 10
@@ -25,6 +27,16 @@ def paginar(lista, pagina, cantidad):
         entradas = paginator.page(paginator.num_pages)     
     return entradas
 
+def construir_data(flag, msg):
+    data = {}
+    if (flag == 0):
+        data['flag'] = 0
+        data['msg'] = msg
+    else:
+        data['flag'] = -1
+        data['errores'] = msg
+        
+    return simplejson.dumps(data)
 
 def index(request, pagina='1'):    
     lista = Entrada.objects.order_by('creado').reverse()
@@ -49,6 +61,7 @@ def busqueda(request, pagina="1", query=None):
     if query:
         qset = (Q(titulo__icontains=query) | Q(categorias__descripcion__icontains=query) | Q(contenido__icontains=query))
         lista = Entrada.objects.filter(qset).distinct()
+        lista = lista.order_by('creado').reverse()
         entradas = paginar(lista, pagina, ENTRADAS * 2)
     else:
         entradas = None
@@ -60,23 +73,26 @@ def busqueda(request, pagina="1", query=None):
 # Vistas AJAX
 @csrf_protect
 def agregar(request):
-    if request.user.is_superuser and request.method == 'POST':                
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():                
         titulo = request.POST.get('titulo', None)
         contenido = request.POST.get('contenido', None)
-        categorias = str(request.POST.get('categorias', None)).split(',')
+        categorias = str(request.POST.get('categorias', None)).split(',')        
+        form = EntradaForm(request.POST)    
         
-        if (titulo and contenido and categorias):
+        if (form.is_valid()):
             entrada = Entrada(titulo=titulo, contenido=contenido, autor=request.user)
             entrada.save()            
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
                 entrada.categorias.add(categoria)
-            return HttpResponse(simplejson.dumps("Entrada agregada con éxito"), mimetype='application/javascript')
+            return HttpResponse(construir_data(0, "Entrada agregada con éxito"), mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors), mimetype='application/javascript') 
     raise Http404
 
 @csrf_protect
 def agregar_categoria(request):
-    if request.user.is_superuser and request.method == 'POST':
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
         descripcion = request.POST.get('descripcion', None)
         
         if (descripcion):
@@ -85,28 +101,29 @@ def agregar_categoria(request):
             return HttpResponse(simplejson.dumps(str(categoria.pk)), mimetype='application/javascript')
     raise Http404
         
-
 @csrf_protect
 def modificar(request):
-    if request.user.is_superuser and request.method == 'POST':        
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():        
         entrada_id = request.POST.get('entrada', None)
         entrada = get_object_or_404(Entrada, pk=entrada_id)         
-        titulo = request.POST.get('titulo', None)
-        contenido = request.POST.get('contenido', None)
+        entrada.titulo = request.POST.get('titulo', None)
+        entrada.contenido = request.POST.get('contenido', None)
         
-        if (titulo and contenido):
-            entrada.titulo = titulo
-            entrada.contenido = contenido
+        try:
+            entrada.full_clean()
             entrada.save()
-            return HttpResponse(simplejson.dumps("Entrada modificada con éxito"), mimetype='application/javascript')
+            return HttpResponse(construir_data(0, "Entrada modificada con éxito"), mimetype='application/javascript')
+        except ValidationError as errors:        
+            return HttpResponse(construir_data(-1, errors.message_dict), mimetype='application/javascript') 
+        
     raise Http404
 
 @csrf_protect
 def borrar(request):
-    if request.user.is_superuser and request.method == 'POST':        
+    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():        
         entrada_id = request.POST.get('entrada', None)
         entrada = get_object_or_404(Entrada, pk=entrada_id)
         entrada.delete()
-        return HttpResponse(simplejson.dumps("Entrada borrada con éxito"), mimetype='application/javascript')
+        return HttpResponse(construir_data(0, "Entrada borrada con éxito"), mimetype='application/javascript')
                 
     raise Http404

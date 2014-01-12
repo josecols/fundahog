@@ -61,7 +61,7 @@
 			<section id="principal">
 				<section id="contenido" class="left">
 					{% if request.user.is_staff %}
-					<form class="formulario entrada">
+					<form class="formulario admin entrada">
 						<div class="contenedor-input">
 							<input type="text" name="titulo" placeholder="Título">
 						</div>
@@ -123,17 +123,6 @@
 					</form>
 					<h2 class="titulo">Categorías</h2>					
 					{% if request.user.is_staff %}
-					<nav class="categorias">
-						<ul>
-							{% for categoria in categorias %}
-							<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>{{categoria}}</a></li>							
-							{% endfor %}
-							<div class="fix"></div>				
-						</ul>						
-						<div id="nueva_categoria" contenteditable="true"></div>
-						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>					
-					</nav>
-					{% else %}				
 					{% if categorias %}
 					<nav class="categorias">
 						<ul>
@@ -142,11 +131,25 @@
 							{% endfor %}
 							<div class="fix"></div>				
 						</ul>						
+						
 						<div id="nueva_categoria" contenteditable="true"></div>
-						{% if request.user.is_staff %}
-						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
-						{% endif %}						
+						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>					
 					</nav>
+					{% else %}	
+					<p>No hay categorías registradas</p>
+					{% endif %}
+					{% else %}				
+					{% if categorias %}
+					<nav class="categorias">
+						<ul>
+							{% for categoria in categorias %}
+							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>						
+							{% endfor %}
+							<div class="fix"></div>				
+						</ul>									
+					</nav>
+					{% else %}	
+					<p>No hay categorías registradas</p>
 					{% endif %}
 					{% endif %}
 				</aside>
@@ -163,6 +166,8 @@
 			window.onload = function() {
 				var html = CKEDITOR.replace('entrada_contenido');
 				var nueva_categoria = $('#nueva_categoria');
+				
+				CKEDITOR.instances["nueva_categoria"].destroy()
 
 				$('#guardar').click(function() {
 					guardar();
@@ -212,7 +217,7 @@
 						dataType : "text"
 					});
 					request.done(function(msg) {
-						location.reload();
+						console.log(msg);
 					});
 				}
 				

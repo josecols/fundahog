@@ -99,20 +99,37 @@
 						</div>
 						<div class="fix"></div>
 					</form>
-					<h2 class="titulo">Categorías</h2>
+					<h2 class="titulo">Categorías</h2>					
+					{% if request.user.is_staff %}
 					{% if categorias %}
 					<nav class="categorias">
 						<ul>
 							{% for categoria in categorias %}
-							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>				
+							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>							
 							{% endfor %}
-							<div class="fix"></div>
+							<div class="fix"></div>				
 						</ul>						
-						{% if request.user.is_staff %}
-						<a href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>
-						{% endif %}						
+						
+						<div id="nueva_categoria" contenteditable="true"></div>
+						<a id="agregar" href="javascript:void(0)"><span class="i-mas"></span>Agregar</a>					
 					</nav>
-					{% endif %}		
+					{% else %}	
+					<p>No hay categorías registradas</p>
+					{% endif %}
+					{% else %}				
+					{% if categorias %}
+					<nav class="categorias">
+						<ul>
+							{% for categoria in categorias %}
+							<li><a class="categoria" href="{% url blog_busqueda_query "1" categoria|lower %}"><span class="i-categoria"></span>{{categoria}}</a></li>						
+							{% endfor %}
+							<div class="fix"></div>				
+						</ul>									
+					</nav>
+					{% else %}	
+					<p>No hay categorías registradas</p>
+					{% endif %}
+					{% endif %}
 				</aside>
 				<div class="fix"></div>
 			</section>
@@ -170,7 +187,7 @@
 							dataType : "text"
 						});
 						request.done(function(msg) {
-							location.reload();
+							console.log(msg);
 						});
 					}
 				}
