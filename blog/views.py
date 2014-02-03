@@ -1,7 +1,10 @@
-# encoding:utf-8
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # FUNDAHOG - Django 1.4 - Python 2.7.3
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
+
 from blog.forms import EntradaForm
 from django.utils import simplejson
 from portal.views import construir_data
@@ -15,115 +18,148 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Publicaciones por página
+
 ENTRADAS = 10
 
+
 def paginar(lista, pagina, cantidad):
-    paginator = Paginator(lista, cantidad)    
+    paginator = Paginator(lista, cantidad)
     try:
         entradas = paginator.page(pagina)
     except PageNotAnInteger:
         entradas = paginator.page(1)
     except EmptyPage:
-        entradas = paginator.page(paginator.num_pages)     
+        entradas = paginator.page(paginator.num_pages)
     return entradas
+
 
 def construir_data(flag, msg):
     data = {}
-    if (flag == 0):
+    if flag == 0:
         data['flag'] = 0
         data['msg'] = msg
     else:
         data['flag'] = -1
         data['errores'] = msg
-        
+
     return simplejson.dumps(data)
 
-def index(request, pagina='1'):    
+
+def index(request, pagina='1'):
     lista = Entrada.objects.order_by('creado').reverse()
-    entradas = paginar(lista, pagina, ENTRADAS)      
+    entradas = paginar(lista, pagina, ENTRADAS)
     categorias = Categoria.objects.all()
-    return render_to_response('blog.html',
-                              {'entradas':entradas, 'categorias':categorias, 'request':request},
+    return render_to_response('blog.html', {'entradas': entradas,
+                              'categorias': categorias,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 
 def entrada(request, slug, entrada_id):
     entrada = get_object_or_404(Entrada, pk=entrada_id)
     categorias = Categoria.objects.all()
-    return render_to_response('entrada.html',
-                              {'entrada':entrada, 'categorias':categorias, 'request':request},
+    return render_to_response('entrada.html', {'entrada': entrada,
+                              'categorias': categorias,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 
-def busqueda(request, pagina="1", query=None):
+def busqueda(request, pagina='1', query=None):
     if not query:
         query = request.GET.get('q', '')
     if query:
-        qset = (Q(titulo__icontains=query) | Q(categorias__descripcion__icontains=query) | Q(contenido__icontains=query))
+        qset = Q(titulo__icontains=query) \
+            | Q(categorias__descripcion__icontains=query) \
+            | Q(contenido__icontains=query)
         lista = Entrada.objects.filter(qset).distinct()
         lista = lista.order_by('creado').reverse()
         entradas = paginar(lista, pagina, ENTRADAS * 2)
     else:
         entradas = None
     categorias = Categoria.objects.all()
-            
-    return render_to_response('busqueda.html',
-                              {'entradas': entradas, 'query': query, 'categorias':categorias, 'request':request},
-                              context_instance=RequestContext(request))
+
+    return render_to_response('busqueda.html', {
+        'entradas': entradas,
+        'query': query,
+        'categorias': categorias,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
 # Vistas AJAX
+
 @csrf_protect
 def agregar(request):
-    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():                
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
         titulo = request.POST.get('titulo', None)
         contenido = request.POST.get('contenido', None)
-        categorias = str(request.POST.get('categorias', None)).split(',')        
-        form = EntradaForm(request.POST)    
-        
-        if (form.is_valid()):
-            entrada = Entrada(titulo=titulo, contenido=contenido, autor=request.user)
-            entrada.save()            
+        categorias = str(request.POST.get('categorias', None)).split(','
+                )
+        form = EntradaForm(request.POST)
+
+        if form.is_valid():
+            entrada = Entrada(titulo=titulo, contenido=contenido,
+                              autor=request.user)
+            entrada.save()
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
                 entrada.categorias.add(categoria)
-            return HttpResponse(construir_data(0, "Entrada agregada con éxito"), mimetype='application/javascript')
+            return HttpResponse(construir_data(0,
+                                "Entrada agregada con éxito"),
+                                mimetype='application/javascript')
         else:
-            return HttpResponse(construir_data(-1, form.errors), mimetype='application/javascript') 
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
     raise Http404
+
 
 @csrf_protect
 def agregar_categoria(request):
-    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
         descripcion = request.POST.get('descripcion', None)
-        
-        if (descripcion):
+
+        if descripcion:
             categoria = Categoria(descripcion=descripcion)
             categoria.save()
-            return HttpResponse(simplejson.dumps(str(categoria.pk)), mimetype='application/javascript')
+            return HttpResponse(simplejson.dumps(str(categoria.pk)),
+                                mimetype='application/javascript')
     raise Http404
-        
+
+
 @csrf_protect
 def modificar(request):
-    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():        
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
         entrada_id = request.POST.get('entrada', None)
-        entrada = get_object_or_404(Entrada, pk=entrada_id)         
+        entrada = get_object_or_404(Entrada, pk=entrada_id)
         entrada.titulo = request.POST.get('titulo', None)
         entrada.contenido = request.POST.get('contenido', None)
-        
+
         try:
             entrada.full_clean()
             entrada.save()
-            return HttpResponse(construir_data(0, "Entrada modificada con éxito"), mimetype='application/javascript')
-        except ValidationError as errors:        
-            return HttpResponse(construir_data(-1, errors.message_dict), mimetype='application/javascript') 
-        
+            return HttpResponse(construir_data(0,
+                                "Entrada modificada con éxito"),
+                                mimetype='application/javascript')
+        except ValidationError, errors:
+            return HttpResponse(construir_data(-1,
+                                errors.message_dict),
+                                mimetype='application/javascript')
+
     raise Http404
+
 
 @csrf_protect
 def borrar(request):
-    if request.user.is_superuser and request.method == 'POST' and request.is_ajax():        
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
         entrada_id = request.POST.get('entrada', None)
         entrada = get_object_or_404(Entrada, pk=entrada_id)
         entrada.delete()
-        return HttpResponse(construir_data(0, "Entrada borrada con éxito"), mimetype='application/javascript')
-                
+        return HttpResponse(construir_data(0,
+                            "Entrada borrada con éxito"),
+                            mimetype='application/javascript')
+
     raise Http404
