@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 /*  CKEDITOR Inline
     UCAB Guayana
     Tema: FUNDAHOG
@@ -6,32 +7,25 @@
     Autor: José Cols - josecolsg@gmail.com - @josecols
     Version: 1.0
 */
-.cke_editable.cke_editable_inline
-{
+
+.cke_editable.cke_editable_inline {
 	cursor: pointer;
 }
-
-.cke_editable.cke_editable_inline.cke_focus
-{
+.cke_editable.cke_editable_inline.cke_focus {
 	box-shadow: inset 0px 0px 20px 3px #ddd, inset 0 0 1px #000;
 	outline: none;
 	background: #eee;
 	cursor: text;
-	padding:10px;
+	padding: 10px;
 }
-
-.cke_editable_inline pre
-{
+.cke_editable_inline pre {
 	white-space: pre-wrap;
 	word-wrap: break-word;
 }
-
 .titulo .cke_editable.cke_editable_inline.cke_focus {
-	padding:0 5px;
+	padding: 0 5px;
 }
-
-blockquote
-{
+blockquote {
 	font-style: italic;
 	font-family: Georgia, Times, "Times New Roman", serif;
 	padding: 2px 0;
@@ -39,22 +33,17 @@ blockquote
 	border-color: #ccc;
 	border-width: 0;
 }
-
-.cke_contents_ltr blockquote
-{
+.cke_contents_ltr blockquote {
 	padding-left: 20px;
 	padding-right: 8px;
 	border-left-width: 5px;
 }
-
-.cke_contents_rtl blockquote
-{
+.cke_contents_rtl blockquote {
 	padding-left: 8px;
 	padding-right: 20px;
 	border-right-width: 5px;
 }
-
-.cke_editable.cke_editable_inline img {    
-    margin: 6px;
-    padding: 6px;
+.cke_editable.cke_editable_inline img {
+	margin: 6px;
+	padding: 6px;
 }

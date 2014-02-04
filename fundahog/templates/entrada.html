@@ -2,208 +2,164 @@
 <html lang="es">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<title>{{entrada}} - FUNDAHOG</title>
-	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-	<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-	<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">{% if request.user.is_staff %}
-	<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">{% endif %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{entrada}} - FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">{% endif %}
 </head>
 
 {% load filters %}
 
 <body>
-	<header id="header">
-		<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-		<table class="contacto">
-			<tr>
-				<td>Teléfono</td>
-				<td>
-					<span class="i-telefono"></span>
-				</td>
-			</tr>
-			<tr>
-				<td>Ubicación</td>
-				<td>
-					<span class="i-ubicacion"></span>
-				</td>
-			</tr>
-		</table>
-		<div class="fix"></div>
-	</header>
-	<div id="pagina" class="hardware">
-		<div id="status" class="exito"></div>
-		<a id="menu" class="toggler" href="javascript:void(0)">
-			<span class="i-menu"></span>Menú</a>
-		<nav id="barra">
-			<ul>
-				<li>
-					<a href="{% url nosotros %}">Nosotros</a>
-				</li>
-				<li>
-					<a class="seleccionado" href="{% url blog %}">Blog</a>
-				</li>
-				<li>
-					<a href="{% url programas %}">Programas</a>
-				</li>
-				<li>
-					<a href="{% url contacto %}">Contacto</a>
-				</li>
-				<li>
-					<a href="{% url eventos %}">Eventos</a>
-				</li>
-				<li>
-					<a href="{% url libros %}">Libros</a>
-				</li>
-				<li>
-					<a href="{% url galeria %}">Galería</a>
-				</li>
-				{% if request.user.is_staff %}
-				<li>
-					<a href="">Ayuda</a>
-				</li>
-				{% endif %}
-			</ul>
-		</nav>
-		<section id="principal">
-			<section id="contenido" class="left">
-				{% if request.user.is_staff %}
-				<div class="titulo">
-					<div id="titulo" contenteditable="true">
-						{{entrada}}
-					</div>
-					<small>
-						<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}}
-						<span class="i-usuario"></span>{{entrada.autor|nombre_completo}}
-					</small>
-				</div>
-				<div id="contenido-html" contenteditable="true">
-					{{entrada.contenido|safe}}
-				</div>
-				{% else %}
-				<h1 class="titulo">{{entrada}}
-					<small>
-						<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}}
-						<span class="i-usuario"></span>{{entrada.autor|nombre_completo}}
-					</small>
-				</h1>
-				{{entrada.contenido|safe}} {% endif %}
-				<hr>
-			</section>
-			<aside id="sidebar" class="right">
-				{% if request.user.is_staff %}
-				<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">
-					<span style="display:none" class="i-guardar"></span>Modo edición activo</a>
-				<div class="fix"></div>
-				{% endif %}
-				<form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
-					<div class="contenedor-input">
-						<span class="i-busqueda"></span>
-						<input name="q" type="text" placeholder="Búsqueda">
-					</div>
-					<div class="fix"></div>
-				</form>
-				<h2 class="titulo">Categorías</h2>
-				{% if request.user.is_staff %} {% if categorias %}
-				<nav class="categorias">
-					<ul>
-						{% for categoria in categorias %}
-						<li>
-							<a class="categoria" href="{% url blog_busqueda_query '1' categoria|lower %}">
-								<span class="i-categoria"></span>{{categoria}}</a>
-						</li>
-						{% endfor %}
-						<div class="fix"></div>
-					</ul>
-
-					<div id="nueva_categoria" contenteditable="true"></div>
-					<a id="agregar" href="javascript:void(0)">
-						<span class="i-mas"></span>Agregar</a>
-				</nav>
-				{% else %}
-				<p>No hay categorías registradas</p>
-				{% endif %} {% else %} {% if categorias %}
-				<nav class="categorias">
-					<ul>
-						{% for categoria in categorias %}
-						<li>
-							<a class="categoria" href="{% url blog_busqueda_query '1' categoria|lower %}">
-								<span class="i-categoria"></span>{{categoria}}</a>
-						</li>
-						{% endfor %}
-						<div class="fix"></div>
-					</ul>
-				</nav>
-				{% else %}
-				<p>No hay categorías registradas</p>
-				{% endif %} {% endif %}
-			</aside>
-			<div class="fix"></div>
-		</section>
-	</div>
-	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-	<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-	{% if request.user.is_staff %}
-	<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-	<script async defer src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
-	<script src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-	<script>
-		$(document).ready(function() {
-				var guardar = false;
-
-				$('div[contenteditable]').on('focus', function() {
-				    var $this = $(this);
-				    $this.data('before', $this.html());
-				    return $this;
-				}).on('blur input paste', function() {
-				    var $this = $(this);
-				    if ($this.data('before') !== $this.html()) {
-				        $this.data('before', $this.html());
-				        $this.trigger('change');
-				    }
-				    return $this;
-				});
-
-				$("div[contenteditable='true']").bind('change', function() {
-					cambios();
-				});
-
-				$('#guardar').click(function() {
-					modificar();
-				});
-
-				function cambios() {
-					$('#guardar').html('<span style="display:inline-block" class="i-guardar"></span>Guardar cambios');
-					$('#guardar').addClass('cambios');
-					guardar = true;
-				}
-
-				function modificar() {
-					if (guardar) {
-						var titulo = $('#titulo').text();
-						var contenido = encodeURIComponent($('#contenido-html').html());
-						var entrada = "{{entrada.pk}}";
-
-						var request = $.ajax({
-							async : true,
-							type : "POST",
-							url : "{% url modificar_entrada %}",
-							data : 'entrada=' + entrada
-								+ '&titulo=' + titulo
-								+ '&contenido=' + contenido
-								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-							dataType : "text"
-						});
-						request.done(function(data) {
-							manejarRespuestaServidor(data);
-						});
-					}
-				}
-
-			});
-	</script>
-	{% endif %}
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <div id="status" class="exito"></div>
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <div class="titulo">
+                    <div id="titulo" contenteditable="true">
+                        {{entrada}}
+                    </div>
+                    <small>
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </div>
+                <div id="contenido-html" contenteditable="true">
+                    {{entrada.contenido|safe}}
+                </div>
+                {% else %}
+                <h1 class="titulo">{{entrada}}
+                    <small>
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </h1>
+                {{entrada.contenido|safe}} {% endif %}
+                <hr>
+            </section>
+            <aside id="sidebar" class="right">
+                {% if request.user.is_staff %}
+                <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">Modo edición activo</a>
+                <div class="fix"></div>
+                {% endif %}
+                <form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
+                    <div class="contenedor-input">
+                        <i class="fa fa-search"></i>
+                        <input name="q" type="text" placeholder="Búsqueda">
+                    </div>
+                    <div class="fix"></div>
+                </form>
+                <h2 class="titulo">Categorías</h2>
+                {% if request.user.is_staff %} {% if categorias %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url blog_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                    <div id="nueva_categoria" contenteditable="true"></div>
+                    <a id="agregar" href="javascript:void(0)">
+                        <i class="fa fa-plus"></i>Agregar</a>
+                </nav>
+                {% else %}
+                <p>No hay categorías registradas</p>
+                {% endif %} {% else %} {% if categorias %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url blog_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                </nav>
+                {% else %}
+                <p>No hay categorías registradas</p>
+                {% endif %} {% endif %}
+            </aside>
+            <div class="fix"></div>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        url = '{% url modificar_entrada %}';
+        data = '';
+        $(document).ready(function() {
+            $('#guardar').click(function () {
+                var titulo = $('#titulo').text();
+                var contenido = encodeURIComponent($('#contenido-html').html());
+                var entrada = "{{entrada.pk}}";
+                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + '{{csrf_token}}';
+            });
+        });
+    </script>
+    <script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async defer src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    {% endif %}
 </body>
 
 </html>

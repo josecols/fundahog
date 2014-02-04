@@ -1,100 +1,100 @@
 <!doctype html>
 <html lang="es">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <title>FUNDAHOG</title>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
-    </head>
-    
-    <body>
-        <header id="header">
-            <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-            <table class="contacto">
-                <tr>
-                    <td>Teléfono</td>
-                    <td>
-                        <span class="i-telefono"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ubicación</td>
-                    <td>
-                        <span class="i-ubicacion"></span>
-                    </td>
-                </tr>
-            </table>
-            <div class="fix"></div>
-        </header>
-        <div id="pagina" class="hardware">
-            <a id="menu" class="toggler" href="javascript:void(0)">
-                <span class="i-menu"></span>Menú</a>
-            <nav id="barra">
-				<ul>
-					<li>
-						<a href="{% url nosotros %}">Nosotros</a>
-					</li>
-					<li>
-						<a href="{% url blog %}">Blog</a>
-					</li>
-					<li>
-						<a href="{% url programas %}">Programas</a>
-					</li>
-					<li>
-						<a class="seleccionado" href="{% url contacto %}">Contacto</a>
-					</li>
-					<li>
-						<a href="{% url eventos %}">Eventos</a>
-					</li>
-					<li>
-						<a href="{% url libros %}">Libros</a>
-					</li>
-					<li>
-						<a href="{% url galeria %}">Galería</a>
-					</li>
-					{% if request.user.is_staff %}
-					<li>
-						<a href="">Ayuda</a>
-					</li>
-					{% endif %}
-				</ul>
-            </nav>
-            <section id="principal">
-                <div class="contenedor-banner">
-                    <a class="chat" href="" class="chat">chat</a>
-                    <a class="twitter" href="" class="chat">twitter</a>
-                    <a class="facebook" href="" class="chat">facebook</a>
-                    <section class="banner"></section>
-                </div>
-                <aside id="sidebar" class="left">
-                    <h2 class="titulo" style="margin-top:0;">Dirección</h2>
-                    <h2 class="titulo">Correo</h2>
-                </aside>
-                <section id="contenido" class="right">
-                    <h1 class="titulo">Envíanos un mensaje</h1>
-                    <form action="" class="formulario">
-                        <div class="contenedor-input">
-                            <span class="i-usuario"></span>
-                            <input type="text" placeholder="Nombre">
-                        </div>
-                        <div class="contenedor-input">
-                            <span class="i-correo"></span>
-                            <input type="text" placeholder="Correo electrónico">
-                        </div>
-                        <h2 class="subtitulo">Mensaje:</h2>
-                        <textarea name="" id="" cols="30" rows="10"></textarea>
-                        <input class="boton" type="submit" value="Enviar">
-                        <div class="fix"></div>
-                    </form>
-                </section>
-                <div class="fix"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+</head>
+
+<body>
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <div class="contenedor-banner">
+                <a class="chat" href="" class="chat">chat</a>
+                <a class="twitter" href="" class="chat">twitter</a>
+                <a class="facebook" href="" class="chat">facebook</a>
+                <section class="banner"></section>
+            </div>
+            <aside id="sidebar" class="left">
+                <h2 class="titulo" style="margin-top:0;">Dirección</h2>
+                <h2 class="titulo">Correo</h2>
+            </aside>
+            <section id="contenido" class="right">
+                <h1 class="titulo">Envíanos un mensaje</h1>
+                <form action="" class="formulario">
+                    <div class="contenedor-input">
+                        <i class="fa fa-user"></i>
+                        <input type="text" placeholder="Nombre">
+                    </div>
+                    <div class="contenedor-input">
+                        <i class="fa fa-envelope"></i>
+                        <input type="text" placeholder="Correo electrónico">
+                    </div>
+                    <h2 class="subtitulo">Mensaje:</h2>
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <input class="boton" type="submit" value="Enviar">
+                    <div class="fix"></div>
+                </form>
             </section>
-        </div>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-    </body>
+            <div class="fix"></div>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+</body>
 
 </html>

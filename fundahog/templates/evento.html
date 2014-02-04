@@ -1,158 +1,121 @@
 <!doctype html>
 <html lang="es">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<title>{{evento}} - FUNDAHOG</title>
-		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
-		{% if request.user.is_staff %}
-		<link rel="stylesheet" href="{{STATIC_URL}}css/inline.css">
-		{% endif %}
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{evento}} - FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">{% endif %}
+</head>
 
-	<body>
-		<header id="header">
-			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-			<table class="contacto">
-				<tr>
-					<td>Teléfono</td>
-					<td><span class="i-telefono"></span></td>
-				</tr>
-				<tr>
-					<td>Ubicación</td>
-					<td><span class="i-ubicacion"></span></td>
-				</tr>
-			</table>
-			<div class="fix"></div>
-		</header>
-		<div id="pagina" class="hardware">
-			<a id="menu" class="toggler" href="javascript:void(0)"> <span class="i-menu"></span>Menú</a>
-			<nav id="barra">
-				<ul>
-					<li>
-						<a href="{% url nosotros %}">Nosotros</a>
-					</li>
-					<li>
-						<a href="{% url blog %}">Blog</a>
-					</li>
-					<li>
-						<a href="{% url programas %}">Programas</a>
-					</li>
-					<li>
-						<a href="{% url contacto %}">Contacto</a>
-					</li>
-					<li>
-						<a class="seleccionado" href="{% url eventos %}">Eventos</a>
-					</li>
-					<li>
-						<a href="{% url libros %}">Libros</a>
-					</li>
-					<li>
-						<a href="{% url galeria %}">Galería</a>
-					</li>
-					{% if request.user.is_staff %}
-					<li>
-						<a href="">Ayuda</a>
-					</li>
-					{% endif %}
-				</ul>
-			</nav>
-			<section id="principal">
-				<section id="contenido">
-					{% if request.user.is_staff %}					
-					<div class="titulo">
-						<a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo"><span style="display:none" class="i-guardar"></span>Modo edición activo</a>
-						<div id="titulo" class="left" contenteditable="true">
-							{{evento}}
-						</div>						
-						<div class="fix"></div>
-						<small>
-							<span class="i-calendario"></span>{{evento.fecha}}
-						</small>						
-					</div>
-					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
-					<div id="contenido-html" contenteditable="true">
-						{{evento.contenido|safe}}
-					</div>
-					<div class="fix"></div>
-					{% else %}
-					<h1 class="titulo">{{evento}}
-						<small>
-							<span class="i-calendario"></span>{{evento.fecha}}
-						</small>
-					</h1>
-					<img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
-					{{evento.contenido|safe}}
-					<div class="fix"></div>
-					{% endif %}
-					<hr>
-				</section>
-			</section>
-		</div>
-		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-		<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-		{% if request.user.is_staff %}
-		<script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-		<script async defer src="{{STATIC_URL}}js/inline.js"></script>
-		<script>
-			$(document).ready(function() {
-				var guardar = false;			
-
-				$('div[contenteditable]').on('focus', function() {
-				    var $this = $(this);
-				    $this.data('before', $this.html());
-				    return $this;
-				}).on('blur input paste', function() {
-				    var $this = $(this);
-				    if ($this.data('before') !== $this.html()) {
-				        $this.data('before', $this.html());
-				        $this.trigger('change');
-				    }
-				    return $this;
-				});
-
-				$("div[contenteditable='true']").bind('change', function() {
-					cambios();
-				});				
-				
-				$('#guardar').click(function() {
-					modificar();
-				});
-				
-				function cambios() {
-					$('#guardar').html('<span style="display:inline-block" class="i-guardar"></span>Guardar cambios');
-					$('#guardar').addClass('cambios');					
-					guardar = true;
-				}
-
-				function modificar() {					
-					if (guardar) {
-						var titulo = $('#titulo').text(); 
-						var contenido = encodeURIComponent($('#contenido-html').html());	
-						var evento = "{{evento.pk}}";						
-						
-						var request = $.ajax({
-							async : true,
-							type : "POST",
-							url : "{% url modificar_evento %}",
-							data : 'evento=' + evento 
-								+ '&titulo=' + titulo 
-								+ '&contenido=' + contenido
-								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-							dataType : "text"
-						});
-						request.done(function(msg) {
-							console.log(msg);
-						});
-					}
-				}
-
-			});
-		</script>
-		{% endif %}
-	</body>
+<body>
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <div id="status" class="exito"></div>
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <section id="contenido">
+                {% if request.user.is_staff %}
+                <div class="titulo">
+                    <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">
+                        Modo edición activo</a>
+                    <div id="titulo" class="left" contenteditable="true">
+                        {{evento}}
+                    </div>
+                    <div class="fix"></div>
+                    <small>
+                        <i class="fa fa-calendar"></i>{{evento.fecha}}
+                    </small>
+                </div>
+                <img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
+                <div id="contenido-html" contenteditable="true">
+                    {{evento.contenido|safe}}
+                </div>
+                <div class="fix"></div>
+                {% else %}
+                <h1 class="titulo">{{evento}}
+                    <small>
+                        <i class="fa fa-calendar"></i>{{evento.fecha}}
+                    </small>
+                </h1>
+                <img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">{{evento.contenido|safe}}
+                <div class="fix"></div>
+                {% endif %}
+                <hr>
+            </section>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        url = '{% url modificar_evento %}';
+        data = '';
+        $(document).ready(function() {
+            $('#guardar').click(function () {
+                var titulo = $('#titulo').text();
+                var contenido = encodeURIComponent($('#contenido-html').html());
+                var evento = "{{evento.pk}}";
+                data = 'evento=' + evento + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + '{{csrf_token}}';
+            });
+        });
+    </script>
+    <script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async defer src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    {% endif %}
+</body>
 
 </html>

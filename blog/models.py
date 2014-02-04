@@ -14,6 +14,7 @@ class Categoria(models.Model):
 
     descripcion = models.CharField(max_length=100, unique=True,
                                    verbose_name="descripción")
+    slug = models.SlugField(max_length=100, editable=False)
 
     class Meta:
 
@@ -22,6 +23,11 @@ class Categoria(models.Model):
 
     def __unicode__(self):
         return self.descripcion
+
+    def save(self):
+        if not self.id:
+            self.slug = slugify(self.descripcion)
+        super(Categoria, self).save()
 
 
 class Entrada(models.Model):

@@ -1,107 +1,107 @@
 <!doctype html>
 <html lang="es">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <title>FUNDAHOG</title>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
-    </head>
-    
-    <body>
-        <header id="header">
-            <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-            <table class="contacto">
-                <tr>
-                    <td>Teléfono</td>
-                    <td>
-                        <span class="i-telefono"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ubicación</td>
-                    <td>
-                        <span class="i-ubicacion"></span>
-                    </td>
-                </tr>
-            </table>
-            <div class="fix"></div>
-        </header>
-        <div id="pagina" class="hardware">
-            <a id="menu" class="toggler" href="javascript:void(0)">
-                <span class="i-menu"></span>Menú</a>
-            <nav id="barra">
-				<ul>
-					<li>
-						<a class="seleccionado" href="{% url nosotros %}">Nosotros</a>
-					</li>
-					<li>
-						<a href="{% url blog %}">Blog</a>
-					</li>
-					<li>
-						<a href="{% url programas %}">Programas</a>
-					</li>
-					<li>
-						<a href="{% url contacto %}">Contacto</a>
-					</li>
-					<li>
-						<a href="{% url eventos %}">Eventos</a>
-					</li>
-					<li>
-						<a href="{% url libros %}">Libros</a>
-					</li>
-					<li>
-						<a href="{% url galeria %}">Galería</a>
-					</li>
-					{% if request.user.is_staff %}
-					<li>
-						<a href="">Ayuda</a>
-					</li>
-					{% endif %}
-				</ul>
-            </nav>
-            <section id="principal">
-                <aside id="sidebar" class="left">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a class="seleccionado" href="">Objetivos
-                                    <span class="flecha"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">Directiva</a>
-                            </li>
-                            <li>
-                                <a href="">Patrocinio</a>
-                            </li>
-                            <li>
-                                <a href="">Enlaces</a>
-                            </li>
-                            <li>
-                                <a href="">Directorio</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-                <section id="contenido" class="right">
-                    <h1 class="titulo">
-                        <a href="javascript:void(0)">Las frutas y vegetales que combaten el cáncer</a>
-                        <small>
-                            <span class="i-calendario"></span>10/08/2013</small>
-                    </h1>
-                    <p>El consumir por lo menos cinco raciones de frutas y vegetales al día puede disminuir significativamente su riesgo de desarrollar un cáncer. Las frutas y los vegetales contienen vitaminas que ayudan a prevenir el cáncer al igual que muchos fitaquímicos - algunos ya conocidos, otro más aún por ser descubiertos - que también ayudan a prevenir el cáncer.</p>
-                    <br>
-                    <p>La siguiente lista de frutas y vegetales son bien conocidos por contener algunos de estos compuestos: Manzanas, Albaricoques, Espárragos, Remolacha, Bayas, Brócoli, Bok choy, Coles de Bruselas, Repollo, Melón, Zanahorias, Frutas cítricas, Pepinos, Berenjenas, Ajo, Cale, Kiwi, Mango, Cebollas, Perejil, Lechosa, Melocotones, Arvejas, Pimentones, Papas, Auyama, Lechuga romana y de hojas rojas, Productos de soya, Espinaca, Calabaza, Batata, Tomates, Nabo verde, Ñame.</p>
-                    <hr>
-                </section>
-                <div class="fix"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+</head>
+
+<body>
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a class="seleccionado" href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <aside id="sidebar" class="left">
+                <nav>
+                    <ul>
+                        <li>
+                            <a class="seleccionado" href="">Objetivos
+                                <span class="flecha"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">Directiva</a>
+                        </li>
+                        <li>
+                            <a href="">Patrocinio</a>
+                        </li>
+                        <li>
+                            <a href="">Enlaces</a>
+                        </li>
+                        <li>
+                            <a href="">Directorio</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <section id="contenido" class="right">
+                <h1 class="titulo">
+                    <a href="javascript:void(0)">Las frutas y vegetales que combaten el cáncer</a>
+                    <small>
+                        <i class="fa fa-calendar"></i>10/08/2013</small>
+                </h1>
+                <p>El consumir por lo menos cinco raciones de frutas y vegetales al día puede disminuir significativamente su riesgo de desarrollar un cáncer. Las frutas y los vegetales contienen vitaminas que ayudan a prevenir el cáncer al igual que muchos fitaquímicos - algunos ya conocidos, otro más aún por ser descubiertos - que también ayudan a prevenir el cáncer.</p>
+                <br>
+                <p>La siguiente lista de frutas y vegetales son bien conocidos por contener algunos de estos compuestos: Manzanas, Albaricoques, Espárragos, Remolacha, Bayas, Brócoli, Bok choy, Coles de Bruselas, Repollo, Melón, Zanahorias, Frutas cítricas, Pepinos, Berenjenas, Ajo, Cale, Kiwi, Mango, Cebollas, Perejil, Lechosa, Melocotones, Arvejas, Pimentones, Papas, Auyama, Lechuga romana y de hojas rojas, Productos de soya, Espinaca, Calabaza, Batata, Tomates, Nabo verde, Ñame.</p>
+                <hr>
             </section>
-        </div>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-    </body>
+            <div class="fix"></div>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+</body>
 
 </html>

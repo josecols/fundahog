@@ -6,7 +6,7 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from django import forms
-from blog.models import Entrada
+from blog.models import Entrada, Categoria
 
 
 class EntradaForm(forms.ModelForm):
@@ -14,5 +14,12 @@ class EntradaForm(forms.ModelForm):
     class Meta:
 
         model = Entrada
+
+
+class CategoriaForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Categoria
 
 

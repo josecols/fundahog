@@ -1,202 +1,150 @@
 <!doctype html>
 <html lang="es">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <title>FUNDAHOG</title>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-		<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-		<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
-		{% if request.user.is_staff %}
-		<link rel="stylesheet" href="{{STATIC_URL}}css/jquery.datetimepicker.css">
-		{% endif %}
-    </head>
-    
-    <body>
-        <header id="header">
-			<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-            <table class="contacto">
-                <tr>
-                    <td>Teléfono</td>
-                    <td>
-                        <span class="i-telefono"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ubicación</td>
-                    <td>
-                        <span class="i-ubicacion"></span>
-                    </td>
-                </tr>
-            </table>
-            <div class="fix"></div>
-        </header>
-        <div id="pagina" class="hardware">
-            <a id="menu" class="toggler" href="javascript:void(0)">
-                <span class="i-menu"></span>Menú</a>
-            <nav id="barra">
-                <ul>
-                    <li>
-                        <a href="{% url nosotros %}">Nosotros</a>
-                    </li>
-                    <li>
-                        <a href="{% url blog %}">Blog</a>
-                    </li>
-                    <li>
-                        <a href="{% url programas %}">Programas</a>
-                    </li>
-                    <li>
-                        <a href="{% url contacto %}">Contacto</a>
-                    </li>
-                    <li>
-                        <a class="seleccionado" href="{% url eventos %}">Eventos</a>
-                    </li>
-                    <li>
-                        <a href="{% url libros %}">Libros</a>
-                    </li>
-                    <li>
-                        <a href="{% url galeria %}">Galería</a>
-                    </li>
-					{% if request.user.is_staff %}
-					<li>
-						<a href="">Ayuda</a>
-					</li>
-					{% endif %}
-                </ul>
-            </nav>
-            
-            <section id="principal">					
-				{% if request.user.is_staff %}
-            	<section id="contenido" class="left">
-					<form class="formulario admin entrada" enctype="multipart/form-data">
-						{% csrf_token %}
-						<div class="contenedor-input">
-							<input type="text" name="titulo" placeholder="Título">
-						</div>
-						<textarea id="evento_contenido" name="contenido"></textarea>	
-						<label>Fecha y hora del evento:</label>
-						<div class="contenedor-input">
-							<input id="fecha_hora" type="text" name="fecha" placeholder="día-mes-año hora:minuto">
-						</div>						
-						<label>Imagen de portada:</label>
-						<input id="portada" type="file" name="portada">
-					</form>
-            	</section>
-            	<aside id="sidebar" class="right">
-					<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;"><span class="i-guardar"></span>Guardar</a>
-					<a id="nuevo" class="boton right" href="javascript:void(0)"><span class="i-entrada"></span>Nuevo evento</a>
-					<div class="fix"></div>
-            	</aside>
-            	<div class="fix"></div>
-            	{% endif %}
-            	{% if eventos %}            	
-                <ul class="lista">
-                	{% for evento in eventos %}
-                    <li>
-                        <div class="imagen" style="background-image: url('{{MEDIA_URL}}{{ evento.portada }}');"></div>
-                        <h2 class="titulo">
-                            <a href="{% url evento evento.slug evento.pk %}">{{evento}}</a>
-                            <small>
-								{% if request.user.is_staff %}
-								<a href="{% url evento evento.slug evento.pk %}"><span class="i-editar"></span>Editar</a>
-								<a id="borrar-{{evento.pk}}" class="borrar" href="javascript:void(0)"><span class="i-borrar"></span>Borrar</a> 
-								{% endif %}
-                                <span class="i-calendario"></span>{{evento.fecha}}
-                            </small>
-                        </h2>
-                        <p>{{evento.contenido|safe|truncatewords_html:50}}</p>
-                        <p class="enlace">
-                            <a href="{% url evento evento.slug evento.pk %}"><span class="i-mas"></span>Leer más</a>
-                        </p>
-                        <div class="fix"></div>
-                    </li>
-                    <li>
-                        <hr>
-                    </li>
-                    {% endfor %}                  
-                </ul>
-                <nav class="navegacion">
-                    <a href="" class="boton left">Anterior</a>
-                    <a href="" class="boton right">Siguiente</a>
-                    <div class="fix"></div>
-                </nav>
-                {% else %}
-                <p class="center">No hay eventos registrados</p>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.datetimepicker.css">{% endif %}
+</head>
+
+<body>
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina" class="hardware">
+        <div id="status" class="exito"></div>
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
                 {% endif %}
+            </ul>
+        </nav>
+
+        <section id="principal">
+            {% if request.user.is_staff %}
+            <section id="contenido" class="left">
+                <form class="formulario admin entrada" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <textarea id="evento_contenido" name="contenido"></textarea>
+                    <label>Fecha y hora del evento:</label>
+                    <div class="contenedor-input">
+                        <input id="fecha_hora" type="text" name="fecha" placeholder="día-mes-año hora:minuto">
+                    </div>
+                    <label>Imagen de portada:</label>
+                    <input id="portada" type="file" name="portada">
+                </form>
             </section>
-        </div>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-        {% if request.user.is_staff %}        
-		<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-        <script src="{{STATIC_URL}}js/edicion.js"></script>
-        <script src="{{STATIC_URL}}js/movil.js"></script>
-        <script src="{{STATIC_URL}}js/upload.js"></script>
-        <script src="{{STATIC_URL}}js/datetimepicker/jquery.datetimepicker.min.js"></script>
-		<script>
-			window.onload = function() {
-				var html = CKEDITOR.replace('evento_contenido');
-				
-				$('.borrar').click(function() {
-					borrar(this);
-				});
-				
-				
-				$('#guardar').click(function() {
-					guardar();
-				});
-
-				function borrar(boton) {
-					var pk = $(boton).attr('id').match(/[0-9]+/);
-					var respuesta = confirm("¿Está seguro que deasea eliminar el evento?");
-					
-					if (respuesta  == true) {
-		    			var request = $.ajax({
-							async : true,
-							type : "POST",
-							url : "{% url borrar_evento %}",
-							data : 'evento=' + pk
-							+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-							dataType : "text"
-						});
-						request.done(function(msg) {
-							location.reload();
-						});
-					} 							
-				}			
-
-
-				function guardar() {
-					var titulo = $('input[name="titulo"]').val();
-					var contenido = '';
-					var fecha = $('#fecha_hora').val();
-					
-					if (jQuery.browser.mobile) {
-						contenido = $('#evento_contenido').val();
-					} else {
-						contenido = html.getData();
-					}
-					
-					$('#portada').upload('{% url agregar_evento %}', {
-						'titulo': titulo, 
-						'contenido': contenido,
-						'fecha': fecha,
-						'csrfmiddlewaretoken': '{{csrf_token}}'
-					}, function(success) {
-						location.reload();
-					});					
-				}
-								
-				$('#fecha_hora').datetimepicker({
-					lang:'es',
-					format:'d-m-Y H:i'
-				});
-			};			
-
-
-		</script>
-		{% endif %}
-    </body>
+            <aside id="sidebar" class="right">
+                <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
+                    <i class="fa fa-floppy-o"></i>Guardar</a>
+                <a id="nuevo" class="boton right" href="javascript:void(0)">
+                    <i class="fa fa-file-text-o"></i>Nuevo evento</a>
+                <div class="fix"></div>
+            </aside>
+            <div class="fix"></div>
+            {% endif %} {% if eventos %}
+            <ul class="lista">
+                {% for evento in eventos %}
+                <li>
+                    <div class="imagen" style="background-image: url('{{MEDIA_URL}}{{ evento.portada }}');"></div>
+                    <h2 class="titulo">
+                        <a href="{% url evento evento.slug evento.pk %}">{{evento}}</a>
+                        <small>
+                            {% if request.user.is_staff %}
+                            <a href="{% url evento evento.slug evento.pk %}">
+                                <i class="fa fa-pencil-square-o"></i>Editar</a>
+                            <a id="borrar-{{evento.pk}}" class="borrar" href="javascript:void(0)">
+                                <i class="fa fa-times"></i>Borrar</a>
+                            {% endif %}
+                            <i class="fa fa-calendar"></i>{{evento.fecha}}
+                        </small>
+                    </h2>
+                    <p>{{evento.contenido|safe|truncatewords_html:50}}</p>
+                    <p class="enlace">
+                        <a href="{% url evento evento.slug evento.pk %}">
+                            <i class="fa fa-plus"></i>Leer más</a>
+                    </p>
+                    <div class="fix"></div>
+                </li>
+                <li>
+                    <hr>
+                </li>
+                {% endfor %}
+            </ul>
+            <nav class="navegacion">
+                <a href="" class="boton left">Anterior</a>
+                <a href="" class="boton right">Siguiente</a>
+                <div class="fix"></div>
+            </nav>
+            {% else %}
+            <p class="center">No hay eventos registrados</p>
+            {% endif %}
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        csrfToken = '{{csrf_token}}';
+        urlAgregarEvento = '{% url agregar_evento %}';
+        urlBorrarEvento = '{% url borrar_evento %}';
+    </script>
+    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.eventos.js"></script>
+    <script src="{{STATIC_URL}}js/datetimepicker/jquery.datetimepicker.min.js"></script>
+    {% endif %}
+</body>
 
 </html>

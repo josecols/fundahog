@@ -32,6 +32,14 @@ body {
 	color: #555;
 	font-family: 'Open Sans', sans-serif;
 }
+i {
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	margin: 4px 5px 0;
+	text-align: center;
+	width: 1.25em;
+}
 #header {
 	height: 113px;
 	margin: 15px auto;
@@ -68,10 +76,13 @@ body {
 	text-shadow: 1px 1px 0 rgba(0, 0, 0, .7);
 }
 #status.exito {
-	background-color: #2ecc71;
+	background-color: #61C791;
 }
 #status.error {
-	background-color: #e74c3c;
+	background-color: #EB6B5D;
+}
+#status i {
+	font-size: 16px;
 }
 #barra {
 	background-color: #ECECEC;
@@ -342,10 +353,12 @@ body {
 	color: #108CDE;
 }
 #principal a,
-#principal .titulo small a,
-#principal .titulo small a:hover {
+#principal .titulo small a {
 	color: #A14C5E;
-	text-decoration: underline;
+	text-decoration: none;
+}
+#principal .titulo small a:hover {
+	color: #b16777
 }
 #principal a:hover,
 #principal .titulo small a:hover {

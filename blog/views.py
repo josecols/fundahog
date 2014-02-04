@@ -5,12 +5,12 @@
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
-from blog.forms import EntradaForm
 from django.utils import simplejson
 from portal.views import construir_data
 from blog.models import Categoria, Entrada
 from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
+from blog.forms import EntradaForm, CategoriaForm
 from django.template.context import RequestContext
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
@@ -33,7 +33,7 @@ def paginar(lista, pagina, cantidad):
     return entradas
 
 
-def construir_data(flag, msg):
+def construir_data(flag, msg, datos=None):
     data = {}
     if flag == 0:
         data['flag'] = 0
@@ -41,7 +41,7 @@ def construir_data(flag, msg):
     else:
         data['flag'] = -1
         data['errores'] = msg
-
+    data['data'] = datos
     return simplejson.dumps(data)
 
 
@@ -69,7 +69,7 @@ def busqueda(request, pagina='1', query=None):
         query = request.GET.get('q', '')
     if query:
         qset = Q(titulo__icontains=query) \
-            | Q(categorias__descripcion__icontains=query) \
+            | Q(categorias__slug__icontains=query) \
             | Q(contenido__icontains=query)
         lista = Entrada.objects.filter(qset).distinct()
         lista = lista.order_by('creado').reverse()
@@ -120,10 +120,17 @@ def agregar_categoria(request):
         and request.is_ajax():
         descripcion = request.POST.get('descripcion', None)
 
-        if descripcion:
+        form = CategoriaForm(request.POST)
+
+        if form.is_valid():
             categoria = Categoria(descripcion=descripcion)
             categoria.save()
-            return HttpResponse(simplejson.dumps(str(categoria.pk)),
+            return HttpResponse(construir_data(0,
+                                "Categoría agregada con éxito",
+                                str(categoria.pk)),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
                                 mimetype='application/javascript')
     raise Http404
 

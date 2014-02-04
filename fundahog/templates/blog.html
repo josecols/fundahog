@@ -2,271 +2,179 @@
 <html lang="es">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<title>FUNDAHOG</title>
-	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
-	<link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-	<link rel="stylesheet" href="{{STATIC_URL}}css/iconos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
 </head>
 
 {% load filters %}
 
 <body>
-	<header id="header">
-		<img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-		<table class="contacto">
-			<tr>
-				<td>Teléfono</td>
-				<td>
-					<span class="i-telefono"></span>
-				</td>
-			</tr>
-			<tr>
-				<td>Ubicación</td>
-				<td>
-					<span class="i-ubicacion"></span>
-				</td>
-			</tr>
-		</table>
-		<div class="fix"></div>
-	</header>
-	<div id="pagina" class="hardware">
-		<div id="status" class="exito"></div>
-		<a id="menu" class="toggler" href="javascript:void(0)">
-			<span class="i-menu"></span>Menú</a>
-		<nav id="barra">
-			<ul>
-				<li>
-					<a href="{% url nosotros %}">Nosotros</a>
-				</li>
-				<li>
-					<a class="seleccionado" href="{% url blog %}">Blog</a>
-				</li>
-				<li>
-					<a href="{% url programas %}">Programas</a>
-				</li>
-				<li>
-					<a href="{% url contacto %}">Contacto</a>
-				</li>
-				<li>
-					<a href="{% url eventos %}">Eventos</a>
-				</li>
-				<li>
-					<a href="{% url libros %}">Libros</a>
-				</li>
-				<li>
-					<a href="{% url galeria %}">Galería</a>
-				</li>
-				{% if request.user.is_staff %}
-				<li>
-					<a href="">Ayuda</a>
-				</li>
-				{% endif %}
-			</ul>
-		</nav>
-		<section id="principal">
-			<section id="contenido" class="left">
-				{% if request.user.is_staff %}
-				<form class="formulario admin entrada">
-					<div class="contenedor-input">
-						<input type="text" name="titulo" placeholder="Título">
-					</div>
-					<textarea id="entrada_contenido" name="contenido"></textarea>
-					{% if categorias %}
-					<label for="categorias">Categorias:</label>
-					<select name="categorias" multiple="multiple">
-						{% for categoria in categorias %}
-						<option value="{{categoria.pk}}">{{categoria}}</option>
-						{% endfor %}
-					</select>
-					<small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
-					{% endif %}
-				</form>
-				{% endif %} {% if entradas %} {% for entrada in entradas %}
-				<h1 class="titulo">
-					<a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
-					<small>
-						{% if request.user.is_staff %}
-						<a href="{% url entrada entrada.slug entrada.pk %}">
-							<span class="i-editar"></span>Editar</a>
-						<a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)">
-							<span class="i-borrar"></span>Borrar</a>
-						{% endif %}
-						<span class="i-calendario"></span>{{entrada.creado|date:"d/m/Y"}}
-						<span class="i-usuario"></span>{{entrada.autor|nombre_completo}}
-					</small>
-				</h1>
-				{{entrada.contenido|safe|truncatewords_html:50}}
-				<hr>{% endfor %} {% if entradas.has_previous or entradas.has_next %}
-				<nav class="navegacion">
-					{% if entradas.has_previous %}
-					<a href="{% url blog_pagina entradas.previous_page_number %}" class="boton left">Anterior</a>
-					{% endif %} {% if entradas.has_next %}
-					<a href="{% url blog_pagina entradas.next_page_number %}" class="boton right">Siguiente</a>
-					{% endif %}
-					<div class="fix"></div>
-				</nav>
-				{% endif %} {% else %}
-				<p class="center">No hay entradas registradas</p>
-				{% endif %}
-			</section>
-			<aside id="sidebar" class="right">
-				{% if request.user.is_staff %}
-				<a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
-					<span class="i-guardar"></span>Guardar</a>
-				<a id="nuevo" class="boton right" href="javascript:void(0)">
-					<span class="i-entrada"></span>Nueva entrada</a>
-				<div class="fix"></div>
-				{% endif %}
-				<form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
-					<div class="contenedor-input">
-						<span class="i-busqueda"></span>
-						<input name="q" type="text" placeholder="Búsqueda">
-					</div>
-					<div class="fix"></div>
-				</form>
-				<h2 class="titulo">Categorías</h2>
-				{% if request.user.is_staff %} {% if categorias %}
-				<nav class="categorias">
-					<ul>
-						{% for categoria in categorias %}
-						<li>
-							<a class="categoria" href="{% url blog_busqueda_query '1' categoria|lower %}">
-								<span class="i-categoria"></span>{{categoria}}</a>
-						</li>
-						{% endfor %}
-						<div class="fix"></div>
-					</ul>
-
-					<div id="nueva_categoria" contenteditable="true"></div>
-					<a id="agregar" href="javascript:void(0)">
-						<span class="i-mas"></span>Agregar</a>
-				</nav>
-				{% else %}
-				<p>No hay categorías registradas</p>
-				{% endif %} {% else %} {% if categorias %}
-				<nav class="categorias">
-					<ul>
-						{% for categoria in categorias %}
-						<li>
-							<a class="categoria" href="{% url blog_busqueda_query '1' categoria|lower %}">
-								<span class="i-categoria"></span>{{categoria}}</a>
-						</li>
-						{% endfor %}
-						<div class="fix"></div>
-					</ul>
-				</nav>
-				{% else %}
-				<p>No hay categorías registradas</p>
-				{% endif %} {% endif %}
-			</aside>
-			<div class="fix"></div>
-		</section>
-	</div>
-	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-	<script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
-	{% if request.user.is_staff %}
-	<script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-	<script src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
-	<script src="{{STATIC_URL}}js/jquery.mobile.js"></script>
-	<script src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-	<script>
-		window.onload = function() {
-				var html = CKEDITOR.replace('entrada_contenido');
-				var nueva_categoria = $('#nueva_categoria');
-
-				CKEDITOR.instances["nueva_categoria"].destroy()
-
-				$('#guardar').click(function() {
-					guardar();
-				});
-
-				$('#agregar').click(function() {
-					nueva_categoria.slideToggle('fast');
-					nueva_categoria.focus();
-					nueva_categoria.text('');
-					nueva_categoria.bind('keypress', function(e) {
-					    if (e.which == 13) {
-					    	if (nueva_categoria.text() == nueva_categoria.data('categoria'))
-        						return false;
-    						nueva_categoria.data('categoria', nueva_categoria.text());
-					        $('.categorias ul').prepend('<li><a class="categoria" href="javascript:void(0)"><span class="i-categoria"></span>' +
-					        nueva_categoria.text() + '</a></li>');
-					        nueva_categoria.css('display','none');
-					        agregarCategoria(nueva_categoria.text());
-					    }
-					});
-				});
-
-				$('.borrar').click(function() {
-					borrar(this);
-				});
-
-
-				function guardar() {
-					var titulo = $('input[name="titulo"]').val();
-					var contenido = '';
-					var categorias = $('select[name="categorias"]').val().join(',');
-
-					if (jQuery.browser.mobile) {
-						contenido = $('#entrada_contenido').val();
-					} else {
-						contenido = encodeURIComponent(html.getData());
-					}
-
-					var request = $.ajax({
-						async : true,
-						type : "POST",
-						url : "{% url agregar_entrada %}",
-						data : 'titulo=' + titulo
-						+ '&contenido=' + contenido
-						+ '&categorias=' + categorias
-						+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-						dataType : "text"
-					});
-					request.done(function(data) {
-						manejarRespuestaServidor(data);
-					});
-				}
-
-				function agregarCategoria(categoria) {
-					var request = $.ajax({
-						async : true,
-						type : "POST",
-						url : "{% url agregar_categoria %}",
-						data : 'descripcion=' + categoria
-								+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-						dataType : "text"
-					});
-					request.done(function(msg) {
-						if (msg) {
-							$('select[name="categorias"]').prepend('<option value="'+ msg + '">' + categoria + '</option>');
-						}
-					});
-				}
-
-				function borrar(boton) {
-					var pk = $(boton).attr('id').match(/[0-9]+/);
-					var respuesta = confirm("¿Está seguro que deasea eliminar la entrada?");
-
-					if (respuesta  == true) {
-		    			var request = $.ajax({
-							async : true,
-							type : "POST",
-							url : "{% url borrar_entrada %}",
-							data : 'entrada=' + pk
-							+ '&csrfmiddlewaretoken=' + '{{csrf_token}}',
-							dataType : "text"
-						});
-						request.done(function(data) {
-							manejarRespuestaServidor(data);
-						});
-					}
-				}
-			};
-	</script>
-	{% endif %}
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>Teléfono</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>Ubicación</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <div id="status" class="exito"></div>
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <form class="formulario admin entrada">
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <textarea id="entrada_contenido" name="contenido"></textarea>
+                    {% if categorias %}
+                    <label for="categorias">Categorias:</label>
+                    <select name="categorias" multiple="multiple">
+                        {% for categoria in categorias %}
+                        <option value="{{categoria.pk}}">{{categoria}}</option>
+                        {% endfor %}
+                    </select>
+                    <small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
+                    {% endif %}
+                </form>
+                {% endif %} {% if entradas %} {% for entrada in entradas %}
+                <h1 class="titulo">
+                    <a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
+                    <small>
+                        {% if request.user.is_staff %}
+                        <a href="{% url entrada entrada.slug entrada.pk %}">
+                            <i class="fa fa-pencil-square-o"></i>Editar</a>
+                        <a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)">
+                            <i class="fa fa-times"></i>Borrar</a>
+                        {% endif %}
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </h1>
+                {{entrada.contenido|safe|truncatewords_html:50}}
+                <hr>{% endfor %} {% if entradas.has_previous or entradas.has_next %}
+                <nav class="navegacion">
+                    {% if entradas.has_previous %}
+                    <a href="{% url blog_pagina entradas.previous_page_number %}" class="boton left">Anterior</a>
+                    {% endif %} {% if entradas.has_next %}
+                    <a href="{% url blog_pagina entradas.next_page_number %}" class="boton right">Siguiente</a>
+                    {% endif %}
+                    <div class="fix"></div>
+                </nav>
+                {% endif %} {% else %}
+                <p class="center">No hay entradas registradas</p>
+                {% endif %}
+            </section>
+            <aside id="sidebar" class="right">
+                {% if request.user.is_staff %}
+                <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
+                    <i class="fa fa-floppy-o"></i>Guardar</a>
+                <a id="nuevo" class="boton right" href="javascript:void(0)">
+                    <i class="fa fa-file-text-o"></i>Nueva entrada</a>
+                <div class="fix"></div>
+                {% endif %}
+                <form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
+                    <div class="contenedor-input">
+                        <i class="fa fa-search"></i>
+                        <input name="q" type="text" placeholder="Búsqueda">
+                    </div>
+                    <div class="fix"></div>
+                </form>
+                <h2 class="titulo">Categorías</h2>
+                {% if request.user.is_staff %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url blog_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                    <div id="nueva_categoria" contenteditable="true"></div>
+                    <a id="agregar" href="javascript:void(0)">
+                        <i class="fa fa-plus"></i>Agregar</a>
+                </nav>
+                {% else %} {% if categorias %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url blog_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                </nav>
+                {% else %}
+                <p>No hay categorías registradas</p>
+                {% endif %} {% endif %}
+            </aside>
+            <div class="fix"></div>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        csrfToken = '{{csrf_token}}';
+        urlAgregarEntrada = '{% url agregar_entrada %}';
+        urlBorrarEntrada = '{% url borrar_entrada %}';
+        urlAgregarCategoria = '{% url agregar_categoria %}';
+    </script>
+    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.blog.js"></script>
+    {% endif %}
 </body>
 
 </html>
