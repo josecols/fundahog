@@ -17,13 +17,13 @@
         <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
         <table class="contacto">
             <tr>
-                <td>Teléfono</td>
+                <td>{% for telefono in telefonos.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
                 <td>
                     <i class="fa fa-phone"></i>
                 </td>
             </tr>
             <tr>
-                <td>Ubicación</td>
+                <td>{{direccion}}</td>
                 <td>
                     <i class="fa fa-map-marker"></i>
                 </td>
@@ -122,7 +122,7 @@
                 <form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
                     <div class="contenedor-input">
                         <i class="fa fa-search"></i>
-                        <input name="q" type="text" placeholder="Búsqueda">
+                        <input name="q" type="text" placeholder="{% if query %}{{query|safe}}{% else %}Búsqueda{% endif %}">
                     </div>
                     <div class="fix"></div>
                 </form>

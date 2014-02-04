@@ -6,7 +6,6 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from django.utils import simplejson
-from portal.views import construir_data
 from blog.models import Categoria, Entrada
 from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
@@ -15,53 +14,39 @@ from django.template.context import RequestContext
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from portal.views import construir_data, paginar, \
+    informacion_organizacion
 
 # Publicaciones por página
 
 ENTRADAS = 10
 
 
-def paginar(lista, pagina, cantidad):
-    paginator = Paginator(lista, cantidad)
-    try:
-        entradas = paginator.page(pagina)
-    except PageNotAnInteger:
-        entradas = paginator.page(1)
-    except EmptyPage:
-        entradas = paginator.page(paginator.num_pages)
-    return entradas
-
-
-def construir_data(flag, msg, datos=None):
-    data = {}
-    if flag == 0:
-        data['flag'] = 0
-        data['msg'] = msg
-    else:
-        data['flag'] = -1
-        data['errores'] = msg
-    data['data'] = datos
-    return simplejson.dumps(data)
-
-
 def index(request, pagina='1'):
     lista = Entrada.objects.order_by('creado').reverse()
     entradas = paginar(lista, pagina, ENTRADAS)
     categorias = Categoria.objects.all()
-    return render_to_response('blog.html', {'entradas': entradas,
-                              'categorias': categorias,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('blog.html', {
+        'entradas': entradas,
+        'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def entrada(request, slug, entrada_id):
     entrada = get_object_or_404(Entrada, pk=entrada_id)
     categorias = Categoria.objects.all()
-    return render_to_response('entrada.html', {'entrada': entrada,
-                              'categorias': categorias,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('entrada.html', {
+        'entrada': entrada,
+        'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def busqueda(request, pagina='1', query=None):
@@ -77,11 +62,14 @@ def busqueda(request, pagina='1', query=None):
     else:
         entradas = None
     categorias = Categoria.objects.all()
+    (direccion, telefonos) = informacion_organizacion()
 
     return render_to_response('busqueda.html', {
         'entradas': entradas,
         'query': query,
         'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
         'request': request,
         }, context_instance=RequestContext(request))
 

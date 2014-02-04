@@ -131,7 +131,7 @@ class Organizacion(models.Model):
         verbose_name = "organización"
         verbose_name_plural = "organización"
 
-    def __unicode__(self):
+    def __str__(self):
         return "Información de la organización"
 
 

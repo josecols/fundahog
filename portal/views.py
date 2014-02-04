@@ -8,15 +8,27 @@
 from datetime import datetime
 from django.utils import simplejson
 from portal.forms import EventoForm
-from portal.models import Evento, Seccion
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ValidationError
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
+from portal.models import Evento, Seccion, Organizacion
 from django.shortcuts import render_to_response, get_object_or_404
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-def construir_data(flag, msg):
+def paginar(lista, pagina, cantidad):
+    paginator = Paginator(lista, cantidad)
+    try:
+        entradas = paginator.page(pagina)
+    except PageNotAnInteger:
+        entradas = paginator.page(1)
+    except EmptyPage:
+        entradas = paginator.page(paginator.num_pages)
+    return entradas
+
+
+def construir_data(flag, msg, datos=None):
     data = {}
     if flag == 0:
         data['flag'] = 0
@@ -24,55 +36,89 @@ def construir_data(flag, msg):
     else:
         data['flag'] = -1
         data['errores'] = msg
-
+    data['data'] = datos
     return simplejson.dumps(data)
+
+
+def informacion_organizacion():
+    organizacion = Organizacion.objects.all()[0]
+    telefonos = organizacion.telefonos.filter(principal=True)
+    return (organizacion.direccion, telefonos)
 
 
 def eventos(request):
     eventos = Evento.objects.all()
-    return render_to_response('eventos.html', {'eventos': eventos,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('eventos.html', {
+        'eventos': eventos,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def evento(request, slug, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
-    return render_to_response('evento.html', {'evento': evento,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('evento.html', {
+        'evento': evento,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def programas(request):
-    return render_to_response('programas.html', {'request': request},
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('programas.html',
+                              {'direccion': direccion,
+                              'telefonos': telefonos,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 
 def nosotros(request, slug=None):
     seccion = get_object_or_404(Seccion, titulo='Nosotros')
+    (direccion, telefonos) = informacion_organizacion()
 
     if slug:
         subseccion = get_object_or_404(Seccion, slug=slug)
     else:
         subseccion = None
 
-    return render_to_response('nosotros.html', {'seccion': seccion,
-                              'subseccion': subseccion,
+    return render_to_response('nosotros.html', {
+        'seccion': seccion,
+        'subseccion': subseccion,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
+def contacto(request):
+    organizacion = Organizacion.objects.all()[0]
+    telefonos_principales = \
+        organizacion.telefonos.filter(principal=True)
+    return render_to_response('contacto.html',
+                              {'organizacion': organizacion,
+                              'telefonos_principales': telefonos_principales,
                               'request': request},
                               context_instance=RequestContext(request))
 
 
-def contacto(request):
-    return render_to_response('contacto.html', {'request': request},
-                              context_instance=RequestContext(request))
-
-
 def galeria(request):
-    return render_to_response('galeria.html', {'request': request},
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('galeria.html', {'direccion': direccion,
+                              'telefonos': telefonos,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 
 def libros(request):
-    return render_to_response('libros.html', {'request': request},
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('libros.html', {'direccion': direccion,
+                              'telefonos': telefonos,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 
