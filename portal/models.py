@@ -22,6 +22,8 @@ def uuid_slug(uuid):
 def directorio(instance, nombre):
     if isinstance(instance, Evento):
         ruta = 'uploads/eventos'
+    elif isinstance(instance, Imagen):
+        ruta = 'uploads/imagenes'
     else:
         ruta = 'uploads/error'
 
@@ -71,7 +73,7 @@ class Seccion(models.Model):
             help_text='Toda subsección es integrada en la sección más general.'
             )
     slug = models.SlugField(max_length=100, unique=True, editable=False)
-    creado = models.DateTimeField(editable=False, auto_now_add=True)
+    creado = models.DateField(editable=False, auto_now_add=True)
 
     class Meta:
 
@@ -85,6 +87,47 @@ class Seccion(models.Model):
         if not self.id:
             self.slug = slugify(self.titulo)
         super(Seccion, self).save()
+
+
+class Imagen(models.Model):
+
+    titulo = models.CharField(max_length=100, unique=True,
+                              verbose_name="título")
+    imagen = models.ImageField(upload_to=directorio)
+
+    class Meta:
+
+        verbose_name = 'imagen'
+        verbose_name_plural = 'imágenes'
+
+    def __unicode__(self):
+        return self.titulo
+
+
+class Album(models.Model):
+
+    titulo = models.CharField(max_length=100, unique=True,
+                              verbose_name="título")
+    imagenes = models.ManyToManyField(Imagen, verbose_name='imágenes')
+    creado = models.DateField(editable=False, auto_now_add=True)
+
+    class Meta:
+
+        verbose_name = "álbum"
+        verbose_name_plural = 'álbumes'
+
+    def __unicode__(self):
+        return self.titulo
+
+
+class Galeria(models.Model):
+
+    titulo = models.CharField(max_length=100, unique=True,
+                              verbose_name="título")
+    albumes = models.ManyToManyField(Album, verbose_name='álbumes')
+
+    def __unicode__(self):
+        return self.titulo
 
 
 class Telefono(models.Model):

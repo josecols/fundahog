@@ -7,7 +7,7 @@
 
 from django.contrib import admin
 from portal.models import Evento, Seccion, Telefono, Correo, \
-    Organizacion
+    Organizacion, Imagen, Album, Galeria
 from portal.forms import EventoForm, SeccionForm
 
 
@@ -36,3 +36,6 @@ admin.site.register(Seccion, SeccionAdmin)
 admin.site.register(Telefono)
 admin.site.register(Correo)
 admin.site.register(Organizacion)
+admin.site.register(Imagen)
+admin.site.register(Album)
+admin.site.register(Galeria)
