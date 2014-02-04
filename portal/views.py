@@ -6,9 +6,9 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from datetime import datetime
-from portal.models import Evento
 from django.utils import simplejson
 from portal.forms import EventoForm
+from portal.models import Evento, Seccion
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ValidationError
 from django.template.context import RequestContext
@@ -47,8 +47,17 @@ def programas(request):
                               context_instance=RequestContext(request))
 
 
-def nosotros(request):
-    return render_to_response('nosotros.html', {'request': request},
+def nosotros(request, slug=None):
+    seccion = get_object_or_404(Seccion, titulo='Nosotros')
+
+    if slug:
+        subseccion = get_object_or_404(Seccion, slug=slug)
+    else:
+        subseccion = None
+
+    return render_to_response('nosotros.html', {'seccion': seccion,
+                              'subseccion': subseccion,
+                              'request': request},
                               context_instance=RequestContext(request))
 
 

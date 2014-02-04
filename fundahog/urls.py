@@ -11,8 +11,7 @@ from django.conf.urls import patterns, include, url
 
 admin.autodiscover()
 
-urlpatterns = patterns(  # Blog
-                         # Portal
+urlpatterns = patterns(
     '',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
@@ -36,6 +35,8 @@ urlpatterns = patterns(  # Blog
     url(r'^blog/busqueda-(?P<pagina>\d+)/(?P<query>[-\w]+)/$',
         'blog.views.busqueda', name='blog_busqueda_query'),
     url(r'^nosotros/$', 'portal.views.nosotros', name='nosotros'),
+    url(r'^nosotros/(?P<slug>[-\w]+)$', 'portal.views.nosotros',
+        name='nosotros_subseccion'),
     url(r'^programas/$', 'portal.views.programas', name='programas'),
     url(r'^contacto/$', 'portal.views.contacto', name='contacto'),
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),

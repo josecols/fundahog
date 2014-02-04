@@ -66,37 +66,41 @@
             <aside id="sidebar" class="left">
                 <nav>
                     <ul>
+                        {% for s in seccion.secciones.all %}
                         <li>
-                            <a class="seleccionado" href="">Objetivos
+                            {% if s.titulo == subseccion.titulo %}
+                            <a href="{% url nosotros_subseccion s.titulo|slugify %}" class="seleccionado">{{s.titulo}}
                                 <span class="flecha"></span>
                             </a>
+                            {% else %}
+                            <a href="{% url nosotros_subseccion s.titulo|slugify %}">{{s.titulo}}</a>
+                            {% endif %}
                         </li>
-                        <li>
-                            <a href="">Directiva</a>
-                        </li>
-                        <li>
-                            <a href="">Patrocinio</a>
-                        </li>
-                        <li>
-                            <a href="">Enlaces</a>
-                        </li>
-                        <li>
-                            <a href="">Directorio</a>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </nav>
             </aside>
+            {% if subseccion %}
             <section id="contenido" class="right">
                 <h1 class="titulo">
-                    <a href="javascript:void(0)">Las frutas y vegetales que combaten el cáncer</a>
+                    <a href="javascript:void(0)">{{subseccion.titulo}}</a>
                     <small>
-                        <i class="fa fa-calendar"></i>10/08/2013</small>
+                        <i class="fa fa-calendar"></i>{{subseccion.creado}}</small>
                 </h1>
-                <p>El consumir por lo menos cinco raciones de frutas y vegetales al día puede disminuir significativamente su riesgo de desarrollar un cáncer. Las frutas y los vegetales contienen vitaminas que ayudan a prevenir el cáncer al igual que muchos fitaquímicos - algunos ya conocidos, otro más aún por ser descubiertos - que también ayudan a prevenir el cáncer.</p>
-                <br>
-                <p>La siguiente lista de frutas y vegetales son bien conocidos por contener algunos de estos compuestos: Manzanas, Albaricoques, Espárragos, Remolacha, Bayas, Brócoli, Bok choy, Coles de Bruselas, Repollo, Melón, Zanahorias, Frutas cítricas, Pepinos, Berenjenas, Ajo, Cale, Kiwi, Mango, Cebollas, Perejil, Lechosa, Melocotones, Arvejas, Pimentones, Papas, Auyama, Lechuga romana y de hojas rojas, Productos de soya, Espinaca, Calabaza, Batata, Tomates, Nabo verde, Ñame.</p>
+                {{subseccion.contenido|safe}}
                 <hr>
             </section>
+            {% else %}
+            <section id="contenido" class="right">
+                <h1 class="titulo">
+                    <a href="javascript:void(0)">{{seccion.titulo}}</a>
+                    <small>
+                        <i class="fa fa-calendar"></i>{{seccion.creado}}</small>
+                </h1>
+                {{seccion.contenido|safe}}
+                <hr>
+            </section>
+            {% endif %}
             <div class="fix"></div>
         </section>
     </div>

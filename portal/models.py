@@ -45,7 +45,7 @@ class Evento(models.Model):
     contenido = models.TextField()
     portada = models.ImageField(upload_to=directorio)
     fecha = \
-        models.DateTimeField(help_text='Formato de 24 horas. P. ej. 16:00'
+        models.DateTimeField(help_text='Formato de 24 horas. P. ej. 16:00.'
                              )
     slug = models.SlugField(max_length=100, editable=False)
 
@@ -68,9 +68,9 @@ class Seccion(models.Model):
     contenido = models.TextField()
     secciones = models.ManyToManyField('self', blank=True,
             verbose_name='Subsecciones',
-            help_text='Toda subsección es integrada en la sección más general'
+            help_text='Toda subsección es integrada en la sección más general.'
             )
-    slug = models.SlugField(max_length=100, editable=False)
+    slug = models.SlugField(max_length=100, unique=True, editable=False)
     creado = models.DateTimeField(editable=False, auto_now_add=True)
 
     class Meta:
@@ -96,7 +96,7 @@ class Telefono(models.Model):
                                 help_text='Formato XXX-XXX-XXXX. P. ej. 414-853-0463'
                                 )
     principal = \
-        models.BooleanField(help_text='Un número marcado como principal aparecerá en la cabecera del sitio'
+        models.BooleanField(help_text='Un número marcado como principal aparecerá en la cabecera del sitio.'
                             )
 
     class Meta:
