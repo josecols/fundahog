@@ -199,7 +199,7 @@ def agregar_imagen(request):
         if form.is_valid():
             album.imagenes.add(form.save())
             return HttpResponse(construir_data(0,
-                                'Evento agregado con éxito'),
+                                'Imagen agregado con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),

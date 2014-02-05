@@ -105,7 +105,7 @@
                         <i class="fa fa-calendar"></i>{{evento.fecha}}
                     </small>
                 </h1>
-                <img src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">{{evento.contenido|safe}}
+                <img class="portada" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">{{evento.contenido|safe}}
                 <div class="fix"></div>
                 {% endif %}
                 <hr>

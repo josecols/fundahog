@@ -11,7 +11,8 @@ window.onload = function () {
     ckeditor = CKEDITOR.replace('entrada_contenido');
     var nueva_categoria = $('#nueva_categoria');
 
-    CKEDITOR.instances["nueva_categoria"].destroy();
+    if (!jQuery.browser.mobile)
+        CKEDITOR.instances["nueva_categoria"].destroy();
 
     $('#nuevo').click(function () {
         $('.formulario.admin').slideToggle('fast');

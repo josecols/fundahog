@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">{% endif %}
-</head>
-
-{% load filters %}
+</head>{% load filters %}
 
 <body>
     <header id="header">
@@ -68,46 +66,6 @@
             </ul>
         </nav>
         <section id="principal">
-            <section id="contenido" class="left">
-                {% if request.user.is_staff %}
-                <div class="titulo">
-                    <div id="titulo" contenteditable="true">
-                        {{entrada}}
-                    </div>
-                    <small>
-                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
-                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
-                    </small>
-                </div>
-                <a href="#modal" class="pop fancybox">
-                    <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
-                <div id="modal">
-                    <h2 class="titulo">Selecciona una imagen existente</h2>
-                    <label for="galerias">Galería:</label>
-                    <select name="galerias" id="galerias"></select>
-                    <label for="albumes">Álbum:</label>
-                    <select name="albumes" id="albumes"></select>
-                    <ul class="imagenes"></ul>
-                    <label for="imagen">Agregar imagen:</label>
-                    <div class="contenedor-input">
-                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
-                    </div>
-                    <input type="file" name="imagen" id="imagen">
-                </div>
-                <div id="contenido-html" contenteditable="true">
-                    {{entrada.contenido|safe}}
-                </div>
-                {% else %}
-                <h1 class="titulo">{{entrada}}
-                    <small>
-                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
-                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
-                    </small>
-                </h1>
-                {{entrada.contenido|safe}} {% endif %}
-                <div class="fix"></div>
-                <hr>
-            </section>
             <aside id="sidebar" class="right">
                 {% if request.user.is_staff %}
                 <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">Modo edición activo</a>
@@ -154,6 +112,46 @@
                 <p>No hay categorías registradas</p>
                 {% endif %} {% endif %}
             </aside>
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <div class="titulo">
+                    <div id="titulo" contenteditable="true">
+                        {{entrada}}
+                    </div>
+                    <small>
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </div>
+                <a href="#modal" class="pop fancybox">
+                    <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
+                <div id="modal">
+                    <h2 class="titulo">Selecciona una imagen existente</h2>
+                    <label for="galerias">Galería:</label>
+                    <select name="galerias" id="galerias"></select>
+                    <label for="albumes">Álbum:</label>
+                    <select name="albumes" id="albumes"></select>
+                    <ul class="imagenes"></ul>
+                    <label for="imagen">Agregar imagen:</label>
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                    </div>
+                    <input type="file" name="imagen" id="imagen">
+                </div>
+                <div id="contenido-html" contenteditable="true">
+                    {{entrada.contenido|safe}}
+                </div>
+                {% else %}
+                <h1 class="titulo">{{entrada}}
+                    <small>
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </h1>
+                {{entrada.contenido|safe}} {% endif %}
+                <div class="fix"></div>
+                <hr>
+            </section>
             <div class="fix"></div>
         </section>
     </div>

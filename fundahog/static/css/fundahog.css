@@ -70,10 +70,11 @@ i {
 }
 #status {
     color: #FFF;
-    border-radius: 4px;
     display: none;
+    border-radius: 4px;
     padding: 5px;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, .7);
+    margin-bottom: 10px;
 }
 #status.exito {
     background-color: #61C791;
