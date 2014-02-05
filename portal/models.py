@@ -9,6 +9,7 @@ import uuid
 import os
 from PIL import Image
 from django.db import models
+from django.core.files import File
 from django.contrib.sites.models import Site
 from django.db.models.signals import pre_delete
 from django.core.validators import RegexValidator
@@ -32,12 +33,28 @@ def directorio(instance, nombre):
     return os.path.join(ruta, nombre)
 
 
-def redimensionar(archivo, ancho_requerido, alto_requerido):
+def redimensionar(
+    archivo,
+    ancho_requerido,
+    alto_requerido,
+    archivo_salida=None,
+    ):
+
     imagen = Image.open(archivo)
     (ancho, alto) = imagen.size
     if alto > alto_requerido and ancho > ancho_requerido:
         imagen.thumbnail((ancho_requerido, alto), Image.ANTIALIAS)
-        imagen.save(archivo)
+        if archivo_salida:
+            imagen.save(archivo_salida)
+        else:
+            imagen.save(archivo)
+
+
+def thumbnail(archivo, ancho_requerido, alto_requerido):
+    thumb = os.path.splitext(archivo)[0] + '.thumbnail' \
+        + os.path.splitext(archivo)[1]
+    redimensionar(archivo, ancho_requerido, alto_requerido, thumb)
+    return thumb
 
 
 class Evento(models.Model):
@@ -94,6 +111,7 @@ class Imagen(models.Model):
     titulo = models.CharField(max_length=100, unique=True,
                               verbose_name="título")
     imagen = models.ImageField(upload_to=directorio)
+    thumbnail = models.CharField(max_length=255, editable=False)
 
     class Meta:
 
@@ -102,6 +120,14 @@ class Imagen(models.Model):
 
     def __unicode__(self):
         return self.titulo
+
+    def save(self):
+        super(Imagen, self).save()
+        if self.imagen:
+            archivo = self.imagen.path
+            self.thumbnail = 'uploads/imagenes/' \
+                + os.path.basename(thumbnail(archivo, 200, 200))
+            super(Imagen, self).save()
 
 
 class Album(models.Model):
@@ -188,5 +214,19 @@ def borrar_portada(sender, instance, **kwargs):
             pass
 
 
+def borrar_imagen(sender, instance, **kwargs):
+    if instance.imagen:
+        try:
+            os.remove(instance.imagen.path)
+        except OSError:
+            pass
+    if instance.thumbnail:
+        try:
+            os.remove(instance.thumbnail)
+        except OSError:
+            pass
+
+
 pre_delete.connect(borrar_portada, sender=Evento)
+pre_delete.connect(borrar_imagen, sender=Imagen)
 

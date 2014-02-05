@@ -63,7 +63,15 @@
             </ul>
         </nav>
         <section id="principal">
+            {% if galeria %} {% for album in galeria.albumes.all %}
+            <h1 class="titulo">{{album}}</h1>
+            {% for imagen in album.imagenes.all %}
+            <div class="thumbnail" style="background-image: url('{{MEDIA_URL}}{{imagen.thumbnail}}');"></div>
+            {% endfor %} {% endfor %}
+            <div class="fix"></div>
+            {% else %}
             <p class="center">No hay fotos registradas</p>
+            {% endif %}
             <nav class="navegacion">
                 <a href="" class="boton left">Anterior</a>
                 <a href="" class="boton right">Siguiente</a>

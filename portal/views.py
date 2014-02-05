@@ -115,11 +115,14 @@ def contacto(request):
 
 
 def galeria(request):
+    galeria = get_object_or_404(Galeria, titulo='Principal')
     (direccion, telefonos) = informacion_organizacion()
-    return render_to_response('galeria.html', {'direccion': direccion,
-                              'telefonos': telefonos,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    return render_to_response('galeria.html', {
+        'galeria': galeria,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def libros(request):
