@@ -14,10 +14,6 @@ function pseudoUUID() {
 }
 
 $(document).ready(function () {
-    if (jQuery.browser.mobile) {
-        $('.pop.fancybox').hide();
-    }
-
     $('input[name=imagen]').change(function () {
         var titulo;
         var album = $(this).attr('data-album').match(/[0-9]+/);

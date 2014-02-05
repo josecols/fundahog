@@ -196,6 +196,16 @@ i {
 #modal .titulo {
     margin-top: 0;
 }
+#principal div.imagenes {
+    text-align: center;
+}
+#principal div.imagenes:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em;
+}
 #principal #contenido {
     width: 100%;
 }
@@ -218,7 +228,8 @@ i {
     width: 100px;
     height: 100px;
     margin: 5px;
-    float: left;
+    display: inline-block;
+    vertical-align: middle;
 }
 #principal .thumbnail:hover {
     box-shadow: inset 1px 1px 4px 2px rgba(0, 0, 0, .5);

@@ -17,7 +17,6 @@ $(document).ready(function () {
     if (jQuery.browser.mobile) {
         $('.pop.fancybox').hide();
     }
-
     $('.pop.fancybox').click(function () {
         var request = $.ajax({
             async: true,

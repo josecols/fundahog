@@ -84,8 +84,7 @@
                 <a class="thumbnail fancybox" href="{{MEDIA_URL}}{{imagen.imagen}}" data-fancybox-group="{{album|slugify}}" title="{{imagen}}" style="background-image: url('{{MEDIA_URL}}{{imagen.thumbnail}}');"></a>
                 {% endfor %}
             </div>
-
-            <div class="fix"></div>{% endfor %} {% else %}
+            {% endfor %} {% else %}
             <p class="center">No hay fotos registradas</p>
             {% endif %}
         </section>
@@ -98,7 +97,6 @@
         csrfToken = '{{csrf_token}}';
         urlAgregarImagen = '{% url agregar_imagen %}';
     </script>
-    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.cargar.js"></script>
