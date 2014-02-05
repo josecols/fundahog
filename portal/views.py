@@ -7,14 +7,17 @@
 
 from datetime import datetime
 from django.utils import simplejson
-from portal.forms import EventoForm
+from django.db.models.query import QuerySet
+from django.forms.models import model_to_dict
 from django.http import HttpResponse, Http404
+from portal.forms import EventoForm, ImagenForm
 from django.core.exceptions import ValidationError
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
-from portal.models import Evento, Seccion, Organizacion
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from portal.models import Evento, Seccion, Organizacion, Galeria, \
+    Album, Imagen
 
 
 def paginar(lista, pagina, cantidad):
@@ -36,13 +39,18 @@ def construir_data(flag, msg, datos=None):
     else:
         data['flag'] = -1
         data['errores'] = msg
+    if isinstance(datos, QuerySet):
+        datos = [model_to_dict(obj) for obj in datos]
     data['data'] = datos
     return simplejson.dumps(data)
 
 
 def informacion_organizacion():
-    organizacion = Organizacion.objects.all()[0]
-    telefonos = organizacion.telefonos.filter(principal=True)
+    try:
+        organizacion = Organizacion.objects.all()[0]
+        telefonos = organizacion.telefonos.filter(principal=True)
+    except IndexError:
+        return (None, None)
     return (organizacion.direccion, telefonos)
 
 
@@ -179,3 +187,60 @@ def agregar_evento(request):
                                 mimetype='application/javascript')
     raise Http404
 
+
+@csrf_protect
+def agregar_imagen(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        album = get_object_or_404(Album, pk=request.POST.get('album',
+                                  None))
+        form = ImagenForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            album.imagenes.add(form.save())
+            return HttpResponse(construir_data(0,
+                                'Evento agregado con éxito'),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def galerias(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        galerias = Galeria.objects.all()
+        return HttpResponse(construir_data(0,
+                            'Galerias consultadas con éxito',
+                            galerias), mimetype='application/javascript'
+                            )
+    raise Http404
+
+
+@csrf_protect
+def albumes(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        galeria = request.POST.get('galeria', None)
+        albumes = Album.objects.filter(galeria=galeria)
+        return HttpResponse(construir_data(0,
+                            'Albumes consultadas con éxito', albumes),
+                            mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def imagenes(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        album = request.POST.get('album', None)
+        imagenes = Imagen.objects.filter(album=1)
+        data = [{'id': imagen.pk, 'titulo': imagen.titulo,
+                'imagen': imagen.imagen.url} for imagen in imagenes]
+
+        return HttpResponse(construir_data(0,
+                            'Imagenes consultadas con éxito', data),
+                            mimetype='application/javascript')
+    raise Http404

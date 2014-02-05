@@ -5,8 +5,18 @@
     Version: 1.0
 */
 
+ckeditor = null;
+
 window.onload = function () {
-    var html = CKEDITOR.replace('evento_contenido');
+    ckeditor = CKEDITOR.replace('evento_contenido');
+
+    $('#nuevo').click(function () {
+        $('.formulario.admin').slideToggle('fast');
+        $("html, body").animate({
+            scrollTop: 0
+        }, "slow");
+        $('#guardar').toggle();
+    });
 
     $('.borrar').click(function () {
         borrar(this);
@@ -44,7 +54,7 @@ window.onload = function () {
         if (jQuery.browser.mobile) {
             contenido = $('#evento_contenido').val();
         } else {
-            contenido = html.getData();
+            contenido = ckeditor.getData();
         }
 
         $('#portada').upload(urlAgregarEvento, {

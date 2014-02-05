@@ -8,7 +8,8 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
-    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.datetimepicker.css">{% endif %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">{% endif %}
 </head>
 
 <body>
@@ -68,10 +69,25 @@
         <section id="principal">
             {% if request.user.is_staff %}
             <section id="contenido" class="left">
-                <form class="formulario admin entrada" enctype="multipart/form-data">
+                <form class="formulario admin" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="contenedor-input">
                         <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <a href="#modal" class="pop fancybox">
+                        <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
+                    <div id="modal">
+                        <h2 class="titulo">Selecciona una imagen existente</h2>
+                        <label for="galerias">Galería:</label>
+                        <select name="galerias" id="galerias"></select>
+                        <label for="albumes">Álbum:</label>
+                        <select name="albumes" id="albumes"></select>
+                        <ul class="imagenes"></ul>
+                        <label for="imagen">Agregar imagen:</label>
+                        <div class="contenedor-input">
+                            <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                        </div>
+                        <input type="file" name="imagen" id="imagen">
                     </div>
                     <textarea id="evento_contenido" name="contenido"></textarea>
                     <label>Fecha y hora del evento:</label>
@@ -94,7 +110,7 @@
             <ul class="lista">
                 {% for evento in eventos %}
                 <li>
-                    <div class="imagen" style="background-image: url('{{MEDIA_URL}}{{ evento.portada }}');"></div>
+                    <div class="portada" style="background-image: url('{{MEDIA_URL}}{{ evento.portada }}');"></div>
                     <h2 class="titulo">
                         <a href="{% url evento evento.slug evento.pk %}">{{evento}}</a>
                         <small>
@@ -133,16 +149,22 @@
     <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
+        inline = false;
         csrfToken = '{{csrf_token}}';
         urlAgregarEvento = '{% url agregar_evento %}';
         urlBorrarEvento = '{% url borrar_evento %}';
+        urlGalerias = '{% url galerias %}';
+        urlAlbumes = '{% url albumes %}';
+        urlImagenes = '{% url imagenes %}';
+        urlAgregarImagen = '{% url agregar_imagen %}';
     </script>
     <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.eventos.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     <script src="{{STATIC_URL}}js/datetimepicker/jquery.datetimepicker.min.js"></script>
     {% endif %}
 </body>

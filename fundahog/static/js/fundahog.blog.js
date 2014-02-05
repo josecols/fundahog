@@ -5,8 +5,10 @@
     Version: 1.0
 */
 
+ckeditor = null;
+
 window.onload = function () {
-    var html = CKEDITOR.replace('entrada_contenido');
+    ckeditor = CKEDITOR.replace('entrada_contenido');
     var nueva_categoria = $('#nueva_categoria');
 
     CKEDITOR.instances["nueva_categoria"].destroy();
@@ -51,7 +53,7 @@ window.onload = function () {
         if (jQuery.browser.mobile) {
             contenido = $('#entrada_contenido').val();
         } else {
-            contenido = encodeURIComponent(html.getData());
+            contenido = encodeURIComponent(ckeditor.getData());
         }
 
         var request = $.ajax({

@@ -50,4 +50,9 @@ urlpatterns = patterns(
         name='borrar_evento'),
     url(r'^libros/$', 'portal.views.libros', name='libros'),
     url(r'^galeria/$', 'portal.views.galeria', name='galeria'),
+    url(r'^galerias/$', 'portal.views.galerias', name='galerias'),
+    url(r'^albumes/$', 'portal.views.albumes', name='albumes'),
+    url(r'^imagenes/$', 'portal.views.imagenes', name='imagenes'),
+    url(r'^imagenes/imagen/agregar/$', 'portal.views.agregar_imagen',
+        name='agregar_imagen'),
     )

@@ -6,7 +6,7 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from django import forms
-from portal.models import Evento, Seccion
+from portal.models import Evento, Seccion, Imagen
 from django.core.files.images import get_image_dimensions
 
 
@@ -36,5 +36,12 @@ class SeccionForm(forms.ModelForm):
         super(SeccionForm, self).__init__(*args, **kwargs)
         self.fields['secciones'].queryset = \
             Seccion.objects.exclude(id__exact=self.instance.pk)
+
+
+class ImagenForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Imagen
 
 

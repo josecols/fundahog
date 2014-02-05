@@ -8,7 +8,8 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
-    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">{% endif %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">{% endif %}
 </head>
 
 {% load filters %}
@@ -78,6 +79,21 @@
                         <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
                     </small>
                 </div>
+                <a href="#modal" class="pop fancybox">
+                    <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
+                <div id="modal">
+                    <h2 class="titulo">Selecciona una imagen existente</h2>
+                    <label for="galerias">Galería:</label>
+                    <select name="galerias" id="galerias"></select>
+                    <label for="albumes">Álbum:</label>
+                    <select name="albumes" id="albumes"></select>
+                    <ul class="imagenes"></ul>
+                    <label for="imagen">Agregar imagen:</label>
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                    </div>
+                    <input type="file" name="imagen" id="imagen">
+                </div>
                 <div id="contenido-html" contenteditable="true">
                     {{entrada.contenido|safe}}
                 </div>
@@ -89,6 +105,7 @@
                     </small>
                 </h1>
                 {{entrada.contenido|safe}} {% endif %}
+                <div class="fix"></div>
                 <hr>
             </section>
             <aside id="sidebar" class="right">
@@ -144,21 +161,31 @@
     <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
+        inline = true;
         url = '{% url modificar_entrada %}';
+        csrfToken = '{{csrf_token}}';
+        urlGalerias = '{% url galerias %}';
+        urlAlbumes = '{% url albumes %}';
+        urlImagenes = '{% url imagenes %}';
+        urlAgregarImagen = '{% url agregar_imagen %}';
         data = '';
         $(document).ready(function() {
             $('#guardar').click(function () {
                 var titulo = $('#titulo').text();
                 var contenido = encodeURIComponent($('#contenido-html').html());
                 var entrada = "{{entrada.pk}}";
-                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + '{{csrf_token}}';
+                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + csrfToken;
             });
         });
     </script>
-    <script async defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script async defer src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
+    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     {% endif %}
 </body>
 
