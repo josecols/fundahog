@@ -1,0 +1,33 @@
+[{
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "fundahog.com",
+            "name": "FUNDAHOG"
+        }
+}, {
+        "model": "portal.telefono",
+        "pk": 1,
+        "fields": {
+            "telefono": "414-853-0463",
+            "principal": true
+        }
+}, {
+        "model": "portal.correo",
+        "pk": 1,
+        "fields": {
+            "correo": "josecolsg@gmail.com"
+        }
+}, {
+        "model": "portal.organizacion",
+        "pk": 1,
+        "fields": {
+            "site": 1,
+            "direccion": "Dirección de prueba",
+            "telefonos": [1],
+            "correos": [1],
+            "twitter": "http://twitter.com/josecols",
+            "facebook": "http://facebook.com/jose.cols"
+        }
+    }
+]
