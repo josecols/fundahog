@@ -14,4 +14,15 @@ $(document).ready(function () {
     $('.contenedor-input input').focusout(function () {
         $(this).parent().removeClass('focus');
     });
+
+    if ($('.fancybox').length > 0) {
+        $(".fancybox").fancybox({
+            helpers: {
+                title: {
+                    type: 'inside',
+                    position: 'top'
+                }
+            }
+        });
+    }
 });

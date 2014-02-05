@@ -213,14 +213,18 @@ i {
     display: block;
     background-position: center center;
     background-repeat: no-repeat;
-    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, .5);
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, .5);
     width: 100px;
     height: 100px;
     margin: 5px;
     float: left;
 }
 #principal .thumbnail:hover {
-    cursor: pointer;
+    box-shadow: inset 1px 1px 4px 2px rgba(0, 0, 0, .5);
+}
+#principal .thumbnail:active {
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, .5);
 }
 #principal #sidebar {
     margin-top: 30px;
@@ -271,7 +275,7 @@ i {
     float: left;
     font-size: 0.9em;
 }
-#contenido .pop {
+#principal .pop {
     color: #555;
     text-shadow: 1px 1px 0 #FFF;
     display: block;
@@ -289,7 +293,7 @@ i {
     text-align: left;
 }
 #principal #sidebar .categorias a:hover,
-#contenido .pop:hover {
+#principal .pop:hover {
     background-color: #BBB;
     color: #FFF;
     text-shadow: none;

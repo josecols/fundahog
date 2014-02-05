@@ -114,8 +114,11 @@ def contacto(request):
                               context_instance=RequestContext(request))
 
 
-def galeria(request):
-    galeria = get_object_or_404(Galeria, titulo='Principal')
+def galeria(request, galeria_pk=None):
+    if galeria_pk:
+        galeria = get_object_or_404(Galeria, pk=galeria_pk)
+    else:
+        galeria = get_object_or_404(Galeria, titulo='Principal')
     (direccion, telefonos) = informacion_organizacion()
     return render_to_response('galeria.html', {
         'galeria': galeria,
