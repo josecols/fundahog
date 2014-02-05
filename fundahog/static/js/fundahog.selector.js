@@ -93,10 +93,15 @@ $(document).ready(function () {
             'album': $('#albumes').val(),
             'csrfmiddlewaretoken': csrfToken
         }, function (json) {
-            if (0 === json.flag)
+            if (0 === json.flag) {
                 $('#albumes').change();
-            else
-                alert(json.errores);
+            } else {
+                var mensaje = '';
+                for (key in json.errores) {
+                    mensaje += 'Ha ocurrido un error con ' + capitalizarInicial(key) + ': ' + json.errores[key][0] + ' ';
+                }
+                alert(mensaje);
+            }
         });
     });
 
