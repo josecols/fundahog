@@ -8,7 +8,7 @@
 ckeditor = null;
 inline = false;
 
-window.onload = function () {
+$(document).ready(function () {
     ckeditor = CKEDITOR.replace('evento_contenido');
 
     $('#nuevo').click(function () {
@@ -46,7 +46,6 @@ window.onload = function () {
         }
     }
 
-
     function guardar() {
         var titulo = $('input[name="titulo"]').val();
         var contenido = '';
@@ -73,4 +72,4 @@ window.onload = function () {
         lang: 'es',
         format: 'd-m-Y H:i'
     });
-}
+});

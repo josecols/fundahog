@@ -8,14 +8,12 @@
 ckeditor = null;
 inline = false;
 
-window.onload = function () {
+$(document).ready(function () {
     ckeditor = CKEDITOR.replace('entrada_contenido');
     var nueva_categoria = $('#nueva_categoria');
 
-    if (!jQuery.browser.mobile)
-        CKEDITOR.instances["nueva_categoria"].destroy();
-
     $('#nuevo').click(function () {
+        $('#nueva_categoria').prop('contentEditable', 'true')
         $('.formulario.admin').slideToggle('fast');
         $("html, body").animate({
             scrollTop: 0
@@ -80,8 +78,6 @@ window.onload = function () {
         });
         request.done(function (json) {
             manejarRespuestaServidor(json);
-            json = JSON.parse(json);
-            console.log(json);
             if (-1 != json.flag && json.data) {
                 $('select[name="categorias"]').prepend('<option value="' + json.data + '">' + categoria + '</option>');
                 $('.categorias ul').prepend('<li><a class="categoria" href="javascript:void(0)"><i class="fa fa-bookmark"></i>' + categoria + '</a></li>');
@@ -106,4 +102,4 @@ window.onload = function () {
             });
         }
     }
-};
+});

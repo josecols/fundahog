@@ -117,7 +117,7 @@
         </section>
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
         inline = true;
@@ -137,14 +137,14 @@
             });
         });
     </script>
-    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
     <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
-    <script async defer src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
-    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
+    <script async src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
+    <script async src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     {% endif %}
 </body>
 

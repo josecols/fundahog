@@ -93,7 +93,7 @@
                         {% endfor %}
                         <div class="fix"></div>
                     </ul>
-                    <div id="nueva_categoria" contenteditable="true"></div>
+                    <div id="nueva_categoria" contenteditable="false"></div>
                     <a id="agregar" href="javascript:void(0)">
                         <i class="fa fa-plus"></i>Agregar</a>
                 </nav>
@@ -182,7 +182,7 @@
         </section>
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
         csrfToken = '{{csrf_token}}';
@@ -194,13 +194,13 @@
         urlImagenes = '{% url imagenes %}';
         urlAgregarImagen = '{% url agregar_imagen %}';
     </script>
-    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
-    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.blog.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
+    <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
+    <script async src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.blog.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     {% endif %}
 </body>
 
