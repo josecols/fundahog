@@ -40,6 +40,8 @@ urlpatterns = patterns(
     url(r'^programas/$', 'portal.views.programas', name='programas'),
     url(r'^contacto/$', 'portal.views.contacto', name='contacto'),
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
+    url(r'^eventos/pagina-(?P<pagina>\d+)/$', 'portal.views.eventos',
+        name='eventos_pagina'),
     url(r'^eventos/evento/(?P<slug>[-\w\d]+)-(?P<evento_id>\d+)/$',
         'portal.views.evento', name='evento'),
     url(r'^eventos/evento/modificar/$', 'portal.views.modificar_evento'

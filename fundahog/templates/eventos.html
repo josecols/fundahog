@@ -139,12 +139,16 @@
                 </li>
                 {% endfor %}
             </ul>
+            {% if eventos.has_previous or eventos.has_next %}
             <nav class="navegacion">
-                <a href="" class="boton left">Anterior</a>
-                <a href="" class="boton right">Siguiente</a>
+                {% if eventos.has_previous %}
+                <a href="{% url eventos_pagina eventos.previous_page_number %}" class="boton left">Anterior</a>
+                {% endif %} {% if eventos.has_next %}
+                <a href="{% url eventos_pagina eventos.next_page_number %}" class="boton right">Siguiente</a>
+                {% endif %}
                 <div class="fix"></div>
             </nav>
-            {% else %}
+            {% endif %} {% else %}
             <p class="center">No hay eventos registrados</p>
             {% endif %}
         </section>

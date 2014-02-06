@@ -17,9 +17,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from portal.views import construir_data, paginar, \
     informacion_organizacion
 
-# Publicaciones por página
-
-ENTRADAS = 10
+ENTRADAS = 10  # Publicaciones por página
 
 
 def index(request, pagina='1'):

@@ -19,6 +19,8 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
     Album, Imagen
 
+EVENTOS = 10  # EVENTOS por página
+
 
 def paginar(lista, pagina, cantidad):
     paginator = Paginator(lista, cantidad)
@@ -54,8 +56,9 @@ def informacion_organizacion():
     return (organizacion.direccion, telefonos)
 
 
-def eventos(request):
-    eventos = Evento.objects.all()
+def eventos(request, pagina='1'):
+    lista = Evento.objects.order_by('fecha').reverse()
+    eventos = paginar(lista, pagina, EVENTOS)
     (direccion, telefonos) = informacion_organizacion()
     return render_to_response('eventos.html', {
         'eventos': eventos,
