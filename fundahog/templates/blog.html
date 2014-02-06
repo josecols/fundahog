@@ -8,7 +8,8 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
-    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">{% endif %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
 </head>{% load filters %}
 
 <body>
@@ -121,6 +122,9 @@
                     <a href="#modal" class="pop fancybox">
                         <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
                     <div id="modal" class="modal">
+                        <div id="progress" class="progress">
+                            <span></span>
+                        </div>
                         <h2 class="titulo">Selecciona una imagen existente</h2>
                         <label for="galerias">Galería:</label>
                         <select name="galerias" id="galerias"></select>
@@ -181,7 +185,6 @@
     <script async defer src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
-        inline = false;
         csrfToken = '{{csrf_token}}';
         urlAgregarEntrada = '{% url agregar_entrada %}';
         urlBorrarEntrada = '{% url borrar_entrada %}';

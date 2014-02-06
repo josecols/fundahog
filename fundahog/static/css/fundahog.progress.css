@@ -17,11 +17,11 @@
     margin: 5px auto;
 }
 .progress > span {
-    background-image: -webkit-linear-gradient(left, #61DEBF, #61C791);
-    background-image: -moz-linear-gradient(left, #61DEBF, #61C791);
-    background-image: -o-linear-gradient(left, #61DEBF, #61C791);
-    background-image: -ms-linear-gradient(left, #61DEBF, #61C791);
-    background-image: linear-gradient(left, #61DEBF, #61C791);
+    background-image: -webkit-linear-gradient(left, #96FFC7, #61C791);
+    background-image: -moz-linear-gradient(left, #96FFC7, #61C791);
+    background-image: -o-linear-gradient(left, #96FFC7, #61C791);
+    background-image: -ms-linear-gradient(left, #96FFC7, #61C791);
+    background-image: linear-gradient(left, #96FFC7, #61C791);
     border-radius: 4px;
     display: block;
     text-indent: -9999px;

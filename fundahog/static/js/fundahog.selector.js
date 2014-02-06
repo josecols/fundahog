@@ -87,6 +87,8 @@ $(document).ready(function () {
         if ('' === (titulo = $('#titulo_imagen').val()))
             titulo = pseudoUUID();
 
+        $('#progress').show();
+
         $(this).upload(urlAgregarImagen, {
             'titulo': titulo,
             'album': $('#albumes').val(),
@@ -94,6 +96,7 @@ $(document).ready(function () {
         }, function (json) {
             if (0 === json.flag) {
                 $('#albumes').change();
+                $('#progress').hide();
             } else {
                 var mensaje = '';
                 for (key in json.errores) {
@@ -101,6 +104,8 @@ $(document).ready(function () {
                 }
                 alert(mensaje);
             }
+        }, function (progress, value) {
+            $('#progress > span').width(value + '%');
         });
     });
 

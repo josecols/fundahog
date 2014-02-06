@@ -7,7 +7,9 @@
     <title>FUNDAHOG</title>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
 </head>
 
 {% load filters %}
@@ -66,51 +68,6 @@
             </ul>
         </nav>
         <section id="principal">
-            <section id="contenido" class="left">
-                {% if request.user.is_staff %}
-                <form class="formulario admin entrada">
-                    <div class="contenedor-input">
-                        <input type="text" name="titulo" placeholder="Título">
-                    </div>
-                    <textarea id="entrada_contenido" name="contenido"></textarea>
-                    {% if categorias %}
-                    <label for="categorias">Categorias:</label>
-                    <select name="categorias" multiple="multiple">
-                        {% for categoria in categorias %}
-                        <option value="{{categoria.pk}}">{{categoria}}</option>
-                        {% endfor %}
-                    </select>
-                    <small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
-                    {% endif %}
-                </form>
-                {% endif %} {% if entradas %} {% for entrada in entradas %}
-                <h1 class="titulo">
-                    <a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
-                    <small>
-                        {% if request.user.is_staff %}
-                        <a href="{% url entrada entrada.slug entrada.pk %}">
-                            <i class="fa fa-pencil-square-o"></i>Editar</a>
-                        <a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)">
-                            <i class="fa fa-times"></i>Borrar</a>
-                        {% endif %}
-                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
-                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
-                    </small>
-                </h1>
-                {{entrada.contenido|safe|truncatewords_html:50}}
-                <hr>{% endfor %} {% if entradas.has_previous or entradas.has_next %}
-                <nav class="navegacion">
-                    {% if entradas.has_previous %}
-                    <a href="{% url blog_pagina entradas.previous_page_number %}" class="boton left">Anterior</a>
-                    {% endif %} {% if entradas.has_next %}
-                    <a href="{% url blog_pagina entradas.next_page_number %}" class="boton right">Siguiente</a>
-                    {% endif %}
-                    <div class="fix"></div>
-                </nav>
-                {% endif %} {% else %}
-                <p class="center">No hay entradas registradas</p>
-                {% endif %}
-            </section>
             <aside id="sidebar" class="right">
                 {% if request.user.is_staff %}
                 <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
@@ -158,6 +115,69 @@
                 <p>No hay categorías registradas</p>
                 {% endif %} {% endif %}
             </aside>
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <form class="formulario admin entrada">
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <a href="#modal" class="pop fancybox">
+                        <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
+                    <div id="modal" class="modal">
+                        <div id="progress" class="progress">
+                            <span></span>
+                        </div>
+                        <h2 class="titulo">Selecciona una imagen existente</h2>
+                        <label for="galerias">Galería:</label>
+                        <select name="galerias" id="galerias"></select>
+                        <label for="albumes">Álbum:</label>
+                        <select name="albumes" id="albumes"></select>
+                        <ul class="imagenes"></ul>
+                        <label for="imagen">Agregar imagen:</label>
+                        <div class="contenedor-input">
+                            <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                        </div>
+                        <input type="file" name="imagen" id="imagen">
+                    </div>
+                    <textarea id="entrada_contenido" name="contenido"></textarea>
+                    {% if categorias %}
+                    <label for="categorias">Categorias:</label>
+                    <select name="categorias" multiple="multiple">
+                        {% for categoria in categorias %}
+                        <option value="{{categoria.pk}}">{{categoria}}</option>
+                        {% endfor %}
+                    </select>
+                    <small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
+                    {% endif %}
+                </form>
+                {% endif %} {% if entradas %} {% for entrada in entradas %}
+                <h1 class="titulo">
+                    <a href="{% url entrada entrada.slug entrada.pk %}">{{entrada}}</a>
+                    <small>
+                        {% if request.user.is_staff %}
+                        <a href="{% url entrada entrada.slug entrada.pk %}">
+                            <i class="fa fa-pencil-square-o"></i>Editar</a>
+                        <a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)">
+                            <i class="fa fa-times"></i>Borrar</a>
+                        {% endif %}
+                        <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
+                        <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
+                    </small>
+                </h1>
+                {{entrada.contenido|safe|truncatewords_html:50}}
+                <hr>{% endfor %} {% if entradas.has_previous or entradas.has_next %}
+                <nav class="navegacion">
+                    {% if entradas.has_previous %}
+                    <a href="{% url blog_pagina entradas.previous_page_number %}" class="boton left">Anterior</a>
+                    {% endif %} {% if entradas.has_next %}
+                    <a href="{% url blog_pagina entradas.next_page_number %}" class="boton right">Siguiente</a>
+                    {% endif %}
+                    <div class="fix"></div>
+                </nav>
+                {% endif %} {% else %}
+                <p class="center">No hay entradas registradas</p>
+                {% endif %}
+            </section>
             <div class="fix"></div>
         </section>
     </div>
@@ -169,11 +189,18 @@
         urlAgregarEntrada = '{% url agregar_entrada %}';
         urlBorrarEntrada = '{% url borrar_entrada %}';
         urlAgregarCategoria = '{% url agregar_categoria %}';
+        urlGalerias = '{% url galerias %}';
+        urlAlbumes = '{% url albumes %}';
+        urlImagenes = '{% url imagenes %}';
+        urlAgregarImagen = '{% url agregar_imagen %}';
     </script>
     <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.blog.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     {% endif %}
 </body>
 

@@ -6,6 +6,7 @@
 */
 
 ckeditor = null;
+inline = false;
 
 window.onload = function () {
     ckeditor = CKEDITOR.replace('entrada_contenido');
