@@ -85,8 +85,10 @@
             {% endif %} {% if album.imagenes.all %}
             <div class="imagenes">{% for imagen in album.imagenes.all %}
                 <a class="thumbnail fancybox" href="{{MEDIA_URL}}{{imagen.imagen}}" data-fancybox-group="{{album|slugify}}" title="{{imagen}}" style="background-image: url('{{MEDIA_URL}}{{imagen.thumbnail}}');">
+                    {% if request.user.is_staff %}
                     <span class="borrar" data-imagen="{{imagen.pk}}">
                         <i class="fa fa-times"></i>Borrar</span>
+                    {% endif %}
                 </a>
                 {% endfor %}</div>{% else %}
             <p class="center">No hay fotos registradas</p>
@@ -95,9 +97,28 @@
             {% endif %}
         </section>
     </div>
+    <script>
+        cancelarModal = false;
+    </script>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script async src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+    <script>
+        $(".fancybox").fancybox({
+            helpers: {
+                title: {
+                    type: 'inside',
+                    position: 'top'
+                }
+            },
+            beforeShow: function () {
+                if (cancelarModal) {
+                    $.fancybox.close(true);
+                    cancelarModal = false;
+                }
+            }
+        });
+    </script>
     {% if request.user.is_staff %}
     <script>
         csrfToken = '{{csrf_token}}';

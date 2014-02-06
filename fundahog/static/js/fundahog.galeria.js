@@ -5,6 +5,7 @@
     Version: 1.0
     Carga de imágenes con modal para galería
 */
+
 function pseudoUUID() {
     return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0,
