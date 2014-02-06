@@ -125,6 +125,7 @@ class Imagen(models.Model):
         super(Imagen, self).save()
         if self.imagen:
             archivo = self.imagen.path
+            redimensionar(archivo, 1024, 768)
             self.thumbnail = 'uploads/imagenes/' \
                 + os.path.basename(thumbnail(archivo, 200, 200))
             super(Imagen, self).save()
