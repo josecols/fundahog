@@ -8,7 +8,8 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
 </head>
 
 <body>
@@ -68,9 +69,12 @@
             {% if galeria %} {% for album in galeria.albumes.all %}
             <h1 class="titulo">{{album}}</h1>
             {% if request.user.is_staff %}
-            <a href="#modal" class="pop fancybox">
+            <a href="#modal-{{album|slugify}}" class="pop fancybox">
                 <i class="fa fa-picture-o"></i>Cargar imagen</a>
-            <div id="modal">
+            <div id="modal-{{album|slugify}}" class="modal">
+                <div id="progress-{{album|slugify}}" class="progress">
+                    <span></span>
+                </div>
                 <label for="imagen">Agregar imagen:</label>
                 <div class="contenedor-input">
                     <input type="text" name="titulo" id="titulo-{{album|slugify}}" data-album="{{album|slugify}}" placeholder="Título de la imagen">
@@ -78,13 +82,15 @@
                 <input type="file" name="imagen" id="imagen-{{album|slugify}}" data-album="{{album|slugify}}">
             </div>
             <div class="fix"></div>
-            {% endif %}
-            <div class="imagenes">
-                {% for imagen in album.imagenes.all %}
-                <a class="thumbnail fancybox" href="{{MEDIA_URL}}{{imagen.imagen}}" data-fancybox-group="{{album|slugify}}" title="{{imagen}}" style="background-image: url('{{MEDIA_URL}}{{imagen.thumbnail}}');"></a>
-                {% endfor %}
-            </div>
-            {% endfor %} {% else %}
+            {% endif %} {% if album.imagenes.all %}
+            <div class="imagenes">{% for imagen in album.imagenes.all %}
+                <a class="thumbnail fancybox" href="{{MEDIA_URL}}{{imagen.imagen}}" data-fancybox-group="{{album|slugify}}" title="{{imagen}}" style="background-image: url('{{MEDIA_URL}}{{imagen.thumbnail}}');">
+                    <span class="borrar" data-imagen="{{imagen.pk}}">
+                        <i class="fa fa-times"></i>Borrar</span>
+                </a>
+                {% endfor %}</div>{% else %}
+            <p class="center">No hay fotos registradas</p>
+            {% endif %} {% endfor %} {% else %}
             <p class="center">No hay fotos registradas</p>
             {% endif %}
         </section>
@@ -96,10 +102,11 @@
     <script>
         csrfToken = '{{csrf_token}}';
         urlAgregarImagen = '{% url agregar_imagen %}';
+        urlBorrarImagen = '{% url borrar_imagen %}';
     </script>
     <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
     <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-    <script async defer src="{{STATIC_URL}}js/fundahog.cargar.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.galeria.js"></script>
     {% endif %}
 </body>
 

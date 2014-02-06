@@ -205,11 +205,24 @@ def agregar_imagen(request):
         if form.is_valid():
             album.imagenes.add(form.save())
             return HttpResponse(construir_data(0,
-                                'Imagen agregado con éxito'),
+                                'Imagen agregada con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
                                 mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def borrar_imagen(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        imagen_id = request.POST.get('imagen', None)
+        imagen = get_object_or_404(Imagen, pk=imagen_id)
+        imagen.delete()
+        return HttpResponse(construir_data(0, 'Imagen borrada con éxito'
+                            ), mimetype='application/javascript')
+
     raise Http404
 
 
@@ -242,7 +255,7 @@ def imagenes(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         album = request.POST.get('album', None)
-        imagenes = Imagen.objects.filter(album=1)
+        imagenes = Imagen.objects.filter(album=album)
         data = [{'id': imagen.pk, 'titulo': imagen.titulo,
                 'imagen': imagen.imagen.url} for imagen in imagenes]
 

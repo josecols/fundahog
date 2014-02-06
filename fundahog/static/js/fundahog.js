@@ -22,6 +22,12 @@ $(document).ready(function () {
                     type: 'inside',
                     position: 'top'
                 }
+            },
+            beforeShow: function () {
+                if (cancelarModal) {
+                    $.fancybox.close(true);
+                    cancelarModal = false;
+                }
             }
         });
     }

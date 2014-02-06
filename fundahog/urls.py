@@ -57,4 +57,6 @@ urlpatterns = patterns(
     url(r'^imagenes/$', 'portal.views.imagenes', name='imagenes'),
     url(r'^imagenes/imagen/agregar/$', 'portal.views.agregar_imagen',
         name='agregar_imagen'),
+    url(r'^imagenes/imagen/borrar/$', 'portal.views.borrar_imagen',
+        name='borrar_imagen'),
     )
