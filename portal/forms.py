@@ -6,7 +6,8 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from django import forms
-from portal.models import Evento, Seccion, Imagen, Categoria, Libro
+from portal.models import Evento, Seccion, Imagen, Categoria, Libro, \
+    Programa
 from django.core.files.images import get_image_dimensions
 
 
@@ -21,7 +22,7 @@ class EventoForm(forms.ModelForm):
         if imagen:
             (ancho, alto) = get_image_dimensions(imagen)
             if ancho <= 200 and alto <= 200:
-                raise forms.ValidationError('La imagen debe tener un ancho y un alto mayor a 200px'
+                raise forms.ValidationError('La imagen de portada debe tener un ancho y un alto mayor a 200px'
                         )
         return imagen
 
@@ -72,7 +73,23 @@ class LibroForm(forms.ModelForm):
         if imagen:
             (ancho, alto) = get_image_dimensions(imagen)
             if ancho <= 200 and alto <= 200:
-                raise forms.ValidationError('La imagen debe tener un ancho y un alto mayor a 200px'
+                raise forms.ValidationError('La imagen de portada debe tener un ancho y un alto mayor a 200px'
+                        )
+        return imagen
+
+
+class ProgramaForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Programa
+
+    def clean_portada(self):
+        imagen = self.cleaned_data.get('portada')
+        if imagen:
+            (ancho, alto) = get_image_dimensions(imagen)
+            if ancho <= 200 and alto <= 200:
+                raise forms.ValidationError('La imagen de portada debe tener un ancho y un alto mayor a 200px'
                         )
         return imagen
 

@@ -26,6 +26,8 @@ def directorio(instance, nombre):
         ruta = 'uploads/imagenes'
     elif isinstance(instance, Libro):
         ruta = 'uploads/libros/portadas'
+    elif isinstance(instance, Programa):
+        ruta = 'uploads/programas'
     else:
         ruta = 'uploads/error'
 
@@ -245,6 +247,28 @@ class Libro(models.Model):
         if not self.id:
             self.slug = slugify(self.titulo)
         super(Libro, self).save()
+        if self.portada:
+            archivo = self.portada.path
+            redimensionar(archivo, 400, 200)
+
+
+class Programa(models.Model):
+
+    titulo = models.CharField(max_length=100, unique=True,
+                              verbose_name="título")
+    contenido = models.TextField()
+    portada = models.ImageField(upload_to=directorio)
+    archivo = models.FileField(upload_to='uploads/programas',
+                               blank=True)
+    slug = models.SlugField(max_length=100, editable=False)
+
+    def __unicode__(self):
+        return self.titulo
+
+    def save(self):
+        if not self.id:
+            self.slug = slugify(self.titulo)
+        super(Programa, self).save()
         if self.portada:
             archivo = self.portada.path
             redimensionar(archivo, 400, 200)

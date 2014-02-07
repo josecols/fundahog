@@ -8,7 +8,7 @@
 from django.contrib import admin
 from portal.models import Evento, Seccion, Telefono, Correo, \
     Organizacion, Imagen, Album, Galeria, Libro, Categoria
-from portal.forms import EventoForm, SeccionForm
+from portal.forms import EventoForm, SeccionForm, ProgramaForm
 
 
 class EventoAdmin(admin.ModelAdmin):
@@ -31,6 +31,16 @@ class SeccionAdmin(admin.ModelAdmin):
               '/static/js/ckeditor/init.js')
 
 
+class ProgramaAdmin(admin.ModelAdmin):
+
+    form = ProgramaForm
+
+    class Media:
+
+        js = ('/static/js/ckeditor/ckeditor.js',
+              '/static/js/ckeditor/init.js')
+
+
 admin.site.register(Evento, EventoAdmin)
 admin.site.register(Seccion, SeccionAdmin)
 admin.site.register(Telefono)
@@ -41,3 +51,4 @@ admin.site.register(Album)
 admin.site.register(Galeria)
 admin.site.register(Libro)
 admin.site.register(Categoria)
+admin.site.register(Programa, ProgramaForm)
