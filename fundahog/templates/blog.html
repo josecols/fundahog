@@ -186,13 +186,13 @@
     <script>
         csrfToken = '{{csrf_token}}';
         mediaURL = '{{MEDIA_URL}}';
-        urlAgregarEntrada = '{% url agregar_entrada %}';
-        urlBorrarEntrada = '{% url borrar_entrada %}';
-        urlAgregarCategoria = '{% url agregar_categoria %}';
+        urlAgregarEntrada = '{% url entrada_agregar %}';
+        urlBorrarEntrada = '{% url entrada_borrar %}';
+        urlAgregarCategoria = '{% url categoria_agregar %}';
         urlGalerias = '{% url galerias %}';
         urlAlbumes = '{% url albumes %}';
         urlImagenes = '{% url imagenes %}';
-        urlAgregarImagen = '{% url agregar_imagen %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
     </script>
     <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
     <script async src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>

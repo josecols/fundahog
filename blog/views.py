@@ -5,7 +5,6 @@
 # Universidad Católica Andrés Bello Guayana
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
-from django.utils import simplejson
 from blog.models import Categoria, Entrada
 from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
@@ -62,7 +61,7 @@ def busqueda(request, pagina='1', query=None):
     categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()
 
-    return render_to_response('busqueda-blog.html', {
+    return render_to_response('blog-busqueda.html', {
         'entradas': entradas,
         'query': query,
         'categorias': categorias,
@@ -75,7 +74,7 @@ def busqueda(request, pagina='1', query=None):
 # Vistas AJAX
 
 @csrf_protect
-def agregar(request):
+def entrada_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         titulo = request.POST.get('titulo', None)
@@ -101,28 +100,7 @@ def agregar(request):
 
 
 @csrf_protect
-def agregar_categoria(request):
-    if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
-        descripcion = request.POST.get('descripcion', None)
-
-        form = CategoriaForm(request.POST)
-
-        if form.is_valid():
-            categoria = Categoria(descripcion=descripcion)
-            categoria.save()
-            return HttpResponse(construir_data(0,
-                                "Categoría agregada con éxito",
-                                str(categoria.pk)),
-                                mimetype='application/javascript')
-        else:
-            return HttpResponse(construir_data(-1, form.errors),
-                                mimetype='application/javascript')
-    raise Http404
-
-
-@csrf_protect
-def modificar(request):
+def entrada_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         entrada_id = request.POST.get('entrada', None)
@@ -145,7 +123,7 @@ def modificar(request):
 
 
 @csrf_protect
-def borrar(request):
+def entrada_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         entrada_id = request.POST.get('entrada', None)
@@ -155,4 +133,25 @@ def borrar(request):
                             "Entrada borrada con éxito"),
                             mimetype='application/javascript')
 
+    raise Http404
+
+
+@csrf_protect
+def categoria_agregar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        descripcion = request.POST.get('descripcion', None)
+
+        form = CategoriaForm(request.POST)
+
+        if form.is_valid():
+            categoria = Categoria(descripcion=descripcion)
+            categoria.save()
+            return HttpResponse(construir_data(0,
+                                "Categoría agregada con éxito",
+                                str(categoria.pk)),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
     raise Http404

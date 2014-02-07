@@ -162,13 +162,13 @@
     {% if request.user.is_staff %}
     <script>
         inline = true;
-        url = '{% url modificar_entrada %}';
+        url = '{% url entrada_modificar %}';
         csrfToken = '{{csrf_token}}';
         mediaURL = '{{MEDIA_URL}}';
         urlGalerias = '{% url galerias %}';
         urlAlbumes = '{% url albumes %}';
         urlImagenes = '{% url imagenes %}';
-        urlAgregarImagen = '{% url agregar_imagen %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
         data = '';
         $(document).ready(function() {
             $('#guardar').click(function () {

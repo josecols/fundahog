@@ -122,8 +122,8 @@
     {% if request.user.is_staff %}
     <script>
         csrfToken = '{{csrf_token}}';
-        urlAgregarImagen = '{% url agregar_imagen %}';
-        urlBorrarImagen = '{% url borrar_imagen %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
+        urlBorrarImagen = '{% url imagen_borrar %}';
     </script>
     <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>

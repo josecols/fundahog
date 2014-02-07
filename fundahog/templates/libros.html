@@ -180,10 +180,9 @@
     {% if request.user.is_staff %}
     <script>
         csrfToken = '{{csrf_token}}';
-        urlAgregarEntrada = '{% url agregar_entrada %}';
         urlAgregarLibro = '{% url libro_agregar %}';
-        urlBorrarLibro = '{% url borrar_libro %}';
-        urlAgregarCategoria = '{% url agregar_categoria_libros %}';
+        urlBorrarLibro = '{% url libro_borrar %}';
+        urlAgregarCategoria = '{% url libros_categoria_agregar %}';
     </script>
     <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.libros.js"></script>

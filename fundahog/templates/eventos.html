@@ -161,12 +161,12 @@
     <script>
         csrfToken = '{{csrf_token}}';
         mediaURL = '{{MEDIA_URL}}';
-        urlAgregarEvento = '{% url agregar_evento %}';
-        urlBorrarEvento = '{% url borrar_evento %}';
+        urlAgregarEvento = '{% url evento_agregar %}';
+        urlBorrarEvento = '{% url evento_borrar %}';
         urlGalerias = '{% url galerias %}';
         urlAlbumes = '{% url albumes %}';
         urlImagenes = '{% url imagenes %}';
-        urlAgregarImagen = '{% url agregar_imagen %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
     </script>
     <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
     <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>

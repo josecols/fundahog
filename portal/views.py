@@ -160,7 +160,7 @@ def libro(request, slug, libro_id):
         }, context_instance=RequestContext(request))
 
 
-def busqueda_libros(request, pagina='1', query=None):
+def libros_busqueda(request, pagina='1', query=None):
     if not query:
         query = request.GET.get('q', '')
     if query:
@@ -175,7 +175,7 @@ def busqueda_libros(request, pagina='1', query=None):
     categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()
 
-    return render_to_response('busqueda-libros.html', {
+    return render_to_response('libros-busqueda.html', {
         'libros': libros,
         'query': query,
         'categorias': categorias,
@@ -188,7 +188,27 @@ def busqueda_libros(request, pagina='1', query=None):
 # Vistas AJAX
 
 @csrf_protect
-def modificar_evento(request):
+def evento_agregar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        post = request.POST.copy()
+        post['fecha'] = datetime.strptime(post['fecha'],
+                '%d-%m-%Y %H:%M')
+        form = EventoForm(post, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(construir_data(0,
+                                'Evento agregado con éxito'),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def evento_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         evento_id = request.POST.get('evento', None)
@@ -211,7 +231,7 @@ def modificar_evento(request):
 
 
 @csrf_protect
-def borrar_evento(request):
+def evento_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         evento_id = request.POST.get('evento', None)
@@ -224,27 +244,7 @@ def borrar_evento(request):
 
 
 @csrf_protect
-def agregar_evento(request):
-    if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
-        post = request.POST.copy()
-        post['fecha'] = datetime.strptime(post['fecha'],
-                '%d-%m-%Y %H:%M')
-        form = EventoForm(post, request.FILES)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponse(construir_data(0,
-                                'Evento agregado con éxito'),
-                                mimetype='application/javascript')
-        else:
-            return HttpResponse(construir_data(-1, form.errors),
-                                mimetype='application/javascript')
-    raise Http404
-
-
-@csrf_protect
-def agregar_imagen(request):
+def imagen_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         album = get_object_or_404(Album, pk=request.POST.get('album',
@@ -263,7 +263,7 @@ def agregar_imagen(request):
 
 
 @csrf_protect
-def borrar_imagen(request):
+def imagen_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         imagen_id = request.POST.get('imagen', None)
@@ -276,7 +276,7 @@ def borrar_imagen(request):
 
 
 @csrf_protect
-def agregar_libro(request):
+def libro_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
 
@@ -315,7 +315,7 @@ def libro_modificar(request):
 
 
 @csrf_protect
-def borrar_libro(request):
+def libro_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         libro_id = request.POST.get('libro', None)
@@ -328,7 +328,7 @@ def borrar_libro(request):
 
 
 @csrf_protect
-def agregar_categoria(request):
+def categoria_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
         descripcion = request.POST.get('descripcion', None)
