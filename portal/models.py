@@ -25,6 +25,8 @@ def directorio(instance, nombre):
         ruta = 'uploads/eventos'
     elif isinstance(instance, Imagen):
         ruta = 'uploads/imagenes'
+    elif isinstance(instance, Libro):
+        ruta = 'uploads/libros/portadas'
     else:
         ruta = 'uploads/error'
 
@@ -205,12 +207,64 @@ class Organizacion(models.Model):
         return "Información de la organización"
 
 
+class Categoria(models.Model):
+
+    descripcion = models.CharField(max_length=100, unique=True,
+                                   verbose_name='descripción')
+    slug = models.SlugField(max_length=100, editable=False)
+
+    class Meta:
+
+        verbose_name = "categoría"
+        verbose_name_plural = 'categorías'
+
+    def __unicode__(self):
+        return self.descripcion
+
+    def save(self):
+        if not self.id:
+            self.slug = slugify(self.descripcion)
+        super(Categoria, self).save()
+
+
+class Libro(models.Model):
+
+    titulo = models.CharField(max_length=100, unique=True,
+                              verbose_name="título")
+    descripcion = models.TextField(max_length=255,
+                                   verbose_name='descripción')
+    categorias = models.ManyToManyField(Categoria,
+            verbose_name='categorías')
+    portada = models.ImageField(upload_to=directorio)
+    archivo = models.FileField(upload_to='uploads/libros')
+    slug = models.SlugField(max_length=100, editable=False)
+
+    def __unicode__(self):
+        return self.titulo
+
+    def save(self):
+        if not self.id:
+            self.slug = slugify(self.titulo)
+        super(Libro, self).save()
+        if self.portada:
+            archivo = self.portada.path
+            redimensionar(archivo, 400, 200)
+
+
 # Señales
 
 def borrar_portada(sender, instance, **kwargs):
     if instance.portada:
         try:
             os.remove(instance.portada.path)
+        except OSError:
+            pass
+
+
+def borrar_archivo(sender, instance, **kwargs):
+    if instance.archivo:
+        try:
+            os.remove(instance.archivo.path)
         except OSError:
             pass
 
@@ -229,5 +283,7 @@ def borrar_imagen(sender, instance, **kwargs):
 
 
 pre_delete.connect(borrar_portada, sender=Evento)
+pre_delete.connect(borrar_portada, sender=Libro)
+pre_delete.connect(borrar_archivo, sender=Libro)
 pre_delete.connect(borrar_imagen, sender=Imagen)
 

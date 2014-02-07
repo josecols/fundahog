@@ -7,19 +7,21 @@
 
 from datetime import datetime
 from django.utils import simplejson
+from django.db.models.query_utils import Q
 from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, Http404
-from portal.forms import EventoForm, ImagenForm
 from django.core.exceptions import ValidationError
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from portal.forms import EventoForm, ImagenForm, CategoriaForm, \
+    LibroForm
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
-    Album, Imagen
+    Album, Imagen, Libro, Categoria
 
-EVENTOS = 10  # EVENTOS por página
+ELEMENTOS_PAGINA = 10
 
 
 def paginar(lista, pagina, cantidad):
@@ -58,7 +60,7 @@ def informacion_organizacion():
 
 def eventos(request, pagina='1'):
     lista = Evento.objects.order_by('fecha').reverse()
-    eventos = paginar(lista, pagina, EVENTOS)
+    eventos = paginar(lista, pagina, ELEMENTOS_PAGINA)
     (direccion, telefonos) = informacion_organizacion()
     return render_to_response('eventos.html', {
         'eventos': eventos,
@@ -131,12 +133,56 @@ def galeria(request, galeria_pk=None):
         }, context_instance=RequestContext(request))
 
 
-def libros(request):
+def libros(request, pagina='1'):
+    lista = Libro.objects.order_by()
+    libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
+    categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()
-    return render_to_response('libros.html', {'direccion': direccion,
-                              'telefonos': telefonos,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    return render_to_response('libros.html', {
+        'libros': libros,
+        'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
+def libro(request, slug, libro_id):
+    libro = get_object_or_404(Libro, pk=libro_id)
+    categorias = Categoria.objects.all()
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('libro.html', {
+        'libro': libro,
+        'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
+def busqueda_libros(request, pagina='1', query=None):
+    if not query:
+        query = request.GET.get('q', '')
+    if query:
+        qset = Q(titulo__icontains=query) \
+            | Q(categorias__slug__icontains=query) \
+            | Q(descripcion__icontains=query)
+        lista = Libro.objects.filter(qset).distinct()
+        lista = lista.order_by()
+        libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
+    else:
+        libros = None
+    categorias = Categoria.objects.all()
+    (direccion, telefonos) = informacion_organizacion()
+
+    return render_to_response('busqueda-libros.html', {
+        'libros': libros,
+        'query': query,
+        'categorias': categorias,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 # Vistas AJAX
@@ -230,6 +276,79 @@ def borrar_imagen(request):
 
 
 @csrf_protect
+def agregar_libro(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+
+        form = LibroForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(construir_data(0,
+                                'Libro agregado con éxito'),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def libro_modificar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        libro_id = request.POST.get('libro', None)
+        libro = get_object_or_404(Libro, pk=libro_id)
+        libro.titulo = request.POST.get('titulo', None)
+        libro.descripcion = request.POST.get('descripcion', None)
+
+        try:
+            libro.full_clean()
+            libro.save()
+            return HttpResponse(construir_data(0,
+                                "Libro modificado con éxito"),
+                                mimetype='application/javascript')
+        except ValidationError, errors:
+            return HttpResponse(construir_data(-1,
+                                errors.message_dict),
+                                mimetype='application/javascript')
+
+
+@csrf_protect
+def borrar_libro(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        libro_id = request.POST.get('libro', None)
+        libro = get_object_or_404(Libro, pk=libro_id)
+        libro.delete()
+        return HttpResponse(construir_data(0, 'Libro borrado con éxito'
+                            ), mimetype='application/javascript')
+
+    raise Http404
+
+
+@csrf_protect
+def agregar_categoria(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        descripcion = request.POST.get('descripcion', None)
+
+        form = CategoriaForm(request.POST)
+
+        if form.is_valid():
+            categoria = Categoria(descripcion=descripcion)
+            categoria.save()
+            return HttpResponse(construir_data(0,
+                                "Categoría agregada con éxito",
+                                str(categoria.pk)),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
 def galerias(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
@@ -259,8 +378,12 @@ def imagenes(request):
         and request.is_ajax():
         album = request.POST.get('album', None)
         imagenes = Imagen.objects.filter(album=album)
-        data = [{'id': imagen.pk, 'titulo': imagen.titulo,
-                'imagen': imagen.imagen.url} for imagen in imagenes]
+        data = [{
+            'id': imagen.pk,
+            'titulo': imagen.titulo,
+            'imagen': imagen.imagen.url,
+            'thumbnail': imagen.thumbnail,
+            } for imagen in imagenes]
 
         return HttpResponse(construir_data(0,
                             'Imagenes consultadas con éxito', data),

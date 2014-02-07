@@ -14,7 +14,7 @@
     width: 250px;
     height: 20px;
     display: none;
-    margin: 5px auto;
+    margin: 10px auto;
 }
 .progress > span {
     background-image: -webkit-linear-gradient(left, #96FFC7, #61C791);

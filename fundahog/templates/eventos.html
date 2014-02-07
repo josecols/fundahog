@@ -70,8 +70,10 @@
         <section id="principal">
             {% if request.user.is_staff %}
             <section id="contenido" class="left">
-                <form class="formulario admin" enctype="multipart/form-data">
-                    {% csrf_token %}
+                <form class="formulario admin">
+                    <div id="progress-principal" class="progress">
+                        <span></span>
+                    </div>
                     <div class="contenedor-input">
                         <input type="text" name="titulo" placeholder="Título">
                     </div>
@@ -158,6 +160,7 @@
     {% if request.user.is_staff %}
     <script>
         csrfToken = '{{csrf_token}}';
+        mediaURL = '{{MEDIA_URL}}';
         urlAgregarEvento = '{% url agregar_evento %}';
         urlBorrarEvento = '{% url borrar_evento %}';
         urlGalerias = '{% url galerias %}';

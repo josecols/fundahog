@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>{{evento}} - FUNDAHOG</title>
+    <title>{{libro}} - FUNDAHOG</title>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
-    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">{% endif %}
 </head>
 
 <body>
@@ -51,10 +49,10 @@
                     <a href="{% url contacto %}">Contacto</a>
                 </li>
                 <li>
-                    <a class="seleccionado" href="{% url eventos %}">Eventos</a>
+                    <a href="{% url eventos %}">Eventos</a>
                 </li>
                 <li>
-                    <a href="{% url libros %}">Libros</a>
+                    <a class="seleccionado" href="{% url libros %}">Libros</a>
                 </li>
                 <li>
                     <a href="{% url galeria %}">Galería</a>
@@ -67,53 +65,76 @@
             </ul>
         </nav>
         <section id="principal">
-            <section id="contenido">
+            <aside id="sidebar" class="right">
                 {% if request.user.is_staff %}
-                <div class="titulo">
-                    <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">
-                        Modo edición activo</a>
-                    <div id="titulo" class="left" contenteditable="true">
-                        {{evento}}
-                    </div>
-                    <div class="fix"></div>
-                    <small>
-                        <i class="fa fa-calendar"></i>{{evento.fecha}}
-                    </small>
-                </div>
-                <a href="#modal" class="pop fancybox">
-                    <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
-                <div id="modal" class="modal">
-                    <div id="progress" class="progress">
-                        <span></span>
-                    </div>
-                    <h2 class="titulo">Selecciona una imagen existente</h2>
-                    <label for="galerias">Galería:</label>
-                    <select name="galerias" id="galerias"></select>
-                    <label for="albumes">Álbum:</label>
-                    <select name="albumes" id="albumes"></select>
-                    <ul class="imagenes"></ul>
-                    <label for="imagen">Agregar imagen:</label>
-                    <div class="contenedor-input">
-                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
-                    </div>
-                    <input type="file" name="imagen" id="imagen">
-                </div>
-                <img class="portada" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">
-                <div id="contenido-html" contenteditable="true">
-                    {{evento.contenido|safe}}
-                </div>
-                <div class="fix"></div>
-                {% else %}
-                <h1 class="titulo">{{evento}}
-                    <small>
-                        <i class="fa fa-calendar"></i>{{evento.fecha}}
-                    </small>
-                </h1>
-                <img class="portada" src="{{MEDIA_URL}}{{ evento.portada }}" alt="{{evento}}">{{evento.contenido|safe}}
+                <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">Modo edición activo</a>
                 <div class="fix"></div>
                 {% endif %}
+                <form method="get" action="{% url libros_busqueda '1' %}" class="busqueda formulario">
+                    <div class="contenedor-input">
+                        <i class="fa fa-search"></i>
+                        <input name="q" type="text" placeholder="Búsqueda">
+                    </div>
+                    <div class="fix"></div>
+                </form>
+                <h2 class="titulo">Categorías</h2>
+                {% if request.user.is_staff %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url libros_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                    <div id="nueva_categoria" contenteditable="false"></div>
+                    <a id="agregar" href="javascript:void(0)">
+                        <i class="fa fa-plus"></i>Agregar</a>
+                </nav>
+                {% else %} {% if categorias %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url libros_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                </nav>
+                {% else %}
+                <p>No hay categorías registradas</p>
+                {% endif %} {% endif %}
+            </aside>
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <div class="titulo">
+                    <div id="titulo" contenteditable="true">
+                        {{libro}}
+                    </div>
+                    <small>
+                        <a href="{{MEDIA_URL}}{{libro.archivo}}">
+                            <i class="fa fa-cloud-download"></i>Descargar libro</a>
+                    </small>
+                </div>
+                <div id="contenido-html" contenteditable="true">
+                    {{libro.descripcion}}
+                </div>
+                {% else %}
+                <h1 class="titulo">{{libro}}
+                    <small>
+                        <a href="{{MEDIA_URL}}{{libro.archivo}}">
+                            <i class="fa fa-cloud-download"></i>Descargar libro</a>
+                    </small>
+                </h1>
+                {{libro.descripcion}} {% endif %}
+                <div class="fix"></div>
                 <hr>
             </section>
+            <div class="fix"></div>
         </section>
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -121,31 +142,22 @@
     {% if request.user.is_staff %}
     <script>
         inline = true;
-        url = '{% url modificar_evento %}';
         csrfToken = '{{csrf_token}}';
-        mediaURL = '{{MEDIA_URL}}';
-        urlGalerias = '{% url galerias %}';
-        urlAlbumes = '{% url albumes %}';
-        urlImagenes = '{% url imagenes %}';
-        urlAgregarImagen = '{% url agregar_imagen %}';
+        url = '{% url libro_modificar %}';
         data = '';
         $(document).ready(function() {
             $('#guardar').click(function () {
                 var titulo = $('#titulo').text();
-                var contenido = encodeURIComponent($('#contenido-html').html());
-                var evento = "{{evento.pk}}";
-                data = 'evento=' + evento + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + csrfToken;
+                var descripcion = $('#contenido-html').text();
+                var libro = "{{libro.pk}}";
+                data = 'libro=' + libro + '&titulo=' + titulo + '&descripcion=' + descripcion + '&csrfmiddlewaretoken=' + csrfToken;
             });
         });
     </script>
     <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script async src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
-    <script async src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
-    <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
-    <script async src="{{STATIC_URL}}js/fundahog.selector.js"></script>
     {% endif %}
 </body>
 

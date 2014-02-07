@@ -451,8 +451,7 @@
     border: 1px solid #DDD;
     border-radius: 4px;
     box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-    margin-bottom: 15px;
+    font: 14px"Open Sans", sans-serif;
     padding: 8px;
     width: 100%
 }
@@ -472,7 +471,8 @@
     margin: 15px 0 5px
 }
 .formulario.admin select {
-    font: .9em"Open Sans", sans-serif;
+    border: 1px solid #DDD;
+    font: 14px"Open Sans", sans-serif;
     width: 100%
 }
 .hardware {
@@ -667,8 +667,8 @@ p.center {
         top: 81px
     }
     .lista li:nth-child(3n+3) .portada {
-        float: right;
-        margin: 20px
+        float: right!important;
+        margin: 20px!important
     }
     .lista li:nth-child(odd) .portada {
         float: left;

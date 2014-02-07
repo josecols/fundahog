@@ -5,11 +5,7 @@
     Version: 1.0
 */
 
-ckeditor = null;
-inline = false;
-
 $(document).ready(function () {
-    ckeditor = CKEDITOR.replace('entrada_contenido');
     var nueva_categoria = $('#nueva_categoria');
 
     $('#nuevo').click(function () {
@@ -47,24 +43,21 @@ $(document).ready(function () {
 
     function guardar() {
         var titulo = $('input[name="titulo"]').val();
-        var contenido = '';
+        var descripcion = $('textarea[name="descripcion"]').val();
         var categorias = $('select[name="categorias"]').val() ? $('select[name="categorias"]').val().join(',') : '';
 
-        if (jQuery.browser.mobile) {
-            contenido = $('#entrada_contenido').val();
-        } else {
-            contenido = encodeURIComponent(ckeditor.getData());
-        }
+        $('#progress').show();
 
-        var request = $.ajax({
-            async: true,
-            type: 'POST',
-            url: urlAgregarEntrada,
-            data: 'titulo=' + titulo + '&contenido=' + contenido + '&categorias=' + categorias + '&csrfmiddlewaretoken=' + csrfToken,
-            dataType: "text"
-        });
-        request.done(function (json) {
-            manejarRespuestaServidor(json);
+        $('.archivo').upload(urlAgregarLibro, {
+            'titulo': titulo,
+            'descripcion': descripcion,
+            'categorias': categorias,
+            'csrfmiddlewaretoken': csrfToken
+        }, function (json) {
+            manejarRespuestaServidor(JSON.stringify(json));
+            $('#progress').hide();
+        }, function (progress, value) {
+            $('#progress > span').width(value + '%');
         });
     }
 
@@ -88,14 +81,14 @@ $(document).ready(function () {
 
     function borrar(boton) {
         var pk = $(boton).attr('id').match(/[0-9]+/);
-        var respuesta = confirm("¿Está seguro que deasea eliminar la entrada?");
+        var respuesta = confirm("¿Está seguro que deasea eliminar el libro?");
 
         if (respuesta == true) {
             var request = $.ajax({
                 async: true,
                 type: 'POST',
-                url: urlBorrarEntrada,
-                data: 'entrada=' + pk + '&csrfmiddlewaretoken=' + csrfToken,
+                url: urlBorrarLibro,
+                data: 'libro=' + pk + '&csrfmiddlewaretoken=' + csrfToken,
                 dataType: "text"
             });
             request.done(function (json) {

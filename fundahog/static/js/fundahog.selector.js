@@ -75,7 +75,7 @@ $(document).ready(function () {
             var html = '';
 
             json.data.forEach(function (imagen) {
-                html += '<li data-titulo="' + imagen.titulo + '" data-url=' + imagen.imagen + ' class="imagen" style="background-image: url(' + imagen.imagen + ');"></li>';
+                html += '<li data-titulo="' + imagen.titulo + '" data-url=' + imagen.imagen + ' class="imagen" style="background-image: url(' + mediaURL + imagen.thumbnail + ');"></li>';
             });
             $('.imagenes').html(html + '<div class="fix"></div>');
             $('.fancybox-inner').css('height', 'auto');

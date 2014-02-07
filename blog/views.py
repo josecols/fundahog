@@ -62,7 +62,7 @@ def busqueda(request, pagina='1', query=None):
     categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()
 
-    return render_to_response('busqueda.html', {
+    return render_to_response('busqueda-blog.html', {
         'entradas': entradas,
         'query': query,
         'categorias': categorias,

@@ -57,14 +57,18 @@ $(document).ready(function () {
             contenido = ckeditor.getData();
         }
 
+        $('#progress-principal').show();
+
         $('#portada').upload(urlAgregarEvento, {
             'titulo': titulo,
             'contenido': contenido,
             'fecha': fecha,
             'csrfmiddlewaretoken': csrfToken
         }, function (json) {
-            console.log(json);
             manejarRespuestaServidor(JSON.stringify(json));
+            $('#progress-principal').hide();
+        }, function (progress, value) {
+            $('#progress-principal > span').width(value + '%');
         });
     }
 

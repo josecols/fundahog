@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
     <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
-</head>{% load filters %}
+</head>
+
+{% load filters %}
 
 <body>
     <header id="header">
@@ -77,7 +79,7 @@
                 <form method="get" action="{% url blog_busqueda '1' %}" class="busqueda formulario">
                     <div class="contenedor-input">
                         <i class="fa fa-search"></i>
-                        <input name="q" type="text" placeholder="Buscar en el blog">
+                        <input name="q" type="text" placeholder="{% if query %}{{query|safe}}{% else %}Buscar en el blog{% endif %}">
                     </div>
                     <div class="fix"></div>
                 </form>
@@ -137,7 +139,7 @@
                         </div>
                         <input type="file" name="imagen" id="imagen">
                     </div>
-                    <textarea id="entrada_contenido" name="contenido" placeholder="Contenido"></textarea>
+                    <textarea id="entrada_contenido" name="contenido"></textarea>
                     {% if categorias %}
                     <label for="categorias">Categorias:</label>
                     <select name="categorias" multiple="multiple">
@@ -163,7 +165,6 @@
                     </small>
                 </h1>
                 {{entrada.contenido|safe|truncatewords_html:50}}
-                <div class="fix"></div>
                 <hr>{% endfor %} {% if entradas.has_previous or entradas.has_next %}
                 <nav class="navegacion">
                     {% if entradas.has_previous %}

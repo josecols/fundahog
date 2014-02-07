@@ -80,7 +80,7 @@
                     <div class="fix"></div>
                 </form>
                 <h2 class="titulo">Categorías</h2>
-                {% if request.user.is_staff %} {% if categorias %}
+                {% if request.user.is_staff %}
                 <nav class="categorias">
                     <ul>
                         {% for categoria in categorias %}
@@ -91,13 +91,11 @@
                         {% endfor %}
                         <div class="fix"></div>
                     </ul>
-                    <div id="nueva_categoria" contenteditable="true"></div>
+                    <div id="nueva_categoria" contenteditable="false"></div>
                     <a id="agregar" href="javascript:void(0)">
                         <i class="fa fa-plus"></i>Agregar</a>
                 </nav>
-                {% else %}
-                <p>No hay categorías registradas</p>
-                {% endif %} {% else %} {% if categorias %}
+                {% else %} {% if categorias %}
                 <nav class="categorias">
                     <ul>
                         {% for categoria in categorias %}
@@ -166,6 +164,7 @@
         inline = true;
         url = '{% url modificar_entrada %}';
         csrfToken = '{{csrf_token}}';
+        mediaURL = '{{MEDIA_URL}}';
         urlGalerias = '{% url galerias %}';
         urlAlbumes = '{% url albumes %}';
         urlImagenes = '{% url imagenes %}';

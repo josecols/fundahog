@@ -7,7 +7,8 @@
     <title>FUNDAHOG</title>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
 </head>
 
 <body>
@@ -30,6 +31,7 @@
         <div class="fix"></div>
     </header>
     <div id="pagina">
+        <div id="status" class="exito"></div>
         <a id="menu" class="toggler" href="javascript:void(0)">
             <i class="fa fa-bars"></i>Menú</a>
         <nav id="barra" class="hardware">
@@ -63,16 +65,130 @@
             </ul>
         </nav>
         <section id="principal">
-            <p class="center">No hay libros registrados</p>
-            <nav class="navegacion">
-                <a href="" class="boton left">Anterior</a>
-                <a href="" class="boton right">Siguiente</a>
+            <aside id="sidebar" class="right">
+                {% if request.user.is_staff %}
+                <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
+                    <i class="fa fa-floppy-o"></i>Guardar</a>
+                <a id="nuevo" class="boton right" href="javascript:void(0)">
+                    <i class="fa fa-file-text-o"></i>Nuevo libro</a>
                 <div class="fix"></div>
-            </nav>
+                {% endif %}
+                <form method="get" action="{% url libros_busqueda '1' %}" class="busqueda formulario">
+                    <div class="contenedor-input">
+                        <i class="fa fa-search"></i>
+                        <input name="q" type="text" placeholder="Buscar en libros">
+                    </div>
+                    <div class="fix"></div>
+                </form>
+                <h2 class="titulo">Categorías</h2>
+                {% if request.user.is_staff %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url libros_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                    <div id="nueva_categoria" contenteditable="false"></div>
+                    <a id="agregar" href="javascript:void(0)">
+                        <i class="fa fa-plus"></i>Agregar</a>
+                </nav>
+                {% else %} {% if categorias %}
+                <nav class="categorias">
+                    <ul>
+                        {% for categoria in categorias %}
+                        <li>
+                            <a class="categoria" href="{% url libros_busqueda_query '1' categoria|slugify %}">
+                                <i class="fa fa-bookmark"></i>{{categoria}}</a>
+                        </li>
+                        {% endfor %}
+                        <div class="fix"></div>
+                    </ul>
+                </nav>
+                {% else %}
+                <p>No hay categorías registradas</p>
+                {% endif %} {% endif %}
+            </aside>
+            <section id="contenido" class="left">
+                {% if request.user.is_staff %}
+                <form class="formulario admin libro">
+                    <div id="progress" class="progress">
+                        <span></span>
+                    </div>
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <textarea id="descripcion" name="descripcion" placeholder="Descripcion"></textarea>
+                    {% if categorias %}
+                    <label for="categorias">Categorias:</label>
+                    <select name="categorias" multiple="multiple">
+                        {% for categoria in categorias %}
+                        <option value="{{categoria.pk}}">{{categoria}}</option>
+                        {% endfor %}
+                    </select>
+                    <small>Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción.</small>
+                    {% endif %}
+                    <label>Imagen de portada:</label>
+                    <input id="portada" class="archivo" type="file" name="portada">
+                    <label>Archivo del libro:</label>
+                    <input id="archivo" class="archivo" type="file" name="archivo">
+                </form>
+                {% endif %} {% if libros %}
+                <ul class="lista">{% for libro in libros %}
+                    <li>
+                        <div class="portada" style="background-image: url('{{MEDIA_URL}}{{ libro.portada }}');"></div>
+                        <h2 class="titulo">
+                            <a href="{{MEDIA_URL}}{{libro.archivo}}">{{libro}}</a>
+                            <small>
+                                {% if request.user.is_staff %}
+                                <a href="{% url libro libro.slug libro.pk %}">
+                                    <i class="fa fa-pencil-square-o"></i>Editar</a>
+                                <a id="borrar-{{libro.pk}}" class="borrar" href="javascript:void(0)">
+                                    <i class="fa fa-times"></i>Borrar</a>
+                                {% endif %}
+                                <a href="{{MEDIA_URL}}{{libro.archivo}}">
+                                    <i class="fa fa-cloud-download"></i>Descargar libro</a>
+                            </small>
+                        </h2>
+                        <p>{{libro.descripcion}}</p>
+                        <div class="fix"></div>
+                    </li>
+                    <li>
+                        <hr>
+                    </li>
+                    {% endfor %} {% if libros.has_previous or libros.has_next %}
+                    <nav class="navegacion">
+                        {% if libros.has_previous %}
+                        <a href="{% url libros_pagina libros.previous_page_number %}" class="boton left">Anterior</a>
+                        {% endif %} {% if libros.has_next %}
+                        <a href="{% url libros_pagina libros.next_page_number %}" class="boton right">Siguiente</a>
+                        {% endif %}
+                        <div class="fix"></div>
+                    </nav>
+                    {% endif %}</ul>{% else %}
+                <p class="center">No hay libros registradas</p>
+                {% endif %}
+            </section>
+            <div class="fix"></div>
         </section>
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        csrfToken = '{{csrf_token}}';
+        urlAgregarEntrada = '{% url agregar_entrada %}';
+        urlAgregarLibro = '{% url libro_agregar %}';
+        urlBorrarLibro = '{% url borrar_libro %}';
+        urlAgregarCategoria = '{% url agregar_categoria_libros %}';
+    </script>
+    <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.libros.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    {% endif %}
 </body>
 
 </html>
