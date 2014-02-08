@@ -17,7 +17,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from portal.forms import EventoForm, ImagenForm, CategoriaForm, \
-    LibroForm
+    LibroForm, SeccionForm
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
     Album, Imagen, Libro, Categoria
 
@@ -94,14 +94,26 @@ def nosotros(request, slug=None):
     seccion = get_object_or_404(Seccion, titulo='Nosotros')
     (direccion, telefonos) = informacion_organizacion()
 
-    if slug:
-        subseccion = get_object_or_404(Seccion, slug=slug)
-    else:
+    try:
+        subseccion = Seccion.objects.get(slug=slug)
+    except Seccion.DoesNotExist:
         subseccion = None
 
     return render_to_response('nosotros.html', {
         'seccion': seccion,
         'subseccion': subseccion,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
+def seccion(request, slug):
+    seccion = get_object_or_404(Seccion, slug=slug)
+    (direccion, telefonos) = informacion_organizacion()
+
+    return render_to_response('seccion.html', {
+        'seccion': seccion,
         'direccion': direccion,
         'telefonos': telefonos,
         'request': request,
@@ -323,7 +335,6 @@ def libro_borrar(request):
         libro.delete()
         return HttpResponse(construir_data(0, 'Libro borrado con éxito'
                             ), mimetype='application/javascript')
-
     raise Http404
 
 
@@ -345,6 +356,68 @@ def categoria_agregar(request):
         else:
             return HttpResponse(construir_data(-1, form.errors),
                                 mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def seccion_agregar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+
+        try:
+            superseccion = \
+                Seccion.objects.get(pk=request.POST.get('superseccion',
+                                    None))
+        except Seccion.DoesNotExist:
+            superseccion = None
+
+        form = SeccionForm(request.POST)
+
+        if form.is_valid():
+            if superseccion:
+                superseccion.secciones.add(form.save())
+            else:
+                form.save()
+            return HttpResponse(construir_data(0,
+                                'Seccion agregada con éxito'),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def seccion_modificar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        seccion_id = request.POST.get('seccion', None)
+        seccion = get_object_or_404(Seccion, pk=seccion_id)
+        seccion.titulo = request.POST.get('titulo', None)
+        seccion.contenido = request.POST.get('contenido', None)
+
+        try:
+            seccion.full_clean()
+            seccion.save()
+            return HttpResponse(construir_data(0,
+                                "Sección modificada con éxito"),
+                                mimetype='application/javascript')
+        except ValidationError, errors:
+            return HttpResponse(construir_data(-1,
+                                errors.message_dict),
+                                mimetype='application/javascript')
+
+
+@csrf_protect
+def seccion_borrar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        seccion_id = request.POST.get('seccion', None)
+        seccion = get_object_or_404(Seccion, pk=seccion_id)
+        seccion.delete()
+        return HttpResponse(construir_data(0,
+                            'Seccion borrada con éxito'),
+                            mimetype='application/javascript')
     raise Http404
 
 

@@ -69,70 +69,69 @@
         </nav>
         <section id="principal">
             <aside id="sidebar" class="left">
-                {% if request.user.is_staff and not subseccion %}
-                <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
-                    <i class="fa fa-floppy-o"></i>Guardar</a>
-                <a id="nuevo" class="boton right" href="javascript:void(0)">
-                    <i class="fa fa-file-text-o"></i>Agregar sección</a>
-                {% endif %}
                 <div class="fix"></div>
                 <nav>
                     <ul>
                         {% for s in seccion.secciones.all %}
                         <li>
                             {% if s.titulo == subseccion.titulo %}
-                            <a href="{% url nosotros_subseccion s.slug %}" class="seleccionado">{{s.titulo}}
+                            <a href="{% url seccion s.slug %}" class="seleccionado">{{s.titulo}}
                                 <span class="flecha"></span>
                             </a>
                             {% else %}
-                            <a href="{% url nosotros_subseccion s.slug %}">{{s.titulo}}</a>
+                            <a href="{% url seccion s.slug %}">{{s.titulo}}</a>
                             {% endif %}
                         </li>
                         {% endfor %}
                     </ul>
                 </nav>
             </aside>
+            {% if request.user.is_staff %}
             <section id="contenido" class="right">
-                {% if request.user.is_staff %}
-                <form class="formulario admin seccion">
+                <div class="titulo">
+                    <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">
+                        Modo edición activo</a>
+                    <div id="titulo" class="left" contenteditable="true">
+                        {% if subseccion %}{{subseccion.titulo}}{% else %}{{ seccion.titulo }}{% endif %}
+                    </div>
+                    <div class="fix"></div>
+                    <small>
+                        <i class="fa fa-calendar"></i>{% if subseccion %}{{subseccion.creado}}{% else %}{{ seccion.creado }}{% endif %}</small>
+                </div>
+                <a href="#modal" class="pop fancybox">
+                    <i class="fa fa-picture-o"></i>Añadir imagen a la entrada</a>
+                <div id="modal" class="modal">
+                    <div id="progress" class="progress">
+                        <span></span>
+                    </div>
+                    <h2 class="titulo">Selecciona una imagen existente</h2>
+                    <label for="galerias">Galería:</label>
+                    <select name="galerias" id="galerias"></select>
+                    <label for="albumes">Álbum:</label>
+                    <select name="albumes" id="albumes"></select>
+                    <ul class="imagenes"></ul>
+                    <label for="imagen">Agregar imagen:</label>
                     <div class="contenedor-input">
-                        <input type="text" name="titulo" placeholder="Título">
+                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
                     </div>
-                    <a href="#modal" class="pop fancybox">
-                        <i class="fa fa-picture-o"></i>Añadir imagen al contenido</a>
-                    <div id="modal" class="modal">
-                        <div id="progress" class="progress">
-                            <span></span>
-                        </div>
-                        <h2 class="titulo">Selecciona una imagen existente</h2>
-                        <label for="galerias">Galería:</label>
-                        <select name="galerias" id="galerias"></select>
-                        <label for="albumes">Álbum:</label>
-                        <select name="albumes" id="albumes"></select>
-                        <ul class="imagenes"></ul>
-                        <label for="imagen">Agregar imagen:</label>
-                        <div class="contenedor-input">
-                            <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
-                        </div>
-                        <input type="file" name="imagen" id="imagen">
-                    </div>
-                    <textarea id="seccion_contenido" name="contenido" placeholder="Contenido"></textarea>
-                </form>
-                {% endif %}
+                    <input type="file" name="imagen" id="imagen">
+                </div>
+                <div id="contenido-html" contenteditable="true">
+                    {% if subseccion %}{{subseccion.contenido|safe}}{% else %}{{ seccion.contenido|safe }}{% endif %}
+                </div>
+                <hr>
+            </section>
+            {% else %}
+            <section id="contenido" class="right">
                 <h1 class="titulo">
                     <a href="javascript:void(0)">{% if subseccion %}{{subseccion.titulo}}{% else %}{{ seccion.titulo }}{% endif %}</a>
                     <small>
-                        {% if request.user.is_staff %}
-                        <a href="{% if subseccion %}{% url seccion subseccion.slug %}{% else %}{% url seccion seccion.slug %}{% endif %}">
-                            <i class="fa fa-pencil-square-o"></i>Editar</a>
-                        <a id="borrar-{% if subseccion %}{{subseccion.pk}}{% else %}{{seccion.pk}}{% endif %}" class="borrar" href="javascript:void(0)">
-                            <i class="fa fa-times"></i>Borrar</a>
-                        {% endif %}
                         <i class="fa fa-calendar"></i>{% if subseccion %}{{subseccion.creado}}{% else %}{{ seccion.creado }}{% endif %}</small>
                 </h1>
                 {% if subseccion %}{{subseccion.contenido|safe}}{% else %}{{ seccion.contenido|safe }}{% endif %}
                 <hr>
             </section>
+            {% endif %}
             <div class="fix"></div>
         </section>
     </div>
@@ -140,21 +139,28 @@
     <script async src="{{STATIC_URL}}js/fundahog.js"></script>
     {% if request.user.is_staff %}
     <script>
+        inline = true;
+        url = '{% url seccion_modificar %}';
         csrfToken = '{{csrf_token}}';
         mediaURL = '{{MEDIA_URL}}';
-        superSeccion = '{{seccion.pk}}';
-        urlAgregarSeccion = '{% url seccion_agregar %}';
-        urlBorrarSeccion = '{% url seccion_borrar %}';
         urlGalerias = '{% url galerias %}';
         urlAlbumes = '{% url albumes %}';
         urlImagenes = '{% url imagenes %}';
         urlAgregarImagen = '{% url imagen_agregar %}';
+        $(document).ready(function() {
+            $('#guardar').click(function () {
+                var titulo = $('#titulo').text();
+                var contenido = encodeURIComponent($('#contenido-html').html());
+                var seccion = "{% if subseccion %}{{subseccion.pk}}{% else %}{{seccion.pk}}{% endif %}";
+                data = 'seccion=' + seccion + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + csrfToken;
+            });
+        });
     </script>
     <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
     <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async src="{{STATIC_URL}}js/ckeditor.inline.js"></script>
     <script async src="{{STATIC_URL}}js/jquery.mobile.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
-    <script async src="{{STATIC_URL}}js/fundahog.nosotros.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.selector.js"></script>

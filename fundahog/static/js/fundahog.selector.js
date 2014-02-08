@@ -14,7 +14,7 @@ function pseudoUUID() {
 }
 
 $(document).ready(function () {
-    if (jQuery.browser.mobile) {
+    if (jQuery.browser.mobile && !inline) {
         $('.pop.fancybox').hide();
     }
     $('.pop.fancybox').click(function () {
