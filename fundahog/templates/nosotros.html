@@ -125,9 +125,9 @@
                         {% if request.user.is_staff %}
                         <a href="{% if subseccion %}{% url seccion subseccion.slug %}{% else %}{% url seccion seccion.slug %}{% endif %}">
                             <i class="fa fa-pencil-square-o"></i>Editar</a>
-                        <a id="borrar-{% if subseccion %}{{subseccion.pk}}{% else %}{{seccion.pk}}{% endif %}" class="borrar" href="javascript:void(0)">
-                            <i class="fa fa-times"></i>Borrar</a>
-                        {% endif %}
+                        {% if subseccion %}
+                        <a id="borrar-{{subseccion.pk}}" class="borrar" href="javascript:void(0)">
+                            <i class="fa fa-times"></i>Borrar</a>{% endif %} {% endif %}
                         <i class="fa fa-calendar"></i>{% if subseccion %}{{subseccion.creado}}{% else %}{{ seccion.creado }}{% endif %}</small>
                 </h1>
                 {% if subseccion %}{{subseccion.contenido|safe}}{% else %}{{ seccion.contenido|safe }}{% endif %}
