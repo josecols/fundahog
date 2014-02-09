@@ -7,7 +7,9 @@
     <title>FUNDAHOG</title>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
-    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
 </head>
 
 <body>
@@ -30,6 +32,7 @@
         <div class="fix"></div>
     </header>
     <div id="pagina">
+        <div id="status" class="exito"></div>
         <a id="menu" class="toggler" href="javascript:void(0)">
             <i class="fa fa-bars"></i>Menú</a>
         <nav id="barra" class="hardware">
@@ -62,17 +65,113 @@
                 {% endif %}
             </ul>
         </nav>
-        <section id="principal">
-            <p class="center">No hay programas registrados</p>
+        <section id="principal">{% if request.user.is_staff %}
+            <section id="contenido" class="left">
+                <form class="formulario admin programas">
+                    <div id="progress-principal" class="progress">
+                        <span></span>
+                    </div>
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo" placeholder="Título">
+                    </div>
+                    <a href="#modal" class="pop fancybox">
+                        <i class="fa fa-picture-o"></i>Agregar imagen al contenido</a>
+                    <div id="modal" class="modal">
+                        <div id="progress" class="progress">
+                            <span></span>
+                        </div>
+                        <h2 class="titulo">Selecciona una imagen existente</h2>
+                        <label for="galerias">Galería:</label>
+                        <select name="galerias" id="galerias"></select>
+                        <label for="albumes">Álbum:</label>
+                        <select name="albumes" id="albumes"></select>
+                        <ul class="imagenes"></ul>
+                        <label for="imagen">Agregar imagen:</label>
+                        <div class="contenedor-input">
+                            <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                        </div>
+                        <input type="file" name="imagen" id="imagen">
+                    </div>
+                    <textarea id="programa_contenido" name="contenido" placeholder="contenido"></textarea>
+                    <label>Imagen de portada:</label>
+                    <input id="portada" class="archivo" type="file" name="portada">
+                    <label>Archivo del programa:</label>
+                    <input id="archivo" class="archivo" type="file" name="archivo">
+                </form>
+            </section>
+            <aside id="sidebar" class="right">
+                <a id="guardar" class="boton right cambios" href="javascript:void(0)" style="display:none;">
+                    <i class="fa fa-floppy-o"></i>Guardar</a>
+                <a id="nuevo" class="boton right" href="javascript:void(0)">
+                    <i class="fa fa-file-text-o"></i>Nuevo programa</a>
+                <div class="fix"></div>
+            </aside>
+            <div class="fix"></div>
+            {% endif %} {% if programas %}
+            <ul class="lista">
+                {% for programa in programas %}
+                <li>
+                    <div class="portada" style="background-image: url('{{MEDIA_URL}}{{ programa.portada }}');"></div>
+                    <h2 class="titulo">
+                        <a href="{% url programa programa.slug programa.pk %}">{{programa}}</a>
+                        <small>
+                            {% if request.user.is_staff %}
+                            <a href="{% url programa programa.slug programa.pk %}">
+                                <i class="fa fa-pencil-square-o"></i>Editar</a>
+                            <a id="borrar-{{programa.pk}}" class="borrar" href="javascript:void(0)">
+                                <i class="fa fa-times"></i>Borrar</a>
+                            {% endif %} {% if programa.archivo %}
+                            <a href="{{MEDIA_URL}}{{programa.archivo}}">
+                                <i class="fa fa-cloud-download"></i>Descargar programa</a>
+                            {% endif %}
+                        </small>
+                    </h2>
+                    <p>{{programa.contenido|safe|truncatewords_html:50}}</p>
+                    <p class="enlace">
+                        <a href="{% url programa programa.slug programa.pk %}">
+                            <i class="fa fa-plus"></i>Leer más</a>
+                    </p>
+                    <div class="fix"></div>
+                </li>
+                <li>
+                    <hr>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if programas.has_previous or programas.has_next %}
             <nav class="navegacion">
-                <a href="" class="boton left">Anterior</a>
-                <a href="" class="boton right">Siguiente</a>
+                {% if programas.has_previous %}
+                <a href="{% url programas_pagina programas.previous_page_number %}" class="boton left">Anterior</a>
+                {% endif %} {% if programas.has_next %}
+                <a href="{% url programas_pagina programas.next_page_number %}" class="boton right">Siguiente</a>
+                {% endif %}
                 <div class="fix"></div>
             </nav>
+            {% endif %} {% else %}
+            <p class="center">No hay programas registrados</p>{% endif %}
         </section>
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        csrfToken = '{{csrf_token}}';
+        mediaURL = '{{MEDIA_URL}}';
+        urlAgregarPrograma = '{% url programa_agregar %}';
+        urlBorrarPrograma = '{% url programa_borrar %}';
+        urlGalerias = '{% url galerias %}';
+        urlAlbumes = '{% url albumes %}';
+        urlImagenes = '{% url imagenes %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
+    </script>
+    <script src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
+    <script async defer src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.programas.js"></script>
+    <script async defer src="{{STATIC_URL}}js/fundahog.selector.js"></script>
+    {% endif %}
 </body>
 
 </html>

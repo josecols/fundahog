@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{{programa}} - FUNDAHOG</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.inline.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.progress.css">{% endif %}
+</head>
+
+<body>
+    <header id="header">
+        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+        <table class="contacto">
+            <tr>
+                <td>{% for telefono in telefonos.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+                <td>
+                    <i class="fa fa-phone"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>{{direccion}}</td>
+                <td>
+                    <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+        </table>
+        <div class="fix"></div>
+    </header>
+    <div id="pagina">
+        <div id="status" class="exito"></div>
+        <a id="menu" class="toggler" href="javascript:void(0)">
+            <i class="fa fa-bars"></i>Menú</a>
+        <nav id="barra" class="hardware">
+            <ul>
+                <li>
+                    <a href="{% url nosotros %}">Nosotros</a>
+                </li>
+                <li>
+                    <a href="{% url blog %}">Blog</a>
+                </li>
+                <li>
+                    <a class="seleccionado" href="{% url programas %}">Programas</a>
+                </li>
+                <li>
+                    <a href="{% url contacto %}">Contacto</a>
+                </li>
+                <li>
+                    <a href="{% url eventos %}">Eventos</a>
+                </li>
+                <li>
+                    <a href="{% url libros %}">Libros</a>
+                </li>
+                <li>
+                    <a href="{% url galeria %}">Galería</a>
+                </li>
+                {% if request.user.is_staff %}
+                <li>
+                    <a href="">Ayuda</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <section id="principal">
+            <section id="contenido">
+                {% if request.user.is_staff %}
+                <div class="titulo">
+                    <a id="guardar" class="boton right" href="javascript:void(0)" title="Haz clic en el contenido para editarlo">
+                        Modo edición activo</a>
+                    <div id="titulo" class="left" contenteditable="true">
+                        {{programa}}
+                    </div>
+                    <div class="fix"></div>
+                    {% if programa.archivo %}
+                    <small>
+                        <a href="{{MEDIA_URL}}{{programa.archivo}}">
+                            <i class="fa fa-cloud-download"></i>Descargar programa</a>
+                    </small>{% endif %}
+                </div>
+                <a href="#modal" class="pop fancybox">
+                    <i class="fa fa-picture-o"></i>Agregar imagen al contenido</a>
+                <div id="modal" class="modal">
+                    <div id="progress" class="progress">
+                        <span></span>
+                    </div>
+                    <h2 class="titulo">Selecciona una imagen existente</h2>
+                    <label for="galerias">Galería:</label>
+                    <select name="galerias" id="galerias"></select>
+                    <label for="albumes">Álbum:</label>
+                    <select name="albumes" id="albumes"></select>
+                    <ul class="imagenes"></ul>
+                    <label for="imagen">Agregar imagen:</label>
+                    <div class="contenedor-input">
+                        <input type="text" name="titulo_imagen" id="titulo_imagen" placeholder="Título de la imagen">
+                    </div>
+                    <input type="file" name="imagen" id="imagen">
+                </div>
+                <img class="portada" src="{{MEDIA_URL}}{{programa.portada}}" alt="{{programa}}">
+                <div id="contenido-html" contenteditable="true">
+                    {{programa.contenido|safe}}
+                </div>
+                <div class="fix"></div>
+                {% else %}
+                <h1 class="titulo">{{programa}} {% if programa.archivo %}
+                    <small>
+                        <a href="{{MEDIA_URL}}{{programa.archivo}}">
+                            <i class="fa fa-cloud-download"></i>Descargar programa</a>
+                    </small>{% endif %}
+                </h1>
+                <img class="portada" src="{{MEDIA_URL}}{{programa.portada}}" alt="{{programa}}">{{programa.contenido|safe}}
+                <div class="fix"></div>
+                {% endif %}
+                <hr>
+            </section>
+        </section>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if request.user.is_staff %}
+    <script>
+        inline = true;
+        url = '{% url programa_modificar %}';
+        csrfToken = '{{csrf_token}}';
+        mediaURL = '{{MEDIA_URL}}';
+        urlGalerias = '{% url galerias %}';
+        urlAlbumes = '{% url albumes %}';
+        urlImagenes = '{% url imagenes %}';
+        urlAgregarImagen = '{% url imagen_agregar %}';
+        data = '';
+        $(document).ready(function() {
+            $('#guardar').click(function () {
+                var titulo = $('#titulo').text();
+                var contenido = encodeURIComponent($('#contenido-html').html());
+                var evento = "{{programa.pk}}";
+                data = 'programa=' + evento + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + csrfToken;
+            });
+        });
+    </script>
+    <script src="{{STATIC_URL}}js/jquery.fancybox.min.js"></script>
+    <script defer src="{{STATIC_URL}}js/ckeditor/ckeditor.js"></script>
+    <script async src="{{STATIC_URL}}js/jquery.mobile.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.edicion.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.upload.js"></script>
+    <script async src="{{STATIC_URL}}js/fundahog.selector.js"></script>
+    {% endif %}
+</body>
+
+</html>

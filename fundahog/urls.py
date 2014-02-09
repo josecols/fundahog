@@ -46,6 +46,16 @@ urlpatterns = patterns(
     url(r'^secciones/seccion/borrar$', 'portal.views.seccion_borrar',
         name='seccion_borrar'),
     url(r'^programas/$', 'portal.views.programas', name='programas'),
+    url(r'^programas/pagina-(?P<pagina>\d+)/$', 'portal.views.programas'
+        , name='programas_pagina'),
+    url(r'^programas/programa/(?P<slug>[-\w\d]+)-(?P<programa_id>\d+)/$'
+        , 'portal.views.programa', name='programa'),
+    url(r'^programas/programa/agregar$', 'portal.views.programa_agregar'
+        , name='programa_agregar'),
+    url(r'^programas/programa/modificar$',
+        'portal.views.programa_modificar', name='programa_modificar'),
+    url(r'^programas/programa/borrar$', 'portal.views.programa_borrar',
+        name='programa_borrar'),
     url(r'^contacto/$', 'portal.views.contacto', name='contacto'),
     url(r'^eventos/$', 'portal.views.eventos', name='eventos'),
     url(r'^eventos/pagina-(?P<pagina>\d+)/$', 'portal.views.eventos',

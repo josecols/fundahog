@@ -27,7 +27,7 @@ def directorio(instance, nombre):
     elif isinstance(instance, Libro):
         ruta = 'uploads/libros/portadas'
     elif isinstance(instance, Programa):
-        ruta = 'uploads/programas'
+        ruta = 'uploads/programas/portadas'
     else:
         ruta = 'uploads/error'
 
@@ -306,7 +306,9 @@ def borrar_imagen(sender, instance, **kwargs):
 
 
 pre_delete.connect(borrar_portada, sender=Evento)
+pre_delete.connect(borrar_portada, sender=Programa)
 pre_delete.connect(borrar_portada, sender=Libro)
 pre_delete.connect(borrar_archivo, sender=Libro)
+pre_delete.connect(borrar_archivo, sender=Programa)
 pre_delete.connect(borrar_imagen, sender=Imagen)
 

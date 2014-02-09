@@ -96,7 +96,8 @@
     padding: 6px;
     width: auto
 }
-#principal #contenido img {
+#principal #contenido img,
+#principal .lista img {
     border-radius: 6px;
     display: block;
     margin: 5px auto;

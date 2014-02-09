@@ -17,9 +17,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from portal.forms import EventoForm, ImagenForm, CategoriaForm, \
-    LibroForm, SeccionForm
+    LibroForm, SeccionForm, ProgramaForm
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
-    Album, Imagen, Libro, Categoria
+    Album, Imagen, Libro, Categoria, Programa
 
 ELEMENTOS_PAGINA = 10
 
@@ -81,13 +81,27 @@ def evento(request, slug, evento_id):
         }, context_instance=RequestContext(request))
 
 
-def programas(request):
+def programas(request, pagina='1'):
+    lista = Programa.objects.all()
+    programas = paginar(lista, pagina, ELEMENTOS_PAGINA)
     (direccion, telefonos) = informacion_organizacion()
-    return render_to_response('programas.html',
-                              {'direccion': direccion,
-                              'telefonos': telefonos,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    return render_to_response('programas.html', {
+        'programas': programas,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
+
+
+def programa(request, slug, programa_id):
+    programa = get_object_or_404(Programa, pk=programa_id)
+    (direccion, telefonos) = informacion_organizacion()
+    return render_to_response('programa.html', {
+        'programa': programa,
+        'direccion': direccion,
+        'telefonos': telefonos,
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def nosotros(request, slug=None):
@@ -146,7 +160,7 @@ def galeria(request, galeria_pk=None):
 
 
 def libros(request, pagina='1'):
-    lista = Libro.objects.order_by()
+    lista = Libro.objects.all()
     libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
     categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()
@@ -180,7 +194,6 @@ def libros_busqueda(request, pagina='1', query=None):
             | Q(categorias__slug__icontains=query) \
             | Q(descripcion__icontains=query)
         lista = Libro.objects.filter(qset).distinct()
-        lista = lista.order_by()
         libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
     else:
         libros = None
@@ -379,7 +392,7 @@ def seccion_agregar(request):
             else:
                 form.save()
             return HttpResponse(construir_data(0,
-                                'Seccion agregada con éxito'),
+                                'Sección agregada con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -416,7 +429,59 @@ def seccion_borrar(request):
         seccion = get_object_or_404(Seccion, pk=seccion_id)
         seccion.delete()
         return HttpResponse(construir_data(0,
-                            'Seccion borrada con éxito'),
+                            'Sección borrada con éxito'),
+                            mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def programa_agregar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+
+        form = ProgramaForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(construir_data(0,
+                                'Programa agregado con éxito'),
+                                mimetype='application/javascript')
+        else:
+            return HttpResponse(construir_data(-1, form.errors),
+                                mimetype='application/javascript')
+    raise Http404
+
+
+@csrf_protect
+def programa_modificar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        programa_id = request.POST.get('programa', None)
+        programa = get_object_or_404(Programa, pk=programa_id)
+        programa.titulo = request.POST.get('titulo', None)
+        programa.contenido = request.POST.get('contenido', None)
+
+        try:
+            programa.full_clean()
+            programa.save()
+            return HttpResponse(construir_data(0,
+                                "Programa modificado con éxito"),
+                                mimetype='application/javascript')
+        except ValidationError, errors:
+            return HttpResponse(construir_data(-1,
+                                errors.message_dict),
+                                mimetype='application/javascript')
+
+
+@csrf_protect
+def programa_borrar(request):
+    if request.user.is_superuser and request.method == 'POST' \
+        and request.is_ajax():
+        programa_id = request.POST.get('programa', None)
+        programa = get_object_or_404(Programa, pk=programa_id)
+        programa.delete()
+        return HttpResponse(construir_data(0,
+                            'Programa borrado con éxito'),
                             mimetype='application/javascript')
     raise Http404
 
