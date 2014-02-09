@@ -33,6 +33,13 @@
     </header>
     <div id="pagina">
         <div id="status" class="exito"></div>
+        {% if importante %}
+        <a class="importante" href="{% url entrada importante.slug importante.pk %}">
+            <div id="importante">
+                <i class="fa fa-star"></i>{{importante}}
+            </div>
+        </a>
+        {% endif %}
         <a id="menu" class="toggler" href="javascript:void(0)">
             <i class="fa fa-bars"></i>Menú</a>
         <nav id="barra" class="hardware">
@@ -116,6 +123,10 @@
             <section id="contenido" class="left">
                 {% if request.user.is_staff %}
                 <form class="formulario admin entrada">
+                    <span class="checkbox">
+                        <i class="fa fa-star"></i>Importante:
+                        <input type="checkbox" name="importante">
+                    </span>
                     <div class="contenedor-input">
                         <input type="text" name="titulo" placeholder="Título">
                     </div>
@@ -157,7 +168,8 @@
                             <i class="fa fa-pencil-square-o"></i>Editar</a>
                         <a id="borrar-{{entrada.pk}}" class="borrar" href="javascript:void(0)">
                             <i class="fa fa-times"></i>Borrar</a>
-                        {% endif %}
+                        {% endif %} {% if entrada.importante %}
+                        <i class="fa fa-star"></i>Importante{% endif %}
                         <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
                         <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
                     </small>

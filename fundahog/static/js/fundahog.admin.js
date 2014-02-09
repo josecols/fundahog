@@ -34,8 +34,9 @@ function manejarRespuestaServidor(respuesta) {
     $('#status').slideToggle('fast');
 
     setTimeout(function () {
-        $('#status').slideToggle('slow');
-        if (0 === respuesta.flag)
-            location.reload();
+        $('#status').slideToggle('slow', function () {
+            if (0 === respuesta.flag)
+                location.reload();
+        });
     }, 3000);
 }

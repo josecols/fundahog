@@ -36,6 +36,9 @@ class Entrada(models.Model):
                               verbose_name="título")
     contenido = models.TextField()
     categorias = models.ManyToManyField(Categoria)
+    importante = \
+        models.BooleanField(help_text='Una entrada marcada como importante aparecerá en todo el sitio.'
+                            )
     autor = models.ForeignKey(User, editable=False)
     slug = models.SlugField(max_length=100, editable=False)
     creado = models.DateTimeField(editable=False, auto_now_add=True)

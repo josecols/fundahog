@@ -8,13 +8,14 @@
 from blog.models import Categoria, Entrada
 from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
+from django.forms.models import model_to_dict
 from blog.forms import EntradaForm, CategoriaForm
 from django.template.context import RequestContext
 from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, render_to_response
 from portal.views import construir_data, paginar, \
-    informacion_organizacion
+    informacion_organizacion, entrada_importante
 
 ENTRADAS = 10  # Publicaciones por página
 
@@ -29,6 +30,7 @@ def index(request, pagina='1'):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -42,6 +44,7 @@ def entrada(request, slug, entrada_id):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -67,6 +70,7 @@ def busqueda(request, pagina='1', query=None):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -81,11 +85,13 @@ def entrada_agregar(request):
         contenido = request.POST.get('contenido', None)
         categorias = str(request.POST.get('categorias', None)).split(','
                 )
+        importante = request.POST.get('importante', None)
+
         form = EntradaForm(request.POST)
 
         if form.is_valid():
             entrada = Entrada(titulo=titulo, contenido=contenido,
-                              autor=request.user)
+                              importante=importante, autor=request.user)
             entrada.save()
             for pk in categorias:
                 categoria = Categoria.objects.get(pk=pk)
@@ -107,6 +113,7 @@ def entrada_modificar(request):
         entrada = get_object_or_404(Entrada, pk=entrada_id)
         entrada.titulo = request.POST.get('titulo', None)
         entrada.contenido = request.POST.get('contenido', None)
+        entrada.importante = request.POST.get('importante', None)
 
         try:
             entrada.full_clean()

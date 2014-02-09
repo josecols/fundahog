@@ -74,6 +74,18 @@
     position: absolute;
     right: 0
 }
+#importante {
+    background-color: #F7E748;
+    border-radius: 4px;
+    color: #444;
+    display: none;
+    margin-bottom: 10px;
+    padding: 5px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, .7)
+}
+#importante:hover {
+    background-color: #F7EB74
+}
 #pagina {
     background: #fcfcfc;
     border-top: 7px solid #6fc8e5;
@@ -335,6 +347,14 @@
     margin-left: 2px;
     padding-left: 6px
 }
+#principal .titulo small i,
+.formulario .checkbox i {
+    vertical-align: text-top
+}
+#principal .titulo small input,
+.formulario .checkbox input {
+    vertical-align: middle
+}
 #principal a,
 #principal .titulo small a {
     color: #a14c5e;
@@ -423,6 +443,10 @@
 .formulario .boton:active {
     background: #60c1eb !important
 }
+.formulario .checkbox {
+    display: block;
+    margin-bottom: 15px
+}
 .formulario .contenedor-input input,
 .modal .contenedor-input input {
     border: none;
@@ -482,6 +506,9 @@
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     -webkit-transform: translateZ(0)
+}
+.importante {
+    text-decoration: none;
 }
 .left {
     float: left

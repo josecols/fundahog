@@ -34,6 +34,13 @@
     </header>
     <div id="pagina" class="hardware">
         <div id="status" class="exito"></div>
+        {% if importante %}
+        <a class="importante" href="{% url entrada importante.slug importante.pk %}">
+            <div id="importante">
+                <i class="fa fa-star"></i>{{importante}}
+            </div>
+        </a>
+        {% endif %}
         <a id="menu" class="toggler" href="javascript:void(0)">
             <i class="fa fa-bars"></i>Menú</a>
         <nav id="barra">

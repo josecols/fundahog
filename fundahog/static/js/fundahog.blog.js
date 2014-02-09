@@ -49,6 +49,7 @@ $(document).ready(function () {
         var titulo = $('input[name="titulo"]').val();
         var contenido = '';
         var categorias = $('select[name="categorias"]').val() ? $('select[name="categorias"]').val().join(',') : '';
+        var importante = ($('input[name=importante]').is(':checked') ? 'True' : 'False');
 
         if (jQuery.browser.mobile) {
             contenido = $('#entrada_contenido').val();
@@ -60,7 +61,7 @@ $(document).ready(function () {
             async: true,
             type: 'POST',
             url: urlAgregarEntrada,
-            data: 'titulo=' + titulo + '&contenido=' + contenido + '&categorias=' + categorias + '&csrfmiddlewaretoken=' + csrfToken,
+            data: 'titulo=' + titulo + '&contenido=' + contenido + '&categorias=' + categorias + '&importante=' + importante + '&csrfmiddlewaretoken=' + csrfToken,
             dataType: "text"
         });
         request.done(function (json) {

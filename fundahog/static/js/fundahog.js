@@ -14,4 +14,12 @@ $(document).ready(function () {
     $('.contenedor-input input').focusout(function () {
         $(this).parent().removeClass('focus');
     });
+
+    if ($('#importante').length > 0) {
+        setTimeout(function () {
+            $('#importante').slideToggle('slow', function () {
+                $(this).css('display', 'block');
+            });
+        }, 2000);
+    }
 });

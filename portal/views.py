@@ -7,6 +7,7 @@
 
 from datetime import datetime
 from django.utils import simplejson
+from blog.models import Entrada
 from django.db.models.query_utils import Q
 from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
@@ -58,6 +59,17 @@ def informacion_organizacion():
     return (organizacion.direccion, telefonos)
 
 
+def entrada_importante(request):
+    try:
+        entrada = \
+            Entrada.objects.filter(importante=True).order_by('creado'
+                ).reverse()[0]
+    except IndexError:
+        entrada = None
+
+    return entrada
+
+
 def eventos(request, pagina='1'):
     lista = Evento.objects.order_by('fecha').reverse()
     eventos = paginar(lista, pagina, ELEMENTOS_PAGINA)
@@ -66,6 +78,7 @@ def eventos(request, pagina='1'):
         'eventos': eventos,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -77,6 +90,7 @@ def evento(request, slug, evento_id):
         'evento': evento,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -89,6 +103,7 @@ def programas(request, pagina='1'):
         'programas': programas,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -100,6 +115,7 @@ def programa(request, slug, programa_id):
         'programa': programa,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -118,6 +134,7 @@ def nosotros(request, slug=None):
         'subseccion': subseccion,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -130,6 +147,7 @@ def seccion(request, slug):
         'seccion': seccion,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -138,11 +156,12 @@ def contacto(request):
     organizacion = Organizacion.objects.all()[0]
     telefonos_principales = \
         organizacion.telefonos.filter(principal=True)
-    return render_to_response('contacto.html',
-                              {'organizacion': organizacion,
-                              'telefonos_principales': telefonos_principales,
-                              'request': request},
-                              context_instance=RequestContext(request))
+    return render_to_response('contacto.html', {
+        'organizacion': organizacion,
+        'telefonos_principales': telefonos_principales,
+        'importante': entrada_importante(request),
+        'request': request,
+        }, context_instance=RequestContext(request))
 
 
 def galeria(request, galeria_pk=None):
@@ -155,6 +174,7 @@ def galeria(request, galeria_pk=None):
         'galeria': galeria,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -169,6 +189,7 @@ def libros(request, pagina='1'):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -182,6 +203,7 @@ def libro(request, slug, libro_id):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -206,6 +228,7 @@ def libros_busqueda(request, pagina='1', query=None):
         'categorias': categorias,
         'direccion': direccion,
         'telefonos': telefonos,
+        'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
 

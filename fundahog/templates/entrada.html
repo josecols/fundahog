@@ -34,6 +34,13 @@
     </header>
     <div id="pagina">
         <div id="status" class="exito"></div>
+        {% if importante %}
+        <a class="importante" href="{% url entrada importante.slug importante.pk %}">
+            <div id="importante">
+                <i class="fa fa-star"></i>{{importante}}
+            </div>
+        </a>
+        {% endif %}
         <a id="menu" class="toggler" href="javascript:void(0)">
             <i class="fa fa-bars"></i>Menú</a>
         <nav id="barra" class="hardware">
@@ -117,7 +124,10 @@
                     <div id="titulo" contenteditable="true">
                         {{entrada}}
                     </div>
+
                     <small>
+                        <i class="fa fa-star"></i>Importante:
+                        <input type="checkbox" name="importante" {% if entrada.importante %}checked{% endif %}>
                         <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
                         <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
                     </small>
@@ -146,6 +156,8 @@
                 {% else %}
                 <h1 class="titulo">{{entrada}}
                     <small>
+                        {% if entrada.importante %}
+                        <i class="fa fa-star"></i>Importante{% endif %}
                         <i class="fa fa-calendar"></i>{{entrada.creado|date:"d/m/Y"}}
                         <i class="fa fa-user"></i>{{entrada.autor|nombre_completo}}
                     </small>
@@ -174,8 +186,13 @@
             $('#guardar').click(function () {
                 var titulo = $('#titulo').text();
                 var contenido = encodeURIComponent($('#contenido-html').html());
+                var importante = ($('input[name=importante]').is(':checked') ? 'True' : 'False');
                 var entrada = "{{entrada.pk}}";
-                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&csrfmiddlewaretoken=' + csrfToken;
+                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&importante='+ importante + '&csrfmiddlewaretoken=' + csrfToken;
+            });
+
+            $('input[name=importante]').change(function() {
+                $("#contenido-html").change();
             });
         });
     </script>
