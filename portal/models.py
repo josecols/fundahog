@@ -216,8 +216,8 @@ class Categoria(models.Model):
 
     class Meta:
 
-        verbose_name = "categoría"
-        verbose_name_plural = 'categorías'
+        verbose_name = "categoría de libros"
+        verbose_name_plural = 'categorías de libros'
 
     def __unicode__(self):
         return self.descripcion
