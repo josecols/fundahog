@@ -382,6 +382,9 @@
     margin: 40px auto 5px;
     overflow: hidden
 }
+#principal hr.separador {
+    margin-bottom: 30px!important
+}
 #principal p,
 #principal #contenido ul,
 #principal #contenido ol {

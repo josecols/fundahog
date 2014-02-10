@@ -50,7 +50,6 @@ $(document).ready(function () {
         var contenido = '';
         var categorias = $('select[name="categorias"]').val() ? $('select[name="categorias"]').val().join(',') : '';
         var importante = ($('input[name=importante]').is(':checked') ? 'True' : 'False');
-
         if (jQuery.browser.mobile) {
             contenido = $('#entrada_contenido').val();
         } else {

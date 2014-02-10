@@ -84,7 +84,7 @@ def entrada_agregar(request):
         contenido = request.POST.get('contenido', None)
         categorias = str(request.POST.get('categorias', None)).split(','
                 )
-        importante = request.POST.get('importante', None)
+        importante = request.POST.get('importante', None) == 'True'
 
         form = EntradaForm(request.POST)
 
