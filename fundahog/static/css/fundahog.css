@@ -294,7 +294,8 @@
     text-align: left;
     text-shadow: 1px 1px 0 #FFF
 }
-#principal .subtitulo {
+#principal .subtitulo,
+#principal #contenido h2 {
     font-size: 1.5em;
     font-weight: 300;
     padding: 0 0 5px
@@ -328,7 +329,8 @@
     display: block;
     text-shadow: 1px 1px rgba(0, 0, 0, .7)
 }
-#principal .titulo {
+#principal .titulo,
+#principal #contenido h1 {
     font-size: 2em;
     font-weight: 300;
     padding: 20px 0 15px
@@ -383,7 +385,7 @@
     overflow: hidden
 }
 #principal hr.separador {
-    margin-bottom: 30px!important
+    margin-bottom: 40px!important
 }
 #principal p,
 #principal #contenido ul,
@@ -611,6 +613,17 @@ hgroup,
 nav,
 section {
     display: block
+}
+blockquote {
+    font-style: italic;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    padding: 2px 0;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0;
+    padding-left: 20px;
+    padding-right: 8px;
+    border-left-width: 5px;
 }
 body {
     background: url(../img/body-top.jpg) no-repeat center top #ecfafc;
