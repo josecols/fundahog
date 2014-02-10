@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FUNDAHOG</title>
+    <title>{{seccion.titulo}} - FUNDAHOG</title>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
-</head>
+</head>{% load filters %}
 
 <body>
     <header id="header">
         <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
         <table class="contacto">
             <tr>
-                <td>{% for telefono in telefonos_principales.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+                <td>{% for telefono in telefonos.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
                 <td>
                     <i class="fa fa-phone"></i>
                 </td>
             </tr>
             <tr>
-                <td>{{organizacion.direccion|safe}}</td>
+                <td>{{direccion}}</td>
                 <td>
                     <i class="fa fa-map-marker"></i>
                 </td>
@@ -51,7 +51,7 @@
                     <a href="{% url programas %}">Programas</a>
                 </li>
                 <li>
-                    <a class="seleccionado" href="{% url contacto %}">Contacto</a>
+                    <a href="{% url contacto %}">Contacto</a>
                 </li>
                 <li>
                     <a href="{% url eventos %}">Eventos</a>
@@ -64,53 +64,48 @@
                 </li>
                 {% if request.user.is_staff %}
                 <li>
-                    <a href="{% url ayuda %}">Ayuda</a>
+                    <a class="seleccionado" href="{% url ayuda %}">Ayuda</a>
                 </li>
                 {% endif %}
             </ul>
         </nav>
         <section id="principal">
-            <div class="contenedor-banner">
-                <a class="chat" href="" class="chat">chat</a>
-                <a class="twitter" href="{{organizacion.twitter}}" class="chat">twitter</a>
-                <a class="facebook" href="{{organizacion.facebook}}" class="chat">facebook</a>
-                <section class="banner"></section>
-            </div>
+            {% if secciones %}
             <aside id="sidebar" class="left">
-                <h2 class="titulo" style="margin-top:0;">Dirección</h2>
-                <p>
-                    <i class="fa fa-map-marker"></i>{{organizacion.direccion|safe}}</p>
-                <h2 class="titulo">Correo</h2>
-                <ul>
-                    {% for correo in organizacion.correos.all %}
-                    <li>
-                        <i class="fa fa-envelope-o"></i>{{correo}}</li>
-                    {% endfor %}
-                </ul>
-                <h2 class="titulo">Teléfono</h2>
-                <ul>
-                    {% for telefono in organizacion.telefonos.all %}
-                    <li>
-                        <i class="fa fa-phone"></i>{{telefono}}</li>
-                    {% endfor %}
-                </ul>
+                <nav>
+                    <ul>
+                        {% for s in secciones %}
+                        <li>
+                            {% if s.titulo == seccion.titulo %}
+                            <a href="{% url ayuda_seccion s.slug s.pk %}" class="seleccionado">{{s.titulo}}
+                                <span class="flecha"></span>
+                            </a>
+                            {% else %}
+                            <a href="{% url ayuda_seccion s.slug s.pk %}">{{s.titulo}}</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
             </aside>
+            {% endif %}
             <section id="contenido" class="right">
-                <h1 class="titulo">Envíanos un mensaje</h1>
-                <form action="" class="formulario">
-                    <div class="contenedor-input">
-                        <i class="fa fa-user"></i>
-                        <input type="text" placeholder="Nombre">
-                    </div>
-                    <div class="contenedor-input">
-                        <i class="fa fa-envelope"></i>
-                        <input type="text" placeholder="Correo electrónico">
-                    </div>
-                    <h2 class="subtitulo">Mensaje:</h2>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
-                    <input class="boton" type="submit" value="Enviar">
-                    <div class="fix"></div>
-                </form>
+                {% if seccion %}
+                <h1 class="titulo">
+                    <a href="javascript:void(0)">{{ seccion.titulo }}</a>
+                    <small>
+                        <i class="fa fa-calendar"></i>{{ seccion.editado }} {% if seccion.archivo %}
+                        <a href="{{MEDIA_URL}}{{seccion.archivo}}">
+                            <i class="fa fa-cloud-download"></i>Descargar en PDF</a>{% endif %}
+                    </small>
+
+                </h1>
+                {{ seccion.contenido|safe }} {% if seccion.video %}
+                <h1 class="titulo">Vídeo explicativo</h1>
+                {{seccion.video|youtube_embed_url|safe}} {% endif %}
+                <hr>{% else %}
+                <h1 class="titulo">Selecciona un tema de ayuda de la barra lateral.</h1>
+                {% endif %}
             </section>
             <div class="fix"></div>
         </section>

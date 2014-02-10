@@ -581,6 +581,22 @@
     border-bottom: 1px solid #cecece;
     border-radius: 4px
 }
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 article,
 aside,
 details,
@@ -597,6 +613,11 @@ body {
     background: url(../img/body-top.jpg) no-repeat center top #ecfafc;
     color: #555;
     font-family: "Open Sans", sans-serif
+}
+embed,
+object,
+video {
+    max-width: 100%
 }
 i {
     font-size: 14px;

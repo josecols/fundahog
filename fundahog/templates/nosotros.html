@@ -68,7 +68,7 @@
                 </li>
                 {% if request.user.is_staff %}
                 <li>
-                    <a href="">Ayuda</a>
+                    <a href="{% url ayuda %}">Ayuda</a>
                 </li>
                 {% endif %}
             </ul>
@@ -80,8 +80,7 @@
                     <i class="fa fa-floppy-o"></i>Guardar</a>
                 <a id="nuevo" class="boton right" href="javascript:void(0)">
                     <i class="fa fa-file-text-o"></i>Agregar sección</a>
-                {% endif %}
-                <div class="fix"></div>
+                <div class="fix"></div>{% endif %}
                 <nav>
                     <ul>
                         {% for s in seccion.secciones.all %}

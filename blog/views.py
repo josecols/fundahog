@@ -8,7 +8,6 @@
 from blog.models import Categoria, Entrada
 from django.db.models.query_utils import Q
 from django.http import Http404, HttpResponse
-from django.forms.models import model_to_dict
 from blog.forms import EntradaForm, CategoriaForm
 from django.template.context import RequestContext
 from django.core.exceptions import ValidationError

@@ -97,4 +97,7 @@ urlpatterns = patterns(
         name='imagen_agregar'),
     url(r'^imagenes/imagen/borrar/$', 'portal.views.imagen_borrar',
         name='imagen_borrar'),
+    url(r'^ayuda/$', 'ayuda.views.ayuda', name='ayuda'),
+    url(r'^ayuda/seccion/(?P<slug>[-\w\d]+)-(?P<seccion_id>\d+)/$',
+        'ayuda.views.ayuda', name='ayuda_seccion'),
     )
