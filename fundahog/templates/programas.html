@@ -121,6 +121,7 @@
                     <div class="portada" style="background-image: url('{{MEDIA_URL}}{{ programa.portada }}');"></div>
                     <h2 class="titulo">
                         <a href="{% url programa programa.slug programa.pk %}">{{programa}}</a>
+                        {% if programa.archivo or request.user.is_staff %}
                         <small>
                             {% if request.user.is_staff %}
                             <a href="{% url programa programa.slug programa.pk %}">
@@ -131,7 +132,7 @@
                             <a href="{{MEDIA_URL}}{{programa.archivo}}">
                                 <i class="fa fa-cloud-download"></i>Descargar programa</a>
                             {% endif %}
-                        </small>
+                        </small>{% endif %}
                     </h2>
                     <p>{{programa.contenido|safe|truncatewords_html:50}}</p>
                     <p class="enlace">
@@ -141,7 +142,7 @@
                     <div class="fix"></div>
                 </li>
                 <li>
-                    <hr>
+                    <hr class="separador">
                 </li>
                 {% endfor %}
             </ul>

@@ -96,7 +96,7 @@ def evento(request, slug, evento_id):
 
 
 def programas(request, pagina='1'):
-    lista = Programa.objects.all()
+    lista = Programa.objects.order_by('-pk')
     programas = paginar(lista, pagina, ELEMENTOS_PAGINA)
     (direccion, telefonos) = informacion_organizacion()
     return render_to_response('programas.html', {
@@ -180,7 +180,7 @@ def galeria(request, galeria_pk=None):
 
 
 def libros(request, pagina='1'):
-    lista = Libro.objects.all()
+    lista = Libro.objects.order_by('-pk')
     libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
     categorias = Categoria.objects.all()
     (direccion, telefonos) = informacion_organizacion()

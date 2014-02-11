@@ -223,14 +223,6 @@
     z-index: 1;
     -webkit-filter: blur(1px)
 }
-#principal .contenedor-banner .chat {
-    left: 15%;
-    top: 55px
-}
-#principal .contenedor-banner .chat:hover {
-    border-color: #f2277a;
-    color: #f2277a
-}
 #principal .contenedor-banner .facebook {
     right: 15%;
     top: 55px
@@ -240,8 +232,7 @@
     color: #108cde
 }
 #principal .contenedor-banner .twitter {
-    left: 50%;
-    margin-left: -46px;
+    left: 15%;
     top: 126px
 }
 #principal .contenedor-banner .twitter:hover {
@@ -721,9 +712,6 @@ p.center {
     }
     #principal #sidebar nav a {
         text-align: left
-    }
-    #principal .contenedor-banner .chat {
-        top: 81px
     }
     #principal .contenedor-banner .facebook {
         top: 81px
