@@ -274,6 +274,17 @@ class Programa(models.Model):
             redimensionar(archivo, 400, 200)
 
 
+class Mensaje(models.Model):
+
+    nombre = models.CharField(max_length=100,
+                              verbose_name='nombre del remitente')
+    correo = models.EmailField(verbose_name="Correo electrónico")
+    mensaje = models.TextField()
+
+    def __unicode__(self):
+        return self.nombre
+
+
 # Señales
 
 def borrar_portada(sender, instance, **kwargs):

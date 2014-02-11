@@ -11,8 +11,9 @@ function capitalizarInicial(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function manejarRespuestaServidor(respuesta) {
+function manejarRespuestaServidor(respuesta, reload) {
     respuesta = JSON.parse(respuesta);
+    reload = typeof reload !== 'undefined' ? reload : true;
 
     switch (respuesta.flag) {
     case 0:
@@ -35,8 +36,11 @@ function manejarRespuestaServidor(respuesta) {
 
     setTimeout(function () {
         $('#status').slideToggle('slow', function () {
-            if (0 === respuesta.flag)
-                location.reload();
+            if (0 === respuesta.flag) {
+                console.log(reload);
+                if (reload)
+                    location.reload();
+            }
         });
     }, 3000);
 }

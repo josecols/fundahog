@@ -18,9 +18,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from portal.forms import EventoForm, ImagenForm, CategoriaForm, \
-    LibroForm, SeccionForm, ProgramaForm
+    LibroForm, SeccionForm, ProgramaForm, MensajeForm
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
-    Album, Imagen, Libro, Categoria, Programa
+    Album, Imagen, Libro, Categoria, Programa, Mensaje
 
 ELEMENTOS_PAGINA = 10
 
@@ -152,14 +152,21 @@ def seccion(request, slug):
         }, context_instance=RequestContext(request))
 
 
-def contacto(request):
+def contacto(request, data=None):
     organizacion = Organizacion.objects.all()[0]
     telefonos_principales = \
         organizacion.telefonos.filter(principal=True)
+
+    if request.POST:
+        data = mensaje_agregar(request)
+    else:
+        data = None
+
     return render_to_response('contacto.html', {
         'organizacion': organizacion,
         'telefonos_principales': telefonos_principales,
         'importante': entrada_importante(request),
+        'data': data,
         'request': request,
         }, context_instance=RequestContext(request))
 
@@ -231,6 +238,21 @@ def libros_busqueda(request, pagina='1', query=None):
         'importante': entrada_importante(request),
         'request': request,
         }, context_instance=RequestContext(request))
+
+
+@csrf_protect
+def mensaje_agregar(request):
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return construir_data(0,
+                                  'Hemos recibido el mensaje, nos comunicaremos pronto.'
+                                  )
+        else:
+            return construir_data(-1, form.errors)
+    raise Http404
 
 
 # Vistas AJAX

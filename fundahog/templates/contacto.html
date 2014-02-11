@@ -30,7 +30,9 @@
         <div class="fix"></div>
     </header>
     <div id="pagina">
-        {% if importante %}
+        {% if data %}
+        <div id="status" class="exito"></div>
+        {% endif %} {% if importante %}
         <a class="importante" href="{% url entrada importante.slug importante.pk %}">
             <div id="importante">
                 <i class="fa fa-star"></i>{{importante}}
@@ -96,17 +98,18 @@
             </aside>
             <section id="contenido" class="right">
                 <h1 class="titulo">Envíanos un mensaje</h1>
-                <form action="" class="formulario">
+                <form action="{% url contacto %}" method="post" class="formulario">
+                    {% csrf_token %}
                     <div class="contenedor-input">
                         <i class="fa fa-user"></i>
-                        <input type="text" placeholder="Nombre">
+                        <input type="text" placeholder="Nombre" name="nombre" required>
                     </div>
                     <div class="contenedor-input">
                         <i class="fa fa-envelope"></i>
-                        <input type="text" placeholder="Correo electrónico">
+                        <input type="text" placeholder="Correo electrónico" name="correo" required>
                     </div>
                     <h2 class="subtitulo">Mensaje:</h2>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <textarea name="mensaje" id="" cols="30" rows="10" required></textarea>
                     <input class="boton" type="submit" value="Enviar">
                     <div class="fix"></div>
                 </form>
@@ -116,6 +119,13 @@
     </div>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+    {% if data %}
+    <script src="{{STATIC_URL}}js/fundahog.admin.js"></script>
+    <script>
+        var data = '{{data|safe}}';
+        $(document).ready(function () {manejarRespuestaServidor(data, false);});
+    </script>
+    {% endif %}
 </body>
 
 </html>

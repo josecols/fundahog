@@ -7,7 +7,7 @@
 
 from django import forms
 from portal.models import Evento, Seccion, Imagen, Categoria, Libro, \
-    Programa
+    Programa, Mensaje
 from django.core.files.images import get_image_dimensions
 
 
@@ -92,5 +92,12 @@ class ProgramaForm(forms.ModelForm):
                 raise forms.ValidationError('La imagen de portada debe tener un ancho y un alto mayor a 200px'
                         )
         return imagen
+
+
+class MensajeForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Mensaje
 
 
