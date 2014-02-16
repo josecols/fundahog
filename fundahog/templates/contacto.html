@@ -123,7 +123,7 @@
     <script src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script>
         var data = '{{data|safe}}';
-        $(document).ready(function () {manejarRespuestaServidor(data, false);});
+        $(document).ready(function () {Admin.manejarRespuestaServidor(data, false);});
     </script>
     {% endif %}
 </body>
