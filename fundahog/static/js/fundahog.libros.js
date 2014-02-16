@@ -1,9 +1,14 @@
 /*  FUNDAHOG
-    UCAB Guayana
-    Aplicación: FUNDAHOG WEB
-    Autor: Jose Cols - josecolsg@gmail.com - @josecols
-    Version: 1.0
-*/
+ *    UCAB Guayana
+ *    Aplicación: FUNDAHOG WEB
+ *    Autor: Jose Cols - josecolsg@gmail.com - @josecols
+ *    Version: 1.0
+ */
+
+/**
+ * Este módulo ofrece las herramientas administrativas al cliente para gestionar Libros y Categorías de libros.
+ * @class Libros
+ */
 
 $(document).ready(function () {
     var nueva_categoria = $('#nueva_categoria');
@@ -41,6 +46,13 @@ $(document).ready(function () {
     });
 
 
+    /**
+     * Realiza la consulta al servidor para agregar un nuevo Libro.
+     *
+     * @method guardar
+     * @param urlAgregarLibro {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function guardar() {
         var titulo = $('input[name="titulo"]').val();
         var descripcion = $('textarea[name="descripcion"]').val();
@@ -54,13 +66,21 @@ $(document).ready(function () {
             'categorias': categorias,
             'csrfmiddlewaretoken': csrfToken
         }, function (json) {
-            manejarRespuestaServidor(JSON.stringify(json));
+            Admin.manejarRespuestaServidor(JSON.stringify(json));
             $('#progress').hide();
         }, function (progress, value) {
             $('#progress > span').width(value + '%');
         });
     }
 
+    /**
+     * Realiza la consulta al servidor para agregar una nueva Categoría de libro.
+     *
+     * @method agregarCategoria
+     * @param categoria {String} Descripción de la categoría a agregar.
+     * @param urlAgregarCategoria {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function agregarCategoria(categoria) {
         var request = $.ajax({
             async: true,
@@ -70,7 +90,7 @@ $(document).ready(function () {
             dataType: "text"
         });
         request.done(function (json) {
-            manejarRespuestaServidor(json);
+            Admin.manejarRespuestaServidor(json);
             json = JSON.parse(json);
             if (-1 != json.flag && json.data) {
                 $('select[name="categorias"]').prepend('<option value="' + json.data + '">' + categoria + '</option>');
@@ -79,6 +99,14 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * Realiza la consulta al servidor para borrar un libro existente.
+     *
+     * @method borrar
+     * @param boton {Object} Botón que dispara el evento y que contiene el ID del Libro a borrar.
+     * @param urlBorrarLibro {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function borrar(boton) {
         var pk = $(boton).attr('id').match(/[0-9]+/);
         var respuesta = confirm("¿Está seguro que deasea eliminar el libro?");
@@ -92,7 +120,7 @@ $(document).ready(function () {
                 dataType: "text"
             });
             request.done(function (json) {
-                manejarRespuestaServidor(json);
+                Admin.manejarRespuestaServidor(json);
             });
         }
     }

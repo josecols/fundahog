@@ -26,6 +26,11 @@ ELEMENTOS_PAGINA = 10
 
 
 def paginar(lista, pagina, cantidad):
+    '''Retorna los @cantidad elementos correspondientes al número de página según la lista completa resultante de la consulta.
+        @lista: Elementos que regresa la consulta a paginar.
+        @pagina: Número de página que se quiere visualizar.
+        @cantidad: Cantidad de elementos por página.'''
+
     paginator = Paginator(lista, cantidad)
     try:
         entradas = paginator.page(pagina)
@@ -37,11 +42,17 @@ def paginar(lista, pagina, cantidad):
 
 
 def construir_data(flag, msg, datos=None):
+    '''Retorna, según estándar diseñado, el JSON utilizado para la comunicación con el cliente.
+        @flag: Bandera de estado en la comunicación. 0 es exitosa, -1 representa un error.
+        @msg: Mensaje de éxito que se muestra al usuario en el cliente.
+        @errores: Arreglo de errores, incluye campo y mensaje de error para el mismo.
+        @data: Data resultante de la consulta utilizada en el cliente.'''
+
     data = {}
     if flag == 0:
         data['flag'] = 0
         data['msg'] = msg
-    else:
+    elif flag == -1:
         data['flag'] = -1
         data['errores'] = msg
     if isinstance(datos, QuerySet):
@@ -51,6 +62,8 @@ def construir_data(flag, msg, datos=None):
 
 
 def informacion_organizacion():
+    '''Retorna dirección y teléfonos de la organización.'''
+
     try:
         organizacion = Organizacion.objects.all()[0]
         telefonos = organizacion.telefonos.filter(principal=True)
@@ -60,6 +73,8 @@ def informacion_organizacion():
 
 
 def entrada_importante(request):
+    '''Retorna la entrada marcada como importante más reciente.'''
+
     try:
         entrada = \
             Entrada.objects.filter(importante=True).order_by('creado'

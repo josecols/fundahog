@@ -1,11 +1,33 @@
 /*  FUNDAHOG
-    UCAB Guayana
-    Aplicación: FUNDAHOG WEB
-    Autor: Jose Cols - josecolsg@gmail.com - @josecols
-    Version: 1.0
-*/
+ *    UCAB Guayana
+ *    Aplicación: FUNDAHOG WEB
+ *    Autor: Jose Cols - josecolsg@gmail.com - @josecols
+ *    Version: 1.0
+ */
 
+/**
+ * Este módulo ofrece las herramientas administrativas al cliente para gestionar Entradas y Categorías.
+ * @class Blog
+ */
+
+/**
+ * Editor enriquecido existente en la página.
+ *
+ * @property ckeditor
+ * @static
+ * @type Object
+ * @default null
+ */
 ckeditor = null;
+
+/**
+ * Indica si el editor está funcionando en modo inline
+ *
+ * @property inline
+ * @static
+ * @type Boolean
+ * @default false
+ */
 inline = false;
 
 $(document).ready(function () {
@@ -44,7 +66,13 @@ $(document).ready(function () {
         borrar(this);
     });
 
-
+    /**
+     * Realiza la consulta al servidor para agregar una nueva Entrada.
+     *
+     * @method guardar
+     * @param urlAgregarEntrada {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function guardar() {
         var titulo = $('input[name="titulo"]').val();
         var contenido = '';
@@ -64,10 +92,18 @@ $(document).ready(function () {
             dataType: "text"
         });
         request.done(function (json) {
-            manejarRespuestaServidor(json);
+            Admin.manejarRespuestaServidor(json);
         });
     }
 
+    /**
+     * Realiza la consulta al servidor para agregar una nueva Categoría.
+     *
+     * @method agregarCategoria
+     * @param categoria {String} Descripción de la categoría a agregar.
+     * @param urlAgregarCategoria {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function agregarCategoria(categoria) {
         var request = $.ajax({
             async: true,
@@ -77,7 +113,7 @@ $(document).ready(function () {
             dataType: "text"
         });
         request.done(function (json) {
-            manejarRespuestaServidor(json);
+            Admin.manejarRespuestaServidor(json);
             json = JSON.parse(json);
             if (-1 != json.flag && json.data) {
                 $('select[name="categorias"]').prepend('<option value="' + json.data + '">' + categoria + '</option>');
@@ -86,6 +122,14 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * Realiza la consulta al servidor para borrar una Entrada existente.
+     *
+     * @method borrar
+     * @param boton {Object} Botón que dispara el evento y que contiene el ID de la Entrada a borrar.
+     * @param urlBorrarEntrada {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function borrar(boton) {
         var pk = $(boton).attr('id').match(/[0-9]+/);
         var respuesta = confirm("¿Está seguro que deasea eliminar la entrada?");
@@ -99,7 +143,7 @@ $(document).ready(function () {
                 dataType: "text"
             });
             request.done(function (json) {
-                manejarRespuestaServidor(json);
+                Admin.manejarRespuestaServidor(json);
             });
         }
     }

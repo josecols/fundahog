@@ -1,9 +1,15 @@
-/*  CKEDITOR INIT
-    UCAB Guayana
-    Aplicación: FUNDAHOG WEB
-    Autor: Jose Cols - josecolsg@gmail.com - @josecols
-    Version: 1.0
-*/
+/*  FUNDAHOG
+ *    UCAB Guayana
+ *    Aplicación: FUNDAHOG WEB
+ *    Autor: Jose Cols - josecolsg@gmail.com - @josecols
+ *    Version: 1.0
+ */
+
+/**
+ * Este módulo controla las vistas con edición inline.
+ * @class Edicion
+ */
+
 $(document).ready(function () {
     var guardar = false;
 
@@ -28,12 +34,24 @@ $(document).ready(function () {
         modificar();
     });
 
+    /**
+     * En el caso de que ocurran cambios al texto los refleja en la interfaz ofreciendo la opción de Guardar cambios.
+     *
+     * @method cambios
+     **/
     function cambios() {
         $('#guardar').html('<i class="fa fa-floppy-o"></i>Guardar cambios');
         $('#guardar').addClass('cambios');
         guardar = true;
     }
 
+    /**
+     * Realiza la consulta al servidor para modificar la tabla correspondiente.
+     *
+     * @method modificar
+     * @param url {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param data {String} Datos que serán enviados al servidor, incluye csrfToken. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function modificar() {
         if (guardar) {
             var request = $.ajax({
@@ -44,7 +62,7 @@ $(document).ready(function () {
                 dataType: "text"
             });
             request.done(function (data) {
-                manejarRespuestaServidor(data);
+                Admin.manejarRespuestaServidor(data);
             });
         }
     }

@@ -1,11 +1,33 @@
 /*  FUNDAHOG
-    UCAB Guayana
-    Aplicación: FUNDAHOG WEB
-    Autor: Jose Cols - josecolsg@gmail.com - @josecols
-    Version: 1.0
-*/
+ *    UCAB Guayana
+ *    Aplicación: FUNDAHOG WEB
+ *    Autor: Jose Cols - josecolsg@gmail.com - @josecols
+ *    Version: 1.0
+ */
 
+/**
+ * Este módulo ofrece las herramientas administrativas al cliente para gestionar la Programas.
+ * @class Programas
+ */
+
+/**
+ * Editor enriquecido existente en la página.
+ *
+ * @property ckeditor
+ * @static
+ * @type Object
+ * @default null
+ */
 ckeditor = null;
+
+/**
+ * Indica si el editor está funcionando en modo inline
+ *
+ * @property inline
+ * @static
+ * @type Boolean
+ * @default false
+ */
 inline = false;
 
 $(document).ready(function () {
@@ -28,6 +50,14 @@ $(document).ready(function () {
         guardar();
     });
 
+    /**
+     * Realiza la consulta al servidor para borrar un Programa existente.
+     *
+     * @method borrar
+     * @param boton {Object} Botón que dispara el evento y que contiene el ID del programa a borrar.
+     * @param urlBorrarPrograma {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function borrar(boton) {
         var pk = $(boton).attr('id').match(/[0-9]+/);
         var respuesta = confirm("¿Está seguro que deasea eliminar el programa?");
@@ -41,11 +71,18 @@ $(document).ready(function () {
                 dataType: "text"
             });
             request.done(function (json) {
-                manejarRespuestaServidor(json);
+                Admin.manejarRespuestaServidor(json);
             });
         }
     }
 
+    /**
+     * Realiza la consulta al servidor para agregar un nuevo Programa.
+     *
+     * @method guardar
+     * @param urlAgregarSeccion {String} Dirección de la vista en el servidor. Este parámetro debe estar definido global y estáticamente en el template.
+     * @param csrfToken {String} Código para evitar falsificación de peticiones. Este parámetro debe estar definido global y estáticamente en el template.
+     **/
     function guardar() {
         var titulo = $('input[name="titulo"]').val();
         var contenido = '';
@@ -64,7 +101,7 @@ $(document).ready(function () {
             'contenido': contenido,
             'csrfmiddlewaretoken': csrfToken
         }, function (json) {
-            manejarRespuestaServidor(JSON.stringify(json));
+            Admin.manejarRespuestaServidor(JSON.stringify(json));
             $('#progress-principal').hide();
         }, function (progress, value) {
             $('#progress-principal > span').width(value + '%');

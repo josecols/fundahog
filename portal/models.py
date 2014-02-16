@@ -16,10 +16,17 @@ from django.template.defaultfilters import slugify
 
 
 def uuid_slug(uuid):
+    '''Retorna pseudo uuid tomando los primeros 8 dígitos.
+    @uuid: Código uuid4.'''
+
     return str(uuid)[:8]
 
 
 def directorio(instance, nombre):
+    '''Construye un directorio para guardar un archivo según la clase que lo contiene.
+    @instance: Instancia de la clase que realiza el almacenamiento del archivo.
+    @nombre: Nombre del archivo, será sustituido por el pseudo código uuid.'''
+
     if isinstance(instance, Evento):
         ruta = 'uploads/eventos'
     elif isinstance(instance, Imagen):
@@ -42,6 +49,11 @@ def redimensionar(
     alto_requerido,
     archivo_salida=None,
     ):
+    '''Redimensiona una imagen simétricamente, si sus dimensiones superan las requeridas.
+        @archivo: Archivo de la imagen a redimensionar.
+        @ancho_requerido: Ancho máximo en pixeles que puede tomar la imagen.
+        @alto_requerido: Alto máximo en pixeles que puede tomar la imagen.
+        @archivo_salida: Si está establecido se guarda la imagen en este directorio.'''
 
     imagen = Image.open(archivo)
     (ancho, alto) = imagen.size
@@ -54,6 +66,11 @@ def redimensionar(
 
 
 def thumbnail(archivo, ancho_requerido, alto_requerido):
+    '''Genera un thumbnail según el @archivo dado. El nombre del thumbnail agrega .thumbnail al final del nombre del archivo original.
+        @archivo: Archivo de la imagen que se va a utilizar para generar el thumbnail.
+        @ancho_requerido: Ancho máximo en pixeles que puede tomar el thumbnail.
+        @alto_requerido: Alto máximo en pixeles que puede tomar el thumbnail.'''
+
     thumb = os.path.splitext(archivo)[0] + '.thumbnail' \
         + os.path.splitext(archivo)[1]
     redimensionar(archivo, ancho_requerido, alto_requerido, thumb)
