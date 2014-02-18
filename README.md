@@ -9,6 +9,6 @@ Contribucción
 -------------
 El proyecto está desarrollado con Python y el framework Web [Django](https://www.djangoproject.com/). Para realizar una contribucción, la misma debe hacerse mediante el mecanismo ofrecido por GitHub (pull request), para ver cómo realizar un pull request puedes consultar la [ayuda de GitHub](https://help.github.com/articles/creating-a-pull-request).
 
-Para futuros desarrollos es importante consultar la [Wiki del proyecto](wiki/), aquí se especifican los modelos y sus funciones principales, además se las diferentes estructuras de comunicación con el cliente.
+Para futuros desarrollos es importante consultar la [Wiki del proyecto](../wiki/), aquí se especifican los modelos y sus funciones principales, además de las diferentes estructuras de comunicación con el cliente.
 
 Todo código Python debe cumplir con la [guía de estilo PEP8](http://www.python.org/dev/peps/pep-0008/).
