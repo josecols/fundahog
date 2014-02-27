@@ -332,6 +332,7 @@ def evento_borrar(request):
 def imagen_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
         and request.is_ajax():
+
         album = get_object_or_404(Album, pk=request.POST.get('album',
                                   None))
         form = ImagenForm(request.POST, request.FILES)
@@ -344,6 +345,7 @@ def imagen_agregar(request):
         else:
             return HttpResponse(construir_data(-1, form.errors),
                                 mimetype='application/javascript')
+
     raise Http404
 
 

@@ -328,7 +328,8 @@ def borrar_imagen(sender, instance, **kwargs):
             pass
     if instance.thumbnail:
         try:
-            os.remove(instance.thumbnail)
+            os.remove(os.path.join(os.path.dirname(instance.imagen.path),
+                      os.path.basename(instance.thumbnail)))
         except OSError:
             pass
 
