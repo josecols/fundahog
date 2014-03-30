@@ -29,55 +29,14 @@
             "twitter": "http://www.twitter.com/fundahog",
             "facebook": "http://www.facebook.com/fundahog"
         }
-    },
-    {
+    }, {
         "model": "auth.user",
         "pk": 2,
         "fields": {
             "username": "fundahog",
             "email": "fundahog@gmail.com",
             "is_staff": true,
-            "user_permissions": [
-                ["add_entrada", "blog", "entrada"],
-                ["change_entrada", "blog", "entrada"],
-                ["delete_entrada", "blog", "entrada"],
-                ["add_categoria", "blog", "categoria"],
-                ["change_categoria", "blog", "categoria"],
-                ["delete_categoria", "blog", "categoria"],
-                ["add_album", "portal", "album"],
-                ["change_album", "portal", "album"],
-                ["delete_album", "portal", "album"],
-                ["add_categoria", "portal", "categoria"],
-                ["change_categoria", "portal", "categoria"],
-                ["delete_categoria", "portal", "categoria"],
-                ["add_correo", "portal", "correo"],
-                ["change_correo", "portal", "correo"],
-                ["delete_correo", "portal", "correo"],
-                ["add_evento", "portal", "evento"],
-                ["change_evento", "portal", "evento"],
-                ["delete_evento", "portal", "evento"],
-                ["add_galeria", "portal", "galeria"],
-                ["change_galeria", "portal", "galeria"],
-                ["delete_galeria", "portal", "galeria"],
-                ["add_imagen", "portal", "imagen"],
-                ["change_imagen", "portal", "imagen"],
-                ["delete_imagen", "portal", "imagen"],
-                ["add_libro", "portal", "libro"],
-                ["change_libro", "portal", "libro"],
-                ["delete_libro", "portal", "libro"],
-                ["add_organizacion", "portal", "organizacion"],
-                ["change_organizacion", "portal", "organizacion"],
-                ["delete_organizacion", "portal", "organizacion"],
-                ["add_programa", "portal", "programa"],
-                ["change_programa", "portal", "programa"],
-                ["delete_programa", "portal", "programa"],
-                ["add_seccion", "portal", "seccion"],
-                ["change_seccion", "portal", "seccion"],
-                ["delete_seccion", "portal", "seccion"],
-                ["add_telefono", "portal", "telefono"],
-                ["change_telefono", "portal", "telefono"],
-                ["delete_telefono", "portal", "telefono"]
-            ]
+            "user_permissions": [4, 5, 6, 1, 2, 3, 7, 8, 9, 22, 23, 24, 25, 26, 27, 37, 38, 39, 52, 53, 54, 46, 47, 48, 28, 29, 30, 40, 41, 42, 34, 35, 36, 55, 56, 57, 50, 51, 58, 59, 60, 31, 32, 33, 43, 44, 45]
         }
     }
 ]
