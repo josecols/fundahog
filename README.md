@@ -12,3 +12,4 @@ El proyecto está desarrollado con Python y el framework Web [Django](https://ww
 Para futuros desarrollos es importante consultar la [Wiki del proyecto](../../wiki/), aquí se especifican los modelos y sus funciones principales, además de las diferentes estructuras de comunicación con el cliente.
 
 Todo código Python debe cumplir con la [guía de estilo PEP8](http://www.python.org/dev/peps/pep-0008/).
+<p align="center"><img src="https://raw.githubusercontent.com/josecols/fundahog/master/fundahog/static/img/favicon.png" alt="FUNDAHOG"/></p>
