@@ -179,11 +179,11 @@ class Galeria(models.Model):
 
 class Telefono(models.Model):
 
-    telefono = models.CharField(max_length=12, unique=True,
-                                validators=[RegexValidator(regex='^\d{3}-\d{3}-\d{4}$'
+    telefono = models.CharField(max_length=13, unique=True,
+                                validators=[RegexValidator(regex='^\d{4}-\d{3}-\d{4}$'
                                 , message='El formato es incorrecto')],
                                 verbose_name="número de teléfono",
-                                help_text='Formato XXX-XXX-XXXX. P. ej. 414-853-0463'
+                                help_text='Formato XXXX-XXX-XXXX. P. ej. 0414-853-0463'
                                 )
     principal = \
         models.BooleanField(help_text='Un número marcado como principal aparecerá en la cabecera del sitio.'

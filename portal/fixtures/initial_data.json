@@ -9,7 +9,7 @@
         "model": "portal.telefono",
         "pk": 1,
         "fields": {
-            "telefono": "414-853-0463",
+            "telefono": "0414-853-0463",
             "principal": true
         }
 }, {
