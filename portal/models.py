@@ -209,6 +209,8 @@ class Correo(models.Model):
 class Organizacion(models.Model):
 
     site = models.OneToOneField(Site)
+    rif = models.CharField(max_length=100, unique=True,
+                           verbose_name='RIF')
     direccion = models.TextField(verbose_name="dirección")
     telefonos = models.ManyToManyField(Telefono,
             verbose_name="números telefónicos")

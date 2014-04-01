@@ -23,6 +23,7 @@
         "pk": 1,
         "fields": {
             "site": 1,
+            "rif": 'J-123123123'
             "direccion": "Dirección de prueba",
             "telefonos": [1],
             "correos": [1],
