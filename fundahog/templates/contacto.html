@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FUNDAHOG</title>
+    <title>Contacto - FUNDAHOG</title>
+    <meta name="robots" content="index, follow">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
@@ -24,6 +25,12 @@
                 <td>{{organizacion.direccion|safe}}</td>
                 <td>
                     <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>{{organizacion.rif}}</td>
+                <td>
+                    <i class="fa fa-building-o"></i>
                 </td>
             </tr>
         </table>
@@ -123,7 +130,9 @@
     <script src="{{STATIC_URL}}js/fundahog.admin.js"></script>
     <script>
         var data = '{{data|safe}}';
-        $(document).ready(function () {Admin.manejarRespuestaServidor(data, false);});
+        $(document).ready(function() {
+            Admin.manejarRespuestaServidor(data, false);
+        });
     </script>
     {% endif %}
 </body>

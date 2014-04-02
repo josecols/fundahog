@@ -27,6 +27,12 @@
                     <i class="fa fa-map-marker"></i>
                 </td>
             </tr>
+            <tr>
+                <td>{{rif}}</td>
+                <td>
+                    <i class="fa fa-building-o"></i>
+                </td>
+            </tr>
         </table>
         <div class="fix"></div>
     </header>
@@ -153,7 +159,7 @@
         url = '{% url libro_modificar %}';
         data = '';
         $(document).ready(function() {
-            $('#guardar').click(function () {
+            $('#guardar').click(function() {
                 var titulo = $('#titulo').text();
                 var descripcion = $('#contenido-html').text();
                 var libro = "{{libro.pk}}";

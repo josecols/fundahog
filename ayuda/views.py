@@ -20,11 +20,12 @@ def ayuda(request, slug=None, seccion_id=None):
             seccion = None
 
         secciones = Seccion.objects.all()
-        (direccion, telefonos) = informacion_organizacion()
+        (rif, direccion, telefonos) = informacion_organizacion()
 
         return render_to_response('ayuda.html', {
             'seccion': seccion,
             'secciones': secciones,
+            'rif': rif,
             'direccion': direccion,
             'telefonos': telefonos,
             'importante': entrada_importante(request),

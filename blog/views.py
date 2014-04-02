@@ -23,10 +23,11 @@ def index(request, pagina='1'):
     lista = Entrada.objects.order_by('creado').reverse()
     entradas = paginar(lista, pagina, ENTRADAS)
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('blog.html', {
         'entradas': entradas,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -37,10 +38,11 @@ def index(request, pagina='1'):
 def entrada(request, slug, entrada_id):
     entrada = get_object_or_404(Entrada, pk=entrada_id)
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('entrada.html', {
         'entrada': entrada,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -61,12 +63,13 @@ def busqueda(request, pagina='1', query=None):
     else:
         entradas = None
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
 
     return render_to_response('blog-busqueda.html', {
         'entradas': entradas,
         'query': query,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),

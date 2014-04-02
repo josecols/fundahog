@@ -62,14 +62,14 @@ def construir_data(flag, msg, datos=None):
 
 
 def informacion_organizacion():
-    '''Retorna dirección y teléfonos de la organización.'''
+    '''Retorna el RIF, la dirección y teléfonos de la organización.'''
 
     try:
         organizacion = Organizacion.objects.all()[0]
         telefonos = organizacion.telefonos.filter(principal=True)
     except IndexError:
-        return (None, None)
-    return (organizacion.direccion, telefonos)
+        return (None, None, None)
+    return (organizacion.rif, organizacion.direccion, telefonos)
 
 
 def entrada_importante(request):
@@ -88,9 +88,10 @@ def entrada_importante(request):
 def eventos(request, pagina='1'):
     lista = Evento.objects.order_by('fecha').reverse()
     eventos = paginar(lista, pagina, ELEMENTOS_PAGINA)
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('eventos.html', {
         'eventos': eventos,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -100,9 +101,10 @@ def eventos(request, pagina='1'):
 
 def evento(request, slug, evento_id):
     evento = get_object_or_404(Evento, pk=evento_id)
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('evento.html', {
         'evento': evento,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -113,9 +115,10 @@ def evento(request, slug, evento_id):
 def programas(request, pagina='1'):
     lista = Programa.objects.order_by('-pk')
     programas = paginar(lista, pagina, ELEMENTOS_PAGINA)
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('programas.html', {
         'programas': programas,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -125,9 +128,10 @@ def programas(request, pagina='1'):
 
 def programa(request, slug, programa_id):
     programa = get_object_or_404(Programa, pk=programa_id)
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('programa.html', {
         'programa': programa,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -137,7 +141,7 @@ def programa(request, slug, programa_id):
 
 def nosotros(request, slug=None):
     seccion = get_object_or_404(Seccion, titulo='Nosotros')
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
 
     try:
         subseccion = Seccion.objects.get(slug=slug)
@@ -147,6 +151,7 @@ def nosotros(request, slug=None):
     return render_to_response('nosotros.html', {
         'seccion': seccion,
         'subseccion': subseccion,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -156,10 +161,11 @@ def nosotros(request, slug=None):
 
 def seccion(request, slug):
     seccion = get_object_or_404(Seccion, slug=slug)
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
 
     return render_to_response('seccion.html', {
         'seccion': seccion,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -191,9 +197,10 @@ def galeria(request, galeria_pk=None):
         galeria = get_object_or_404(Galeria, pk=galeria_pk)
     else:
         galeria = get_object_or_404(Galeria, titulo='Principal')
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('galeria.html', {
         'galeria': galeria,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -205,10 +212,11 @@ def libros(request, pagina='1'):
     lista = Libro.objects.order_by('-pk')
     libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('libros.html', {
         'libros': libros,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -219,10 +227,11 @@ def libros(request, pagina='1'):
 def libro(request, slug, libro_id):
     libro = get_object_or_404(Libro, pk=libro_id)
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
     return render_to_response('libro.html', {
         'libro': libro,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),
@@ -242,12 +251,13 @@ def libros_busqueda(request, pagina='1', query=None):
     else:
         libros = None
     categorias = Categoria.objects.all()
-    (direccion, telefonos) = informacion_organizacion()
+    (rif, direccion, telefonos) = informacion_organizacion()
 
     return render_to_response('libros-busqueda.html', {
         'libros': libros,
         'query': query,
         'categorias': categorias,
+        'rif': rif,
         'direccion': direccion,
         'telefonos': telefonos,
         'importante': entrada_importante(request),

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>{{entrada}} - FUNDAHOG</title>
+    <meta name="robots" content="index, follow">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
@@ -27,6 +28,12 @@
                 <td>{{direccion}}</td>
                 <td>
                     <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>{{rif}}</td>
+                <td>
+                    <i class="fa fa-building-o"></i>
                 </td>
             </tr>
         </table>
@@ -170,7 +177,9 @@
                 <script type="text/javascript">
                     var disqus_shortname = 'fundahog';
                     (function() {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        var dsq = document.createElement('script');
+                        dsq.type = 'text/javascript';
+                        dsq.async = true;
                         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
                         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                     })();
@@ -196,12 +205,12 @@
         urlAgregarImagen = '{% url imagen_agregar %}';
         data = '';
         $(document).ready(function() {
-            $('#guardar').click(function () {
+            $('#guardar').click(function() {
                 var titulo = $('#titulo').text();
                 var contenido = encodeURIComponent($('#contenido-html').html());
                 var importante = ($('input[name=importante]').is(':checked') ? 'True' : 'False');
                 var entrada = "{{entrada.pk}}";
-                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&importante='+ importante + '&csrfmiddlewaretoken=' + csrfToken;
+                data = 'entrada=' + entrada + '&titulo=' + titulo + '&contenido=' + contenido + '&importante=' + importante + '&csrfmiddlewaretoken=' + csrfToken;
             });
 
             $('input[name=importante]').change(function() {

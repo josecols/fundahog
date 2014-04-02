@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FUNDAHOG</title>
+    <title>Libros - FUNDAHOG</title>
+    <meta name="robots" content="index, follow">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">{% if request.user.is_staff %}
@@ -25,6 +26,12 @@
                 <td>{{direccion}}</td>
                 <td>
                     <i class="fa fa-map-marker"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>{{rif}}</td>
+                <td>
+                    <i class="fa fa-building-o"></i>
                 </td>
             </tr>
         </table>
