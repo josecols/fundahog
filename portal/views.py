@@ -6,8 +6,8 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from datetime import datetime
+
 from django.utils import simplejson
-from blog.models import Entrada
 from django.db.models.query_utils import Q
 from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
@@ -17,10 +17,13 @@ from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from blog.models import Entrada
 from portal.forms import EventoForm, ImagenForm, CategoriaForm, \
     LibroForm, SeccionForm, ProgramaForm, MensajeForm
 from portal.models import Evento, Seccion, Organizacion, Galeria, \
-    Album, Imagen, Libro, Categoria, Programa, Mensaje
+    Album, Imagen, Libro, Categoria, Programa
+
 
 ELEMENTOS_PAGINA = 10
 
@@ -78,7 +81,7 @@ def entrada_importante(request):
     try:
         entrada = \
             Entrada.objects.filter(importante=True).order_by('creado'
-                ).reverse()[0]
+            ).reverse()[0]
     except IndexError:
         entrada = None
 
@@ -96,7 +99,7 @@ def eventos(request, pagina='1'):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def evento(request, slug, evento_id):
@@ -109,7 +112,7 @@ def evento(request, slug, evento_id):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def programas(request, pagina='1'):
@@ -123,7 +126,7 @@ def programas(request, pagina='1'):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def programa(request, slug, programa_id):
@@ -136,7 +139,7 @@ def programa(request, slug, programa_id):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def nosotros(request, slug=None):
@@ -156,7 +159,7 @@ def nosotros(request, slug=None):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def seccion(request, slug):
@@ -170,7 +173,7 @@ def seccion(request, slug):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def contacto(request, data=None):
@@ -189,7 +192,7 @@ def contacto(request, data=None):
         'importante': entrada_importante(request),
         'data': data,
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def galeria(request, galeria_pk=None):
@@ -205,7 +208,7 @@ def galeria(request, galeria_pk=None):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def libros(request, pagina='1'):
@@ -221,7 +224,7 @@ def libros(request, pagina='1'):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def libro(request, slug, libro_id):
@@ -236,7 +239,7 @@ def libro(request, slug, libro_id):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 def libros_busqueda(request, pagina='1', query=None):
@@ -244,8 +247,8 @@ def libros_busqueda(request, pagina='1', query=None):
         query = request.GET.get('q', '')
     if query:
         qset = Q(titulo__icontains=query) \
-            | Q(categorias__slug__icontains=query) \
-            | Q(descripcion__icontains=query)
+               | Q(categorias__slug__icontains=query) \
+               | Q(descripcion__icontains=query)
         lista = Libro.objects.filter(qset).distinct()
         libros = paginar(lista, pagina, ELEMENTOS_PAGINA)
     else:
@@ -262,7 +265,7 @@ def libros_busqueda(request, pagina='1', query=None):
         'telefonos': telefonos,
         'importante': entrada_importante(request),
         'request': request,
-        }, context_instance=RequestContext(request))
+    }, context_instance=RequestContext(request))
 
 
 @csrf_protect
@@ -274,7 +277,7 @@ def mensaje_agregar(request):
             form.save()
             return construir_data(0,
                                   'Hemos recibido el mensaje, nos comunicaremos pronto.'
-                                  )
+            )
         else:
             return construir_data(-1, form.errors)
     raise Http404
@@ -285,16 +288,16 @@ def mensaje_agregar(request):
 @csrf_protect
 def evento_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         post = request.POST.copy()
         post['fecha'] = datetime.strptime(post['fecha'],
-                '%d-%m-%Y %H:%M')
+                                          '%d-%m-%Y %H:%M')
         form = EventoForm(post, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponse(construir_data(0,
-                                'Evento agregado con éxito'),
+                                               'Evento agregado con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -305,7 +308,7 @@ def evento_agregar(request):
 @csrf_protect
 def evento_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         evento_id = request.POST.get('evento', None)
         evento = get_object_or_404(Evento, pk=evento_id)
         evento.titulo = request.POST.get('titulo', None)
@@ -315,11 +318,11 @@ def evento_modificar(request):
             evento.full_clean()
             evento.save()
             return HttpResponse(construir_data(0,
-                                "Evento modificado con éxito"),
+                                               "Evento modificado con éxito"),
                                 mimetype='application/javascript')
         except ValidationError, errors:
             return HttpResponse(construir_data(-1,
-                                errors.message_dict),
+                                               errors.message_dict),
                                 mimetype='application/javascript')
 
     raise Http404
@@ -328,12 +331,12 @@ def evento_modificar(request):
 @csrf_protect
 def evento_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         evento_id = request.POST.get('evento', None)
         evento = get_object_or_404(Evento, pk=evento_id)
         evento.delete()
         return HttpResponse(construir_data(0, 'Evento borrado con éxito'
-                            ), mimetype='application/javascript')
+        ), mimetype='application/javascript')
 
     raise Http404
 
@@ -341,16 +344,16 @@ def evento_borrar(request):
 @csrf_protect
 def imagen_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
 
         album = get_object_or_404(Album, pk=request.POST.get('album',
-                                  None))
+                                                             None))
         form = ImagenForm(request.POST, request.FILES)
 
         if form.is_valid():
             album.imagenes.add(form.save())
             return HttpResponse(construir_data(0,
-                                'Imagen agregada con éxito'),
+                                               'Imagen agregada con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -362,12 +365,12 @@ def imagen_agregar(request):
 @csrf_protect
 def imagen_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         imagen_id = request.POST.get('imagen', None)
         imagen = get_object_or_404(Imagen, pk=imagen_id)
         imagen.delete()
         return HttpResponse(construir_data(0, 'Imagen borrada con éxito'
-                            ), mimetype='application/javascript')
+        ), mimetype='application/javascript')
 
     raise Http404
 
@@ -375,14 +378,14 @@ def imagen_borrar(request):
 @csrf_protect
 def libro_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
 
         form = LibroForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponse(construir_data(0,
-                                'Libro agregado con éxito'),
+                                               'Libro agregado con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -393,7 +396,7 @@ def libro_agregar(request):
 @csrf_protect
 def libro_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         libro_id = request.POST.get('libro', None)
         libro = get_object_or_404(Libro, pk=libro_id)
         libro.titulo = request.POST.get('titulo', None)
@@ -403,30 +406,30 @@ def libro_modificar(request):
             libro.full_clean()
             libro.save()
             return HttpResponse(construir_data(0,
-                                "Libro modificado con éxito"),
+                                               "Libro modificado con éxito"),
                                 mimetype='application/javascript')
         except ValidationError, errors:
             return HttpResponse(construir_data(-1,
-                                errors.message_dict),
+                                               errors.message_dict),
                                 mimetype='application/javascript')
 
 
 @csrf_protect
 def libro_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         libro_id = request.POST.get('libro', None)
         libro = get_object_or_404(Libro, pk=libro_id)
         libro.delete()
         return HttpResponse(construir_data(0, 'Libro borrado con éxito'
-                            ), mimetype='application/javascript')
+        ), mimetype='application/javascript')
     raise Http404
 
 
 @csrf_protect
 def categoria_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         descripcion = request.POST.get('descripcion', None)
 
         form = CategoriaForm(request.POST)
@@ -435,8 +438,8 @@ def categoria_agregar(request):
             categoria = Categoria(descripcion=descripcion)
             categoria.save()
             return HttpResponse(construir_data(0,
-                                "Categoría agregada con éxito",
-                                str(categoria.pk)),
+                                               "Categoría agregada con éxito",
+                                               str(categoria.pk)),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -447,12 +450,12 @@ def categoria_agregar(request):
 @csrf_protect
 def seccion_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
 
         try:
             superseccion = \
                 Seccion.objects.get(pk=request.POST.get('superseccion',
-                                    None))
+                                                        None))
         except Seccion.DoesNotExist:
             superseccion = None
 
@@ -464,7 +467,7 @@ def seccion_agregar(request):
             else:
                 form.save()
             return HttpResponse(construir_data(0,
-                                'Sección agregada con éxito'),
+                                               'Sección agregada con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -475,7 +478,7 @@ def seccion_agregar(request):
 @csrf_protect
 def seccion_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         seccion_id = request.POST.get('seccion', None)
         seccion = get_object_or_404(Seccion, pk=seccion_id)
         seccion.titulo = request.POST.get('titulo', None)
@@ -485,23 +488,23 @@ def seccion_modificar(request):
             seccion.full_clean()
             seccion.save()
             return HttpResponse(construir_data(0,
-                                "Sección modificada con éxito"),
+                                               "Sección modificada con éxito"),
                                 mimetype='application/javascript')
         except ValidationError, errors:
             return HttpResponse(construir_data(-1,
-                                errors.message_dict),
+                                               errors.message_dict),
                                 mimetype='application/javascript')
 
 
 @csrf_protect
 def seccion_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         seccion_id = request.POST.get('seccion', None)
         seccion = get_object_or_404(Seccion, pk=seccion_id)
         seccion.delete()
         return HttpResponse(construir_data(0,
-                            'Sección borrada con éxito'),
+                                           'Sección borrada con éxito'),
                             mimetype='application/javascript')
     raise Http404
 
@@ -509,14 +512,14 @@ def seccion_borrar(request):
 @csrf_protect
 def programa_agregar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
 
         form = ProgramaForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponse(construir_data(0,
-                                'Programa agregado con éxito'),
+                                               'Programa agregado con éxito'),
                                 mimetype='application/javascript')
         else:
             return HttpResponse(construir_data(-1, form.errors),
@@ -527,7 +530,7 @@ def programa_agregar(request):
 @csrf_protect
 def programa_modificar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         programa_id = request.POST.get('programa', None)
         programa = get_object_or_404(Programa, pk=programa_id)
         programa.titulo = request.POST.get('titulo', None)
@@ -537,23 +540,23 @@ def programa_modificar(request):
             programa.full_clean()
             programa.save()
             return HttpResponse(construir_data(0,
-                                "Programa modificado con éxito"),
+                                               "Programa modificado con éxito"),
                                 mimetype='application/javascript')
         except ValidationError, errors:
             return HttpResponse(construir_data(-1,
-                                errors.message_dict),
+                                               errors.message_dict),
                                 mimetype='application/javascript')
 
 
 @csrf_protect
 def programa_borrar(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         programa_id = request.POST.get('programa', None)
         programa = get_object_or_404(Programa, pk=programa_id)
         programa.delete()
         return HttpResponse(construir_data(0,
-                            'Programa borrado con éxito'),
+                                           'Programa borrado con éxito'),
                             mimetype='application/javascript')
     raise Http404
 
@@ -561,23 +564,23 @@ def programa_borrar(request):
 @csrf_protect
 def galerias(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         galerias = Galeria.objects.all()
         return HttpResponse(construir_data(0,
-                            'Galerias consultadas con éxito',
-                            galerias), mimetype='application/javascript'
-                            )
+                                           'Galerias consultadas con éxito',
+                                           galerias), mimetype='application/javascript'
+        )
     raise Http404
 
 
 @csrf_protect
 def albumes(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         galeria = request.POST.get('galeria', None)
         albumes = Album.objects.filter(galeria=galeria)
         return HttpResponse(construir_data(0,
-                            'Albumes consultadas con éxito', albumes),
+                                           'Albumes consultadas con éxito', albumes),
                             mimetype='application/javascript')
     raise Http404
 
@@ -585,17 +588,17 @@ def albumes(request):
 @csrf_protect
 def imagenes(request):
     if request.user.is_superuser and request.method == 'POST' \
-        and request.is_ajax():
+            and request.is_ajax():
         album = request.POST.get('album', None)
         imagenes = Imagen.objects.filter(album=album)
         data = [{
-            'id': imagen.pk,
-            'titulo': imagen.titulo,
-            'imagen': imagen.imagen.url,
-            'thumbnail': imagen.thumbnail,
-            } for imagen in imagenes]
+                    'id': imagen.pk,
+                    'titulo': imagen.titulo,
+                    'imagen': imagen.imagen.url,
+                    'thumbnail': imagen.thumbnail,
+                } for imagen in imagenes]
 
         return HttpResponse(construir_data(0,
-                            'Imagenes consultadas con éxito', data),
+                                           'Imagenes consultadas con éxito', data),
                             mimetype='application/javascript')
     raise Http404
