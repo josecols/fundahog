@@ -6,18 +6,19 @@
 # Desarrollado por José Cols - josecolsg@gmail.com - @josecols - (0414)8530463
 
 from django.contrib import admin
-from ayuda.models import Seccion
+
+from ayuda.models import Seccion, Video
 from ayuda.forms import SeccionForm
 
 
 class SeccionAdmin(admin.ModelAdmin):
-
     form = SeccionForm
+    filter_horizontal = ('videos',)
 
     class Media:
-
         js = ('/static/js/ckeditor/ckeditor.js',
               '/static/js/ckeditor/init.js')
 
 
 admin.site.register(Seccion, SeccionAdmin)
+admin.site.register(Video)

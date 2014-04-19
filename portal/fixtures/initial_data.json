@@ -1,29 +1,29 @@
 [{
-        "model": "sites.site",
         "pk": 1,
+        "model": "sites.site",
         "fields": {
             "domain": "fundahog.com",
             "name": "FUNDAHOG"
         }
 }, {
-        "model": "portal.telefono",
         "pk": 1,
+        "model": "portal.telefono",
         "fields": {
             "telefono": "0414-853-0463",
             "principal": true
         }
 }, {
-        "model": "portal.correo",
         "pk": 1,
+        "model": "portal.correo",
         "fields": {
             "correo": "josecolsg@gmail.com"
         }
 }, {
-        "model": "portal.organizacion",
         "pk": 1,
+        "model": "portal.organizacion",
         "fields": {
             "site": 1,
-            "rif": 'J-123123123'
+            "rif": "J-123123123",
             "direccion": "Dirección de prueba",
             "telefonos": [1],
             "correos": [1],
@@ -31,13 +31,536 @@
             "facebook": "http://www.facebook.com/fundahog"
         }
     }, {
-        "model": "auth.user",
         "pk": 2,
+        "model": "auth.user",
         "fields": {
             "username": "fundahog",
             "email": "fundahog@gmail.com",
             "is_staff": true,
             "user_permissions": [4, 5, 6, 1, 2, 3, 7, 8, 9, 22, 23, 24, 25, 26, 27, 37, 38, 39, 52, 53, 54, 46, 47, 48, 28, 29, 30, 40, 41, 42, 34, 35, 36, 55, 56, 57, 50, 51, 58, 59, 60, 31, 32, 33, 43, 44, 45]
         }
-    }
+    }, {
+        "pk": 1,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir usuario",
+            "video": "https://www.youtube.com/watch?v=f9lXVC570IU"
+        }
+}, {
+        "pk": 2,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Configurar los permisos de un usuario",
+            "video": "https://www.youtube.com/watch?v=PRRx4c619-w"
+        }
+}, {
+        "pk": 3,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir un grupo",
+            "video": "https://www.youtube.com/watch?v=UE2MFCRWaBo"
+        }
+}, {
+        "pk": 4,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Asignar usuario a un grupo",
+            "video": "https://www.youtube.com/watch?v=NjnaxgjP7hM"
+        }
+}, {
+        "pk": 5,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir entrada",
+            "video": "https://www.youtube.com/watch?v=AuQ1f-CnbXk"
+        }
+}, {
+        "pk": 6,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar entrada",
+            "video": "https://www.youtube.com/watch?v=KKWqDhq69RQ"
+        }
+}, {
+        "pk": 7,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar entrada",
+            "video": "https://www.youtube.com/watch?v=Vd7yQNjS73I"
+        }
+}, {
+        "pk": 8,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Marcar entrada como importante",
+            "video": "https://www.youtube.com/watch?v=gCUICvUlUkM"
+        }
+}, {
+        "pk": 9,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir categor\u00eda",
+            "video": "https://www.youtube.com/watch?v=wJJrsVvP9rg"
+        }
+}, {
+        "pk": 10,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar categor\u00eda",
+            "video": "https://www.youtube.com/watch?v=Sk3fpxpNxhU"
+        }
+}, {
+        "pk": 11,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar categor\u00eda",
+            "video": "https://www.youtube.com/watch?v=5MWNyQexCL4"
+        }
+}, {
+        "pk": 12,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar informaci\u00f3n de la organizaci\u00f3n",
+            "video": "https://www.youtube.com/watch?v=2DiD9BAFDGA"
+        }
+}, {
+        "pk": 13,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir correo",
+            "video": "https://www.youtube.com/watch?v=Oy5r5Zq1OzU"
+        }
+}, {
+        "pk": 14,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar correo",
+            "video": "https://www.youtube.com/watch?v=ZAHljncN5e4"
+        }
+}, {
+        "pk": 15,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar correo",
+            "video": "https://www.youtube.com/watch?v=ftv52iHdxw4"
+        }
+}, {
+        "pk": 16,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir tel\u00e9fono",
+            "video": "https://www.youtube.com/watch?v=LZyLktlP9EM"
+        }
+}, {
+        "pk": 17,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar tel\u00e9fono",
+            "video": "https://www.youtube.com/watch?v=vy9gIxYHi-w"
+        }
+}, {
+        "pk": 18,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar tel\u00e9fono",
+            "video": "https://www.youtube.com/watch?v=Fr_I-S5-Hng"
+        }
+}, {
+        "pk": 19,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Marcar un tel\u00e9fono como importante",
+            "video": "https://www.youtube.com/watch?v=PXmUSNl8KnE"
+        }
+}, {
+        "pk": 20,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir secci\u00f3n",
+            "video": "https://www.youtube.com/watch?v=W-FkN4vjvFg"
+        }
+}, {
+        "pk": 21,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar secci\u00f3n",
+            "video": "https://www.youtube.com/watch?v=nMCCFQMwqEg"
+        }
+}, {
+        "pk": 22,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar secci\u00f3n",
+            "video": "https://www.youtube.com/watch?v=ySYVM3dJPNo"
+        }
+}, {
+        "pk": 23,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir programa",
+            "video": "https://www.youtube.com/watch?v=mTX5Lzozk2k"
+        }
+}, {
+        "pk": 24,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar programa",
+            "video": "https://www.youtube.com/watch?v=8DaiFHyUZTQ"
+        }
+}, {
+        "pk": 25,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar programa",
+            "video": "https://www.youtube.com/watch?v=_gKvegZMUik"
+        }
+}, {
+        "pk": 26,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Consultar un mensaje",
+            "video": "https://www.youtube.com/watch?v=A69HmyNJZm4"
+        }
+}, {
+        "pk": 27,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir evento",
+            "video": "https://www.youtube.com/watch?v=nk7hgjs92pc"
+        }
+}, {
+        "pk": 28,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar evento",
+            "video": "https://www.youtube.com/watch?v=tOsK4ho4xw4"
+        }
+}, {
+        "pk": 29,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar evento",
+            "video": "https://www.youtube.com/watch?v=rKn3gJpPYiU"
+        }
+}, {
+        "pk": 30,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir libro",
+            "video": "https://www.youtube.com/watch?v=R1MfvlYyTCw"
+        }
+}, {
+        "pk": 31,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar libro",
+            "video": "https://www.youtube.com/watch?v=BtA8f_OSHS8"
+        }
+}, {
+        "pk": 32,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar libro",
+            "video": "https://www.youtube.com/watch?v=yb9fcXz5rIE"
+        }
+}, {
+        "pk": 33,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir categor\u00eda de libro",
+            "video": "https://www.youtube.com/watch?v=o3ZI4ht2eIY"
+        }
+}, {
+        "pk": 34,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar categor\u00eda de libro",
+            "video": "https://www.youtube.com/watch?v=soLI8-MV2l8"
+        }
+}, {
+        "pk": 35,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar categor\u00eda de libro",
+            "video": "https://www.youtube.com/watch?v=Xqq12pIaC_U"
+        }
+}, {
+        "pk": 36,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir imagen",
+            "video": "https://www.youtube.com/watch?v=y34UfBBrDqc"
+        }
+}, {
+        "pk": 37,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar imagen",
+            "video": "https://www.youtube.com/watch?v=yb078a3yOIc"
+        }
+}, {
+        "pk": 38,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar imagen",
+            "video": "https://www.youtube.com/watch?v=u9T70LiyhPU"
+        }
+}, {
+        "pk": 39,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir \u00e1lbum",
+            "video": "https://www.youtube.com/watch?v=D4vaG0HTBxY"
+        }
+}, {
+        "pk": 40,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar \u00e1lbum",
+            "video": "https://www.youtube.com/watch?v=OCNpFjGddB4"
+        }
+}, {
+        "pk": 41,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar \u00e1lbum",
+            "video": "https://www.youtube.com/watch?v=Dn__nJtW-xU"
+        }
+}, {
+        "pk": 42,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir galer\u00eda",
+            "video": "https://www.youtube.com/watch?v=KRFf0bJFTvs"
+        }
+}, {
+        "pk": 43,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar galer\u00eda",
+            "video": "https://www.youtube.com/watch?v=pR5Us631Bhk"
+        }
+}, {
+        "pk": 44,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar galer\u00eda",
+            "video": "https://www.youtube.com/watch?v=eckyY2wp0GA"
+        }
+}, {
+        "pk": 45,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir elemento",
+            "video": "https://www.youtube.com/watch?v=sjCKOxc4mS4"
+        }
+}, {
+        "pk": 46,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Modificar elemento",
+            "video": "https://www.youtube.com/watch?v=5qJye1Dozqw"
+        }
+}, {
+        "pk": 47,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "Eliminar elemento",
+            "video": "https://www.youtube.com/watch?v=bFL96Os1YDA"
+        }
+}, {
+        "pk": 48,
+        "model": "ayuda.video",
+        "fields": {
+            "titulo": "A\u00f1adir imagen al contenido",
+            "video": "https://www.youtube.com/watch?v=ArODSQRlqzA"
+        }
+}, {
+        "pk": 1,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [1, 2],
+            "contenido": "<p>Los usuarios y los grupos le permiten definir cuentas para que m&aacute;s personas colaboren con usted en la edici&oacute;n del contenido del sitio web.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Usuarios&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro usuario.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><u>Nota:</u> Es importante luego de agregar el usuario definir los permisos del mismo. Si se desea que el usuario pueda utilizar el sistema administrativo normal se debe marcar la casilla &ldquo;Es staff&rdquo;, en caso de que se desea que el usuario pueda utilizar el sistema administrativo inline se debe marcar la casilla &ldquo;Es superusuario&rdquo;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Usuarios&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el nombre de usuario que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro usuario.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Usuarios&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los usuarios que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de usuarios, seleccione &ldquo;Eliminar Usuarios seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Usuarios",
+            "slug": "usuarios"
+        }
+}, {
+        "pk": 2,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [3, 4],
+            "contenido": "<p>Los usuarios y los grupos le permiten definir cuentas para que m&aacute;s personas colaboren con usted en la edici&oacute;n del contenido del sitio web.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir grupo</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Grupos&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro grupo.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><u>Nota:</u> Para asignar un usuario a un grupo, modifique el usuario y en el panel de &ldquo;Permisos&rdquo; seleccione el grupo deseado.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar grupo</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Grupos&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el nombre de usuario que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro grupo.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar grupo</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Grupos&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los grupos que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de grupos, seleccione &ldquo;Eliminar Grupos seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Grupos",
+            "slug": "grupos"
+        }
+}, {
+        "pk": 3,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [5, 6, 7, 8],
+            "contenido": "<p>Las entradas permiten publicar noticias, anuncios e informaci&oacute;n general en el blog. Estas est&aacute;n compuestas por cuatro campos t&iacute;tulo, contenido, categor&iacute;as y un indicador de importancia denominado &ldquo;Importante&rdquo;, los tres primeros campos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Entradas&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los cuatro campos solicitados, teniendo en cuenta que el campo &ldquo;Importante&rdquo; s&oacute;lo debe ser seleccionado si se desea que la entrada sea mostrada en todo el sitio.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra entrada.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Entradas&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la entrada que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra entrada.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Entradas&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las entradas que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de entradas, seleccione &ldquo;Eliminar Entradas seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Entradas",
+            "slug": "entradas"
+        }
+}, {
+        "pk": 4,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [9, 10, 11],
+            "contenido": "<p>Las categor&iacute;as permiten agrupar y describir entradas cuyo contenido tiene puntos comunes. Estas se conforman por un &uacute;nico campo de descripci&oacute;n, el cual es obligatorio.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Categor&iacute;as&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene el campo solicitado.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra categor&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Categor&iacute;as&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la categor&iacute;a que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra categor&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Categor&iacute;as&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las categor&iacute;as que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de categor&iacute;as, seleccione &ldquo;Eliminar Categor&iacute;as seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Categor\u00edas",
+            "slug": "categorias"
+        }
+}, {
+        "pk": 5,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [12],
+            "contenido": "<p>Este elemento agrupa la informaci&oacute;n organizacional que es mostrada en el sitio web. No se deben a&ntilde;adir nuevos elementos a esta entidad. Est&aacute; conformada por siete campos sitio (sitio web relacionado), RIF, direcci&oacute;n, n&uacute;meros telef&oacute;nicos, correos, perfil de twitter y perfil de facebook. Si desea cambiar la informaci&oacute;n, siga el proceso &ldquo;Modificar&rdquo; descrito a continuaci&oacute;n.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Organizaci&oacute;n&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en &ldquo;Informaci&oacute;n de la organizaci&oacute;n&rdquo;.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Grabar&rdquo; para guardar la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Organizaci\u00f3n",
+            "slug": "organizacion"
+        }
+}, {
+        "pk": 6,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [13, 14, 15],
+            "contenido": "<p>A trav&eacute;s de esta entidad se pueden agregar todos los correos electr&oacute;nicos que se mostraran en la secci&oacute;n de contacto. Est&aacute; compuesto por un solo campo obligatorio, correo.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Correos&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene el campo solicitado.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro correo.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Correos&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el correo electr&oacute;nico que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro correo.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Correos&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los correos que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de correos, seleccione &ldquo;Eliminar Correos seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Correos",
+            "slug": "correos"
+        }
+}, {
+        "pk": 7,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [16, 17, 18, 19],
+            "contenido": "<p>Los tel&eacute;fonos le permiten almacenar los n&uacute;meros telef&oacute;nicos que ser&aacute;n mostrados en el sitio. Estos est&aacute;n compuestos por dos campos n&uacute;mero de tel&eacute;fono y un identificador de tel&eacute;fono principal denominado &ldquo;Principal&rdquo;, el primer campo es obligatorio.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Tel&eacute;fonos&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los dos campos solicitados, teniendo en cuenta que el campo &ldquo;Principal&rdquo; s&oacute;lo debe ser seleccionado si se desea que el tel&eacute;fono sea mostrado en la cabecera del sitio.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro n&uacute;mero telef&oacute;nico.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Tel&eacute;fonos&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el n&uacute;mero telef&oacute;nico que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro n&uacute;mero telef&oacute;nico.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Tel&eacute;fonos&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los tel&eacute;fonos que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de tel&eacute;fonos, seleccione &ldquo;Eliminar Tel&eacute;fonos seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Tel\u00e9fonos",
+            "slug": "telefonos"
+        }
+}, {
+        "pk": 8,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [20, 21, 22],
+            "contenido": "<p>Las secciones son los elementos m&aacute;s flexibles del sistema, permiten crear p&aacute;ginas a disposici&oacute;n del editor. La secci&oacute;n &ldquo;Nosotros&rdquo; forma parte del contenido principal del portal y es mostrada en el men&uacute; del sitio. Estas est&aacute;n compuestas por tres campos t&iacute;tulo, contenido y subsecciones, los dos primeros son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Secciones&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los tres campos solicitados, teniendo en cuenta que las subsecciones se mostrar&aacute;n en una barra lateral de la secci&oacute;n principal.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra secci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Secciones&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la secci&oacute;n que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra secci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Secciones&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las secciones que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de secciones, seleccione &ldquo;Eliminar Secciones seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Secciones",
+            "slug": "secciones"
+        }
+}, {
+        "pk": 9,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [23, 24, 25],
+            "contenido": "<p>Los programas permiten publicar los proyectos y programas de ayuda que ofrece la fundaci&oacute;n. Estos est&aacute;n compuestos por cuatro campos t&iacute;tulo, contenido, portada y archivo, los tres primeros campos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Programas&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los cuatro campos solicitados, teniendo en cuenta que la portada es la imagen del programa y el campo archivo le permite cargar un documento con la descripci&oacute;n del programa que podr&aacute; ser consultado por el usuario.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro programa.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.<span style=\"line-height:1.6\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Programas&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo del programa que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro programa.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Programas&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los programas que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de programas, seleccione &ldquo;Eliminar Programas seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Programas",
+            "slug": "programas"
+        }
+}, {
+        "pk": 10,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [26],
+            "contenido": "<p>Los mensajes representan un medio de comunicaci&oacute;n entre los usuarios que visitan el sitio y usted, el administrador del sitio. Los mensajes no deben ser agregados por usted, si no por las personas que utilizan la p&aacute;gina. Estos est&aacute;n compuestos por tres campos nombre del remitente, correo electr&oacute;nico y mensaje. Para consultar los mensajes enviados por los usuarios, consulte el siguiente proceso.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Consultar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Mensajes&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el mensaje que desea leer. La lista de mensajes est&aacute; formada por los nombres de las personas que han enviado un mensaje a trav&eacute;s de la secci&oacute;n de contacto.</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><u>Nota</u>: Se recomienda que una vez sea respondido el mensaje, a trav&eacute;s de correo electr&oacute;nico o de cualquier otro medio, el mensaje sea eliminado para facilitar el proceso de visualizaci&oacute;n de mensajes y evitar confusiones.</p>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Mensajes",
+            "slug": "mensajes"
+        }
+}, {
+        "pk": 11,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [27, 28, 29],
+            "contenido": "<p>Esta entidad permite publicar eventos a realizar por la fundaci&oacute;n. Los eventos est&aacute;n compuestos por cuatro campos t&iacute;tulo, contenido, portada y fecha. Todos los campos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Eventos&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los cuatro campos solicitados, teniendo en cuenta que la portada es la imagen del evento y que la hora del evento usa un formato de 24 horas.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro evento.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Eventos&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo del evento que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro evento.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Eventos&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los eventos que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de eventos, seleccione &ldquo;Eliminar Eventos seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Eventos",
+            "slug": "eventos"
+        }
+}, {
+        "pk": 12,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [30, 31, 32],
+            "contenido": "<p>Los libros permiten realizar publicaciones de documentos que ser&aacute;n descargados por los usuarios para su lectura. Estos est&aacute;n compuestos por cinco campos t&iacute;tulo, descripci&oacute;n, categor&iacute;as, portada y archivo. Todos los campos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Libros&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los cinco campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro libro.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.<span style=\"line-height:1.6\">&nbsp; &nbsp; &nbsp; &nbsp;</span></li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Libros&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo del libro que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro libro.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Libros&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los libros que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de libros, seleccione &ldquo;Eliminar Libros seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Libros",
+            "slug": "libros"
+        }
+}, {
+        "pk": 13,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [33, 34, 35],
+            "contenido": "<p>Las categor&iacute;as permiten agrupar y describir libros cuyo contenido tiene puntos comunes. Estas se conforman por un &uacute;nico campo de descripci&oacute;n, el cual es obligatorio.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Categor&iacute;as de libros&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene el campo solicitado.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra categor&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Categor&iacute;as de libros&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la categor&iacute;a que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra categor&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Categor&iacute;as&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las categor&iacute;as que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de categor&iacute;as, seleccione &ldquo;Eliminar Categor&iacute;as de libros seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Categor\u00edas de libros",
+            "slug": "categorias-de-libros"
+        }
+}, {
+        "pk": 14,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [36, 37, 38],
+            "contenido": "<p>Esta entidad le permite agregar im&aacute;genes y fotos a cualquier campo de contenido y a las galer&iacute;as del sitio. Est&aacute;n compuestas por dos campos descripci&oacute;n e imagen, ambos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Im&aacute;genes&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los dos campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra categor&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><u>Nota:</u> Tenga en cuenta que con s&oacute;lo cargar la imagen, esta no ser&aacute; mostrada en el sitio, debe indicar al sistema donde quiere que sea mostrada. Puede ser en la galer&iacute;a del sitio o en cualquier campo de contenido de secciones, entradas, programas y eventos. Para mayor informaci&oacute;n consulte la secci&oacute;n de &ldquo;Administraci&oacute;n Inline&rdquo;.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Im&aacute;genes&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la imagen que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra imagen.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Im&aacute;genes&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las im&aacute;genes que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de im&aacute;genes, seleccione &ldquo;Eliminar Im&aacute;genes seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Im\u00e1genes",
+            "slug": "imagenes"
+        }
+}, {
+        "pk": 15,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [39, 40, 41],
+            "contenido": "<p>Los &aacute;lbumes asocian un conjunto de im&aacute;genes en un mismo t&iacute;tulo, esto le permite agrupar im&aacute;genes bajo un mismo contexto. Estos est&aacute;n compuestos por dos campos t&iacute;tulo e im&aacute;genes, ambos campos son obligatorios.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;&Aacute;lbumes&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los dos campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro &aacute;lbum.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;&Aacute;lbumes&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo del &aacute;lbum que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otro &aacute;lbum.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;&Aacute;lbumes&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de los &aacute;lbumes que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de &aacute;lbumes, seleccione &ldquo;Eliminar &Aacute;lbumes seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "\u00c1lbumes",
+            "slug": "albumes"
+        }
+}, {
+        "pk": 16,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [42, 43, 44],
+            "contenido": "<p>Las galer&iacute;as asocian un conjunto de &aacute;lbumes en un mismo t&iacute;tulo, esto le permite agrupar conjuntos de im&aacute;genes bajo un mismo contexto. Estos est&aacute;n compuestos por dos campos t&iacute;tulo y &aacute;lbumes, ambos campos son obligatorios. Es importante destacar que la galer&iacute;a &ldquo;Principal&rdquo; no debe ser eliminada, ya que esta es mostrada en el sitio.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Galer&iacute;as&rdquo; haga clic en la opci&oacute;n &ldquo;A&ntilde;adir&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Rellene los dos campos solicitados.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra galer&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>En la fila &ldquo;Galer&iacute;as&rdquo; haga clic en &ldquo;Modificar&rdquo;. Si no puede visualizar la fila, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Haga clic en el t&iacute;tulo de la galer&iacute;a que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Para finalizar el proceso presione uno de los tres botones para guardar la informaci&oacute;n, dependiendo de la actividad que desea realizar a continuaci&oacute;n.\r\n\t<ol>\r\n\t\t<li>&ldquo;Grabar y a&ntilde;adir otro&rdquo; le permite guardar la informaci&oacute;n y abrir un nuevo formulario para agregar otra galer&iacute;a.</li>\r\n\t\t<li>&ldquo;Grabar y continuar editando&rdquo; funciona de forma similar a un editor como <em>Word, </em>permitiendo guardar los avances realizados hasta el momento y continuar editando la informaci&oacute;n.</li>\r\n\t\t<li>&ldquo;Grabar&rdquo; guarda la informaci&oacute;n definitivamente, la misma puede ser modificada luego.</li>\r\n\t</ol>\r\n\t</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar</strong></p>\r\n\r\n<ol>\r\n\t<li>Dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a> (de no estar identificado como usuario administrador, se le solicitar&aacute; informaci&oacute;n de autenticaci&oacute;n).</li>\r\n\t<li>Haga clic en &ldquo;Galer&iacute;as&rdquo;. Si no puede visualizar la opci&oacute;n, es posible que no tenga los permisos apropiados, comun&iacute;quese con el administrador principal del sitio o con el autor de este manual.</li>\r\n\t<li>Marque la casilla de verificaci&oacute;n de las galer&iacute;as que desea eliminar.</li>\r\n\t<li>De la lista &ldquo;Acci&oacute;n&rdquo; ubicada en la barra superior del listado de galer&iacute;as, seleccione &ldquo;Eliminar Galer&iacute;as seleccionado/s&rdquo;.</li>\r\n\t<li>Para finalizar el proceso presione el bot&oacute;n &ldquo;Ir&rdquo;. Si se le pide confirmaci&oacute;n de la acci&oacute;n haga clic en el bot&oacute;n &ldquo;S&iacute;, estoy seguro&rdquo;.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Galer\u00edas",
+            "slug": "galerias"
+        }
+}, {
+        "pk": 17,
+        "model": "ayuda.seccion",
+        "fields": {
+            "videos": [45, 46, 47, 48],
+            "contenido": "<p>El sitio web de FUNDAHOG cuenta con un sistema de administraci&oacute;n dise&ntilde;ado especialmente para el mismo, el cual permite editar el contenido principal de la p&aacute;gina de una forma mucho m&aacute;s r&aacute;pida y f&aacute;cil.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Para acceder al sistema simplemente se debe iniciar sesi&oacute;n con el superusuario provisto por el autor del manual. Una vez autenticado el usuario, al visualizar el sitio notar&aacute; que aparecen elementos nuevos que le permiten editar la informaci&oacute;n y ver al instante c&oacute;mo los usuarios que visiten la p&aacute;gina visualizar&aacute;n el contenido.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Debido a que los campos de las entidades son los mismos que en el sistema administrativo normal, no se har&aacute; una descripci&oacute;n paso a paso de como agregar, modificar y eliminar un elemento por cada entidad.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir un elemento</strong></p>\r\n\r\n<ol>\r\n\t<li>Si no ha iniciado sesi&oacute;n, dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a>, ingrese sus datos y regrese a la p&aacute;gina principal.</li>\r\n\t<li>Dir&iacute;jase a la direcci&oacute;n del elemento a agregar, puede ser a trav&eacute;s de la navegaci&oacute;n del sitio o ingresando la URL exacta en la barra del navegador.</li>\r\n\t<li>Haga clic en el bot&oacute;n &ldquo;Nuevo &lt;Elemento&gt;&rdquo;. De esta forma despliega el formulario con los campos correspondientes al elemento.</li>\r\n\t<li>Rellene los campos solicitados.</li>\r\n\t<li>Haga clic en guardar. El sistema mostrar&aacute; una respuesta en color verde si el procedimiento se realiz&oacute; correctamente y una en color rojo si ocurri&oacute; un error.</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Modificar un elemento</strong></p>\r\n\r\n<ol>\r\n\t<li>Si no ha iniciado sesi&oacute;n, dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a>, ingrese sus datos y regrese a la p&aacute;gina principal.</li>\r\n\t<li>En el listado de elementos haga clic en el enlace &ldquo;Editar&rdquo;, mostrado junto al t&iacute;tulo del elemento.</li>\r\n\t<li>Haga clic sobre el campo que desea modificar.</li>\r\n\t<li>Modifique la informaci&oacute;n deseada.</li>\r\n\t<li>Haga clic en guardar. El sistema mostrar&aacute; una respuesta en color verde si el procedimiento se realiz&oacute; correctamente y una en color rojo si ocurri&oacute; un error.</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>Eliminar un elemento</strong></p>\r\n\r\n<ol>\r\n\t<li>Si no ha iniciado sesi&oacute;n, dir&iacute;jase a la siguiente direcci&oacute;n <a href=\"http://fundahog.org/admin/\">http://fundahog.org/admin/</a>, ingrese sus datos y regrese a la p&aacute;gina principal.</li>\r\n\t<li>En el listado de elementos haga clic en el enlace &ldquo;Borrar&rdquo;, mostrado junto al t&iacute;tulo del elemento.</li>\r\n\t<li>Aparecer&aacute; un di&aacute;logo de confirmaci&oacute;n, haga clic en &ldquo;Aceptar&rdquo;. El sistema mostrar&aacute; una respuesta en color verde si el procedimiento se realiz&oacute; correctamente y una en color rojo si ocurri&oacute; un error.</li>\r\n</ol>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><strong>A&ntilde;adir imagen al contenido</strong></p>\r\n\r\n<p>Las secciones, las entradas, los programas y los eventos admiten im&aacute;genes en su contenido, para agregar una imagen al contenido de un elemento perteneciente a una de estas entidades siga el procedimiento descrito a continuaci&oacute;n.</p>\r\n\r\n<ol>\r\n\t<li>Durante la edici&oacute;n del elemento haga clic en el bot&oacute;n &ldquo;Agregar imagen al contenido&rdquo;.</li>\r\n\t<li>Seleccione la galer&iacute;a y el &aacute;lbum donde se encuentra la imagen deseada.</li>\r\n\t<li>Haga clic sobre la imagen. Si desea cargar una nueva imagen, ingrese el t&iacute;tulo de la imagen y seleccione el archivo, la misma ser&aacute; cargada autom&aacute;ticamente al &aacute;lbum seleccionado.</li>\r\n</ol>\r\n",
+            "editado": "2014-04-18",
+            "archivo": "",
+            "titulo": "Administraci\u00f3n inline",
+            "slug": "administracion-inline"
+        }
+}
 ]

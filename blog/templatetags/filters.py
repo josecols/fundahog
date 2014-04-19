@@ -20,7 +20,7 @@ def youtube_embed_url(url):
     '''Convierte una URL de youtube a HTML embebido'''
 
     match = \
-        re.search(r'^(http|https)\:\/\/www\.youtube\.com\/watch\?v\=(\w*)(\&(.*))?$'
+        re.search(r'^(http|https)\:\/\/www\.youtube\.com\/watch\?v\=(.*)(\&(.*))?$'
                   , url)
     if match:
         embed_url = 'http://www.youtube.com/embed/%s' % match.group(2)

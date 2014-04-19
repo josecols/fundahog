@@ -8,116 +8,118 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700'>
     <link rel="stylesheet" href="{{STATIC_URL}}css/fundahog.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
-</head>{% load filters %}
+</head>
+{% load filters %}
 
 <body>
-    <header id="header">
-        <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
-        <table class="contacto">
-            <tr>
-                <td>{% for telefono in telefonos.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
-                <td>
-                    <i class="fa fa-phone"></i>
-                </td>
-            </tr>
-            <tr>
-                <td>{{direccion}}</td>
-                <td>
-                    <i class="fa fa-map-marker"></i>
-                </td>
-            </tr>
-            <tr>
-                <td>{{rif}}</td>
-                <td>
-                    <i class="fa fa-building-o"></i>
-                </td>
-            </tr>
-        </table>
-        <div class="fix"></div>
-    </header>
-    <div id="pagina">
-        {% if importante %}
-        <a class="importante" href="{% url entrada importante.slug importante.pk %}">
-            <div id="importante">
-                <i class="fa fa-star"></i>{{importante}}
-            </div>
-        </a>
-        {% endif %}
-        <a id="menu" class="toggler" href="javascript:void(0)">
-            <i class="fa fa-bars"></i>Menú</a>
-        <nav id="barra" class="hardware">
-            <ul>
-                <li>
-                    <a href="{% url nosotros %}">Nosotros</a>
-                </li>
-                <li>
-                    <a href="{% url blog %}">Blog</a>
-                </li>
-                <li>
-                    <a href="{% url programas %}">Programas</a>
-                </li>
-                <li>
-                    <a href="{% url contacto %}">Contacto</a>
-                </li>
-                <li>
-                    <a href="{% url eventos %}">Eventos</a>
-                </li>
-                <li>
-                    <a href="{% url libros %}">Libros</a>
-                </li>
-                <li>
-                    <a href="{% url galeria %}">Galería</a>
-                </li>
-                {% if request.user.is_staff %}
-                <li>
-                    <a class="seleccionado" href="{% url ayuda %}">Ayuda</a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-        <section id="principal">
-            {% if secciones %}
-            <aside id="sidebar" class="left">
-                <nav>
-                    <ul>
-                        {% for s in secciones %}
-                        <li>
-                            {% if s.titulo == seccion.titulo %}
-                            <a href="{% url ayuda_seccion s.slug s.pk %}" class="seleccionado">{{s.titulo}}
-                                <span class="flecha"></span>
-                            </a>
-                            {% else %}
-                            <a href="{% url ayuda_seccion s.slug s.pk %}">{{s.titulo}}</a>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </nav>
-            </aside>
+<header id="header">
+    <img class="logo" src="{{STATIC_URL}}img/logo.png" alt="FUNDAHOG">
+    <table class="contacto">
+        <tr>
+            <td>{% for telefono in telefonos.all %}{{telefono}}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+            <td>
+                <i class="fa fa-phone"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>{{direccion}}</td>
+            <td>
+                <i class="fa fa-map-marker"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>{{rif}}</td>
+            <td>
+                <i class="fa fa-building-o"></i>
+            </td>
+        </tr>
+    </table>
+    <div class="fix"></div>
+</header>
+<div id="pagina">
+    {% if importante %}
+    <a class="importante" href="{% url entrada importante.slug importante.pk %}">
+        <div id="importante">
+            <i class="fa fa-star"></i>{{importante}}
+        </div>
+    </a>
+    {% endif %}
+    <a id="menu" class="toggler" href="javascript:void(0)">
+        <i class="fa fa-bars"></i>Menú</a>
+    <nav id="barra" class="hardware">
+        <ul>
+            <li>
+                <a href="{% url nosotros %}">Nosotros</a>
+            </li>
+            <li>
+                <a href="{% url blog %}">Blog</a>
+            </li>
+            <li>
+                <a href="{% url programas %}">Programas</a>
+            </li>
+            <li>
+                <a href="{% url contacto %}">Contacto</a>
+            </li>
+            <li>
+                <a href="{% url eventos %}">Eventos</a>
+            </li>
+            <li>
+                <a href="{% url libros %}">Libros</a>
+            </li>
+            <li>
+                <a href="{% url galeria %}">Galería</a>
+            </li>
+            {% if request.user.is_staff %}
+            <li>
+                <a class="seleccionado" href="{% url ayuda %}">Ayuda</a>
+            </li>
             {% endif %}
-            <section id="contenido" class="right">
-                {% if seccion %}
-                <h1 class="titulo">
-                    <a href="javascript:void(0)">{{ seccion.titulo }}</a>
-                    <small>
-                        <i class="fa fa-calendar"></i>{{ seccion.editado }} {% if seccion.archivo %}
-                        <a href="{{MEDIA_URL}}{{seccion.archivo}}">
-                            <i class="fa fa-cloud-download"></i>Descargar en PDF</a>{% endif %}
-                    </small>
-
-                </h1>
-                {{ seccion.contenido|safe }} {% if seccion.video %}
-                <h1 class="titulo">Vídeo explicativo</h1>
-                {{seccion.video|youtube_embed_url|safe}} {% endif %}
-                <hr>{% else %}
-                <h1 class="titulo">Selecciona un tema de ayuda de la barra lateral.</h1>
-                {% endif %}
-            </section>
-            <div class="fix"></div>
+        </ul>
+    </nav>
+    <section id="principal">
+        {% if secciones %}
+        <aside id="sidebar" class="left">
+            <nav>
+                <ul>
+                    {% for s in secciones %}
+                    <li>
+                        {% if s.titulo == seccion.titulo %}
+                        <a href="{% url ayuda_seccion s.slug s.pk %}" class="seleccionado">{{s.titulo}}
+                            <span class="flecha"></span>
+                        </a>
+                        {% else %}
+                        <a href="{% url ayuda_seccion s.slug s.pk %}">{{s.titulo}}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
+        {% endif %}
+        <section id="contenido" class="right">
+            {% if seccion %}
+            <h1 class="titulo">
+                <a href="javascript:void(0)">{{ seccion.titulo }}</a>
+                <small>
+                    <i class="fa fa-calendar"></i>{{ seccion.editado }} {% if seccion.archivo %}
+                    <a href="{{MEDIA_URL}}{{seccion.archivo}}">
+                        <i class="fa fa-cloud-download"></i>Descargar en PDF</a>{% endif %}
+                </small>
+            </h1>
+            {{ seccion.contenido|safe }} {% if seccion.videos %}
+            <h1 class="titulo">{% if seccion.videos.count > 1 %}Vídeos explicativos{% else %}Vídeo explicativo{% endif %}</h1>
+            {% for video in seccion.videos.all %}
+            <h2 class="subtitulo">{{video.titulo}}</h2>
+            {{video.video|youtube_embed_url|safe}}<hr>{% endfor %}{% endif %}
+            {% else %}
+            <h1 class="titulo">Selecciona un tema de ayuda de la barra lateral.</h1>
+            {% endif %}
         </section>
-    </div>
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script async src="{{STATIC_URL}}js/fundahog.js"></script>
+        <div class="fix"></div>
+    </section>
+</div>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script async src="{{STATIC_URL}}js/fundahog.js"></script>
 </body>
 
 </html>
